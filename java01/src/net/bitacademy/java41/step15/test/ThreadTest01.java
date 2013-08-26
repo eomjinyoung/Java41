@@ -23,6 +23,10 @@ public class ThreadTest01 {
 		
 		tg2.list();
 		/*
+		 * Priority: 
+		 * - 1 ~ 10
+		 * - 자식 스레드는 부모의 우선 순위와 같은 값을 가진다.
+		 * 
 java.lang.ThreadGroup[name=system,maxpri=10]
 Thread[Reference Handler,10,system]
 Thread[Finalizer,8,system]
