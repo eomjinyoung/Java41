@@ -1,63 +1,57 @@
 package net.bitacademy.java41.servlets;
 
+import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.servlet.GenericServlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebServlet;
+
 import net.bitacademy.java41.dao.MemberDao;
+import net.bitacademy.java41.util.DBConnectionPool;
 import net.bitacademy.java41.vo.Member;
 
-public class MemberServlet {
+@WebServlet("/member")
+@SuppressWarnings("serial")
+public class MemberServlet extends GenericServlet {
 	private MemberDao memberDao;
 	
-	public MemberServlet(MemberDao memberDao) {
-		this.memberDao = memberDao;
+	public MemberServlet() {
+		DBConnectionPool dbpool = new DBConnectionPool(
+				"jdbc:mysql://localhost/test", 
+				"test", 
+				"test",
+				System.getProperty("driverClass"));
+		memberDao = new MemberDao(dbpool);
 	}
 
-	public void execute(Scanner scanner, PrintStream out) {
-		Member member = null;
-		while(true) {
-			printPrompt(out);
-			
-			String command = scanner.nextLine();
-
-			if (command.equals("list")) {
-				member = null;
-				list(scanner, out);
-			} else if (command.equals("add")) {
-				member = null;
-				add(scanner, out);
-			} else if (command.startsWith("view")) {
-				String[] values = command.split(" ");
-				member = view(scanner, out, values[1] );
-			} else if (command.equals("update")) {
-				if (member != null) {
-					update(member, scanner, out);
-				} else {
-					out.println("먼저 멤버를 조회하세요!");
-				}
-			} else if (command.equals("delete")) {
-				if (member != null) {
-					detele(member.getEmail(), scanner, out);
-				} else {
-					out.println("먼저 멤버를 조회하세요!");
-				}
-			 
-			} else if (command.equals("menu")) {
-				break;
-
-			} else {
-				out.println("지원하지 않는 명령어입니다.");
+	@Override
+	public void service(ServletRequest request, ServletResponse response)
+			throws ServletException, IOException {
+		//요청URL: http://localhost:9999/web01/member?command=list
+		
+		String command = request.getParameter("command");
+		response.setContentType("text/plain;charset=UTF-8");
+		
+		try {
+			if ("list".equals(command)) {
+				list(request, response);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
-	private void printPrompt(PrintStream out) {
-		out.println("멤버관리>");
-		out.println("@@?");
-	}
-	
-	private void list(Scanner scanner, PrintStream out) {
+	private void list(ServletRequest request, ServletResponse response) 
+		throws Exception 
+	{
+		PrintWriter out = response.getWriter();
 		try {
 			List<Member> list = memberDao.list();
 
