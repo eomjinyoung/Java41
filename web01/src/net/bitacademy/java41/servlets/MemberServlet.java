@@ -1,13 +1,10 @@
 package net.bitacademy.java41.servlets;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Scanner;
 
 import javax.servlet.GenericServlet;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -42,6 +39,21 @@ public class MemberServlet extends GenericServlet {
 		try {
 			if ("list".equals(command)) {
 				list(request, response);
+			} else if ("add".equals(command)) {
+				// .../member?command=add&name=홍길동&phone=111&email=aaa&blog=aaa&age=12
+				add(request, response);
+			} else if ("view".equals(command)) {
+				// .../member?command=view&email=aaa
+				view(request, response);
+			} else if ("delete".equals(command)) {
+				// .../member?command=delete&email=aaa
+				delete(request, response);
+			} else if ("update".equals(command)) {
+				// .../member?command=update&email=aaa&name=오호라2
+				update(request, response);
+			} else {
+				PrintWriter out = response.getWriter();
+				out.println("해당 명령어를 지원하지 않습니다!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,121 +64,97 @@ public class MemberServlet extends GenericServlet {
 		throws Exception 
 	{
 		PrintWriter out = response.getWriter();
-		try {
-			List<Member> list = memberDao.list();
+		List<Member> list = memberDao.list();
 
-			for(Member m : list) {
-				out.println(m.getName() + ","
-					+ m.getPhone() + ","
-					+ m.getEmail());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-	}
-
-	private void add(Scanner scanner, PrintStream out){
-		Member m = new Member();
-		out.println("이름 : \n@@?");
-		m.setName(scanner.nextLine());
-		out.println("전화번호 : \n@@?");
-		m.setPhone(scanner.nextLine());
-		out.println("이메일 : \n@@?");
-		m.setEmail(scanner.nextLine());
-		out.println("블로그 : \n@@?");
-		m.setBlog(scanner.nextLine());
-		out.println("나이 : \n@@?");
-		m.setAge( Integer.parseInt( scanner.nextLine() ) );
-
-		out.println("등록하시겠습니까?(y/n)\n@@?");
-		if(scanner.nextLine().equals("y")){
-			try {
-				memberDao.add(m);
-				out.println("등록되었습니다!");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			out.println("등록 취소하였습니다!");
+		for(Member m : list) {
+			out.println(m.getName() + ","
+				+ m.getPhone() + ","
+				+ m.getEmail());
 		}
 	}
 
-	private Member view(Scanner scanner, PrintStream out, String email) {
-		try {
-			Member member = memberDao.get(email);
-			
-			if (member != null) {
-				out.println("이름:" + member.getName());
-				out.println("전화:" + member.getPhone());
-				out.println("이메일:" + member.getEmail());
-				out.println("블로그:" + member.getBlog());
-				out.println("나이:" + member.getAge());
-				out.printf("등록일:%1$tY-%1$tm-%1$td \n", member.getRegDate());
-				
-				return member;
-			} else {
-				out.println("해당 이메일의 멤버가 없습니다.");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	private void add(ServletRequest request, ServletResponse response)
+		throws Exception
+	{
+		Member m = new Member()
+				.setName(request.getParameter("name"))
+				.setPhone(request.getParameter("phone"))
+				.setEmail(request.getParameter("email"))
+				.setBlog(request.getParameter("blog"))
+				.setAge( Integer.parseInt( request.getParameter("age") ) );
+
+		memberDao.add(m);
+		PrintWriter out = response.getWriter();
+		out.println("등록되었습니다!");
+	}
+
+	private Member view(ServletRequest request, ServletResponse response) 
+			throws Exception 
+	{
+		Member member = memberDao.get(request.getParameter("email"));
 		
-		return null;
+		PrintWriter out = response.getWriter();
+		if (member != null) {
+			out.println("이름:" + member.getName());
+			out.println("전화:" + member.getPhone());
+			out.println("이메일:" + member.getEmail());
+			out.println("블로그:" + member.getBlog());
+			out.println("나이:" + member.getAge());
+			out.printf("등록일:%1$tY-%1$tm-%1$td \n", member.getRegDate());
+			
+			return member;
+		} else {
+			out.println("해당 이메일의 멤버가 없습니다.");
+			return null;
+		}
 	}
 	
-	private void update(Member member, Scanner scanner, PrintStream out) {
+	private void update(ServletRequest request, ServletResponse response) 
+			throws Exception 
+	{
+		Member member = memberDao.get(request.getParameter("email"));
 		Member copy = member.clone();
-		out.printf("이메일(%1$s):\n", member.getEmail());
-		out.printf("이름(%1$s):\n@@?\n", member.getName());
-		String value = scanner.nextLine();
-		if (value.length() > 0) {
+		
+		String value = request.getParameter("name");
+		if (value != null) {
 			copy.setName(value);
 		}
-		out.printf("전화(%1$s):\n@@?\n", member.getPhone());
-		value = scanner.nextLine();
-		if (value.length() > 0) {
+		
+		value = request.getParameter("phone");
+		if (value != null) {
 			copy.setPhone(value);
 		}
-		out.printf("블로그(%1$s):\n@@?\n", member.getBlog());
-		value = scanner.nextLine();
-		if (value.length() > 0) {
+		
+		value = request.getParameter("blog");
+		if (value != null) {
 			copy.setBlog(value);
 		}
-		out.printf("나이(%1$d):\n@@?\n", member.getAge());
-		value = scanner.nextLine();
-		if (value.length() > 0) {
+		
+		value = request.getParameter("age");
+		if (value != null) {
 			copy.setAge( Integer.parseInt(value) );
 		}
 
-		out.println("변경하시겠습니까?(y/n)\n@@?");
-		if(scanner.nextLine().toLowerCase().equals("y")){
-			try {
-				int count = memberDao.change(copy);
-				
-				if (count > 0) {
-					out.println("변경되었습니다!");
-				} else {
-					out.println("해당 이메일의 멤버를 찾을 수 없습니다.");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		int count = memberDao.change(copy);
+		
+		PrintWriter out = response.getWriter();
+		if (count > 0) {
+			out.println("변경되었습니다!");
 		} else {
-			out.println("변경 취소하였습니다!");
+			out.println("해당 이메일의 멤버를 찾을 수 없습니다.");
 		}
 	}
 
-	private void detele(String email, Scanner scanner, PrintStream out) {
-		try {
-			int count = memberDao.remove(email);
-			
-			if (count > 0) {
-				out.println("삭제되었습니다!");
-			} else {
-				out.println("해당 이메일의 멤버를 찾을 수 없습니다!");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	private void delete(ServletRequest request, ServletResponse response) 
+			throws Exception 
+	{
+		int count = memberDao.remove(request.getParameter("email"));
+		
+		PrintWriter out = response.getWriter();
+		if (count > 0) {
+			out.println("삭제되었습니다!");
+		} else {
+			out.println("해당 이메일의 멤버를 찾을 수 없습니다!");
 		}
 	}
 }
