@@ -23,6 +23,9 @@ public class Servlet02 extends GenericServlet{
 	@Override
 	public void service(ServletRequest request, ServletResponse response)
 			throws ServletException, IOException {
+		// 제대로 Unicode를 클라이언트가 원하는 문자집합으로 변환하려면
+		// 출력스트림을 얻기 전에 변환할 문자집합을 설정한다.
+		response.setContentType("text/plain;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println("오호라...~~~ ");
 	}
