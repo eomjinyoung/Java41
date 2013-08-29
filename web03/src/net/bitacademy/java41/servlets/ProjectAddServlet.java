@@ -16,12 +16,6 @@ import net.bitacademy.java41.vo.Project;
 @WebServlet("/project/add")
 @SuppressWarnings("serial")
 public class ProjectAddServlet extends GenericServlet {
-	private ProjectDao projectDao;
-	
-	public ProjectAddServlet() {
-		this.projectDao = ProjectDao.getInstance();
-	}
-
 	@Override
 	public void service(ServletRequest request, ServletResponse response)
 			throws ServletException, IOException {
@@ -37,6 +31,8 @@ public class ProjectAddServlet extends GenericServlet {
 			project.setStartDate(Date.valueOf(request.getParameter("startDate")));
 			project.setEndDate(Date.valueOf(request.getParameter("endDate")));
 			
+			ProjectDao projectDao = 
+					(ProjectDao) this.getServletContext().getAttribute("projectDao");
 			projectDao.add(project);
 			
 			PrintWriter out = response.getWriter();

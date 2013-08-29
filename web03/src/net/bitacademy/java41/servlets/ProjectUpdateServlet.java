@@ -16,18 +16,14 @@ import net.bitacademy.java41.vo.Project;
 @WebServlet("/project/update")
 @SuppressWarnings("serial")
 public class ProjectUpdateServlet extends GenericServlet {
-	private ProjectDao projectDao;
-	
-	public ProjectUpdateServlet() {
-		this.projectDao = ProjectDao.getInstance();
-	}
-
 	@Override
 	public void service(ServletRequest request, ServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/plain;charset=UTF-8");
 		
 		try {
+			ProjectDao projectDao = 
+					(ProjectDao) this.getServletContext().getAttribute("projectDao");
 			Project project = projectDao.get(
 					Integer.parseInt(request.getParameter("no")));
 			Project copy = project.clone();

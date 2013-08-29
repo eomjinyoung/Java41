@@ -15,18 +15,14 @@ import net.bitacademy.java41.vo.Project;
 @WebServlet("/project/view")
 @SuppressWarnings("serial")
 public class ProjectViewServlet extends GenericServlet {
-	private ProjectDao projectDao;
-	
-	public ProjectViewServlet() {
-		this.projectDao = ProjectDao.getInstance();
-	}
-
 	@Override
 	public void service(ServletRequest request, ServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/plain;charset=UTF-8");
 		
 		try {
+			ProjectDao projectDao = 
+					(ProjectDao) this.getServletContext().getAttribute("projectDao");
 			Project project = projectDao.get(
 					Integer.parseInt(request.getParameter("no")));
 			

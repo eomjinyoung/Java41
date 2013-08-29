@@ -14,18 +14,14 @@ import net.bitacademy.java41.dao.ProjectDao;
 @WebServlet("/project/delete")
 @SuppressWarnings("serial")
 public class ProjectDeleteServlet extends GenericServlet {
-	private ProjectDao projectDao;
-	
-	public ProjectDeleteServlet() {
-		this.projectDao = ProjectDao.getInstance();
-	}
-
 	@Override
 	public void service(ServletRequest request, ServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/plain;charset=UTF-8");
 		
 		try {
+			ProjectDao projectDao = 
+					(ProjectDao) this.getServletContext().getAttribute("projectDao");
 			int count = projectDao.remove(
 					Integer.parseInt(request.getParameter("no")));
 			
