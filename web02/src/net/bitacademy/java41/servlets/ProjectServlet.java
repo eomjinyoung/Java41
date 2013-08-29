@@ -18,7 +18,6 @@ import net.bitacademy.java41.vo.Project;
 @WebServlet("/project")
 @SuppressWarnings("serial")
 public class ProjectServlet extends GenericServlet {
-	private Project project;
 	private ProjectDao projectDao;
 	
 	public ProjectServlet() {
@@ -89,7 +88,7 @@ public class ProjectServlet extends GenericServlet {
 		throws Exception
 	{
 		try {
-			this.project = projectDao.get(
+			Project project = projectDao.get(
 					Integer.parseInt(request.getParameter("no")));
 			
 			PrintWriter out = response.getWriter();
