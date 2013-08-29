@@ -16,12 +16,6 @@ import net.bitacademy.java41.vo.Member;
 @WebServlet("/member/list")
 @SuppressWarnings("serial")
 public class MemberListServlet extends GenericServlet {
-	private MemberDao memberDao;
-	
-	public MemberListServlet() {
-		memberDao = MemberDao.getInstance();
-	}
-
 	@Override
 	public void service(ServletRequest request, ServletResponse response)
 			throws ServletException, IOException {
@@ -29,6 +23,9 @@ public class MemberListServlet extends GenericServlet {
 		
 		try {
 			PrintWriter out = response.getWriter();
+			
+			MemberDao memberDao = 
+					(MemberDao) this.getServletContext().getAttribute("memberDao");
 			List<Member> list = memberDao.list();
 
 			for(Member m : list) {

@@ -15,18 +15,14 @@ import net.bitacademy.java41.vo.Member;
 @WebServlet("/member/update")
 @SuppressWarnings("serial")
 public class MemberUpdateServlet extends GenericServlet {
-	private MemberDao memberDao;
-	
-	public MemberUpdateServlet() {
-		memberDao = MemberDao.getInstance();
-	}
-
 	@Override
 	public void service(ServletRequest request, ServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/plain;charset=UTF-8");
 		
 		try {
+			MemberDao memberDao = 
+					(MemberDao) this.getServletContext().getAttribute("memberDao");
 			Member member = memberDao.get(request.getParameter("email"));
 			Member copy = member.clone();
 			

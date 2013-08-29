@@ -15,11 +15,6 @@ import net.bitacademy.java41.vo.Member;
 @WebServlet("/member/add")
 @SuppressWarnings("serial")
 public class MemberAddServlet extends GenericServlet {
-	private MemberDao memberDao;
-	
-	public MemberAddServlet() {
-		memberDao = MemberDao.getInstance();
-	}
 
 	@Override
 	public void service(ServletRequest request, ServletResponse response)
@@ -34,7 +29,10 @@ public class MemberAddServlet extends GenericServlet {
 				.setBlog(request.getParameter("blog"))
 				.setAge( Integer.parseInt( request.getParameter("age") ) );
 
+			MemberDao memberDao = 
+					(MemberDao) this.getServletContext().getAttribute("memberDao");
 			memberDao.add(m);
+			
 			PrintWriter out = response.getWriter();
 			out.println("등록되었습니다!");
 		} catch (Exception e) {

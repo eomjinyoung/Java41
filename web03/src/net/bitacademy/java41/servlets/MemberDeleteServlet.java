@@ -14,18 +14,14 @@ import net.bitacademy.java41.dao.MemberDao;
 @WebServlet("/member/delete")
 @SuppressWarnings("serial")
 public class MemberDeleteServlet extends GenericServlet {
-	private MemberDao memberDao;
-	
-	public MemberDeleteServlet() {
-		memberDao = MemberDao.getInstance();
-	}
-
 	@Override
 	public void service(ServletRequest request, ServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/plain;charset=UTF-8");
 		
 		try {
+			MemberDao memberDao = 
+					(MemberDao) this.getServletContext().getAttribute("memberDao");
 			int count = memberDao.remove(request.getParameter("email"));
 			
 			PrintWriter out = response.getWriter();

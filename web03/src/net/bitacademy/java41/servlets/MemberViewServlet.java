@@ -15,18 +15,14 @@ import net.bitacademy.java41.vo.Member;
 @WebServlet("/member/view")
 @SuppressWarnings("serial")
 public class MemberViewServlet extends GenericServlet {
-	private MemberDao memberDao;
-	
-	public MemberViewServlet() {
-		memberDao = MemberDao.getInstance();
-	}
-
 	@Override
 	public void service(ServletRequest request, ServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/plain;charset=UTF-8");
 		
 		try {
+			MemberDao memberDao = 
+					(MemberDao) this.getServletContext().getAttribute("memberDao");
 			Member member = memberDao.get(request.getParameter("email"));
 			
 			PrintWriter out = response.getWriter();
