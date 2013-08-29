@@ -16,18 +16,19 @@ public class ContextLoaderListener implements ServletContextListener {
 	// 웹 애플리케이션이 시작될 때 호출됨.
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
+		ServletContext ctx = event.getServletContext();
+		
 		// 웹 애플리케이션이 시작될 때 서블릿들이 사용할 객체를 준비한다.
 		DBConnectionPool dbpool = new DBConnectionPool(
-				"jdbc:mysql://localhost/test", 
-				"test", 
-				"test",
-				System.getProperty("driverClass"));
+				ctx.getInitParameter("dburl"), 
+				ctx.getInitParameter("user"), 
+				ctx.getInitParameter("password"),
+				ctx.getInitParameter("driverClass"));
 		MemberDao memberDao = new MemberDao(dbpool);
 		ProjectDao projectDao = new ProjectDao(dbpool);
 		
 		// 서블릿들이 사용할 객체를 어디에 보관할까? ServletContext
 		// - 웹 애플리케이션이 실행되는 동안 계속 유지할 수 있기 때문에.
-		ServletContext ctx = event.getServletContext();
 		ctx.setAttribute("memberDao", memberDao);
 		ctx.setAttribute("projectDao", projectDao);
 		
