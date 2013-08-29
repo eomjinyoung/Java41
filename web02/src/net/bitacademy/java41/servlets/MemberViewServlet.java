@@ -10,7 +10,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
 import net.bitacademy.java41.dao.MemberDao;
-import net.bitacademy.java41.util.DBConnectionPool;
 import net.bitacademy.java41.vo.Member;
 
 @WebServlet("/member/view")
@@ -19,7 +18,7 @@ public class MemberViewServlet extends GenericServlet {
 	private MemberDao memberDao;
 	
 	public MemberViewServlet() {
-		memberDao = new MemberDao( DBConnectionPool.getInstance());
+		memberDao = MemberDao.getInstance();
 	}
 
 	@Override

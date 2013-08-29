@@ -11,7 +11,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
 import net.bitacademy.java41.dao.ProjectDao;
-import net.bitacademy.java41.util.DBConnectionPool;
 import net.bitacademy.java41.vo.Project;
 
 @WebServlet("/project/add")
@@ -20,7 +19,7 @@ public class ProjectAddServlet extends GenericServlet {
 	private ProjectDao projectDao;
 	
 	public ProjectAddServlet() {
-		this.projectDao = new ProjectDao(DBConnectionPool.getInstance());
+		this.projectDao = ProjectDao.getInstance();
 	}
 
 	@Override

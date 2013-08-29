@@ -10,7 +10,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
 import net.bitacademy.java41.dao.ProjectDao;
-import net.bitacademy.java41.util.DBConnectionPool;
 
 @WebServlet("/project/delete")
 @SuppressWarnings("serial")
@@ -18,7 +17,7 @@ public class ProjectDeleteServlet extends GenericServlet {
 	private ProjectDao projectDao;
 	
 	public ProjectDeleteServlet() {
-		this.projectDao = new ProjectDao(DBConnectionPool.getInstance());
+		this.projectDao = ProjectDao.getInstance();
 	}
 
 	@Override

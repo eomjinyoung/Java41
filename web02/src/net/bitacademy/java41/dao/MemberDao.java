@@ -13,7 +13,17 @@ import net.bitacademy.java41.vo.Member;
 public class MemberDao {
 	DBConnectionPool conPool;
 	
-	public MemberDao(DBConnectionPool conPool) {
+	static MemberDao instance;
+	
+	public static MemberDao getInstance() {
+		if (instance == null) {
+			instance = new MemberDao(DBConnectionPool.getInstance());
+		}
+		
+		return instance;
+	}
+	
+	private MemberDao(DBConnectionPool conPool) {
 		this.conPool = conPool;
 	}
 	

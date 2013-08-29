@@ -10,7 +10,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
 import net.bitacademy.java41.dao.MemberDao;
-import net.bitacademy.java41.util.DBConnectionPool;
 
 @WebServlet("/member/delete")
 @SuppressWarnings("serial")
@@ -18,7 +17,7 @@ public class MemberDeleteServlet extends GenericServlet {
 	private MemberDao memberDao;
 	
 	public MemberDeleteServlet() {
-		memberDao = new MemberDao( DBConnectionPool.getInstance());
+		memberDao = MemberDao.getInstance();
 	}
 
 	@Override

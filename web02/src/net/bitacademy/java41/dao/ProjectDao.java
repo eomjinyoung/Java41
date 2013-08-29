@@ -13,7 +13,16 @@ import net.bitacademy.java41.vo.Project;
 public class ProjectDao {
 	DBConnectionPool conPool;
 	
-	public ProjectDao(DBConnectionPool conPool) {
+	static ProjectDao instance;
+	
+	public static ProjectDao getInstance() {
+		if (instance == null) {
+			instance = new ProjectDao(DBConnectionPool.getInstance());
+		}
+		return instance;
+	}
+	
+	private ProjectDao(DBConnectionPool conPool) {
 		this.conPool = conPool;
 	}
 	
