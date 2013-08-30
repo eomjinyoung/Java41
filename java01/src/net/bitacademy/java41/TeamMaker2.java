@@ -2,11 +2,8 @@ package net.bitacademy.java41;
 
 import java.util.Scanner;
 
-/*
-
-*/
 public class TeamMaker2 {
-	static int[] studentList = new int[27];
+	static int[] studentList = new int[26];
 	static int[] absentList = {
 		
 	};
@@ -15,8 +12,8 @@ public class TeamMaker2 {
 	
 	public static void main(String[] args) {
 		int selectedNo = -1;
-		while (cursor < 27) {
-			selectedNo = (int)(Math.random() * 27 + 1);
+		while (cursor < studentList.length) {
+			selectedNo = (int)(Math.random() * studentList.length + 1);
 			if (isExist(selectedNo)) {
 				//System.out.print(".");
 				continue;
@@ -42,12 +39,15 @@ public class TeamMaker2 {
 	
 	public static void printTeam() {
 		int[][] teams = new int[][]{
-				new int[5],
-				new int[5],
-				new int[5],
-				new int[4],
-				new int[4],
-				new int[4]
+				new int[3],
+				new int[3],
+				new int[3],
+				new int[3],
+				new int[3],
+				new int[3],
+				new int[3],
+				new int[3],
+				new int[2],
 		};
 		
 		int no = 0;

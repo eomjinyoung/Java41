@@ -3,32 +3,31 @@ package net.bitacademy.java41;
 import java.util.Scanner;
 
 /*
+3,4
 
-17,8
+13,25
 
-22,10
+23,7
 
-7,5
+6,2
 
-9,23
+18,24
 
-16,1
+11,12
 
-2,25
+15,19
 
-21,18
+9,21
 
-26,6
+17,16
 
-14,20
+22,8
 
-12,15
+20,10
 
-4,11
+14,1
 
-13,24
-
-3,19
+5,26
 */
 public class TeamMaker {
 	static int[] studentList = new int[26];
