@@ -1,338 +1,338 @@
--- ??
+-- 멤버
 DROP TABLE IF EXISTS `SPMS_MEMBS` RESTRICT;
 
--- ????
+-- 멤버사진
 DROP TABLE IF EXISTS `SPMS_MEMIMG` RESTRICT;
 
--- ????
+-- 주소정보
 DROP TABLE IF EXISTS `SPMS_ADDR` RESTRICT;
 
--- ????
+-- 프로젝트
 DROP TABLE IF EXISTS `SPMS_PRJS` RESTRICT;
 
--- ??????
+-- 프로젝트멤버
 DROP TABLE IF EXISTS `SPMS_PRJMEMB` RESTRICT;
 
--- ???
+-- 태스크
 DROP TABLE IF EXISTS `SPMS_TASKS` RESTRICT;
 
--- ????
+-- 작업할당
 DROP TABLE IF EXISTS `SPMS_MEMBTASK` RESTRICT;
 
--- ??
+-- 피드
 DROP TABLE IF EXISTS `SPMS_FEEDS` RESTRICT;
 
--- ????
+-- 첨부파일
 DROP TABLE IF EXISTS `SPMS_FILES` RESTRICT;
 
--- ????
+-- 피드파일
 DROP TABLE IF EXISTS `SPMS_FEEDFILE` RESTRICT;
 
--- ??
+-- 멤버
 CREATE TABLE `SPMS_MEMBS` (
-	`EMAIL`       VARCHAR(50)  NOT NULL COMMENT '???', -- ???
-	`MNAME`       VARCHAR(50)  NOT NULL COMMENT '??', -- ??
-	`PWD`         VARCHAR(40)  NOT NULL COMMENT '??', -- ??
-	`TEL`         VARCHAR(30)  NOT NULL COMMENT '????', -- ????
-	`BLOG`        VARCHAR(255) NULL     COMMENT '???', -- ???
-	`REG_DATE`    DATETIME     NULL     COMMENT '???', -- ???
-	`UPDATE_DATE` DATETIME     NULL     COMMENT '???', -- ???
-	`ANO`         INTEGER      NULL     COMMENT '????', -- ????
-	`DET_ADDR`    VARCHAR(255) NULL     COMMENT '????', -- ????
-	`TAG`         VARCHAR(255) NULL     COMMENT '??' -- ??
+	`EMAIL`       VARCHAR(50)  NOT NULL COMMENT '이메일', -- 이메일
+	`MNAME`       VARCHAR(50)  NOT NULL COMMENT '이름', -- 이름
+	`PWD`         VARCHAR(40)  NOT NULL COMMENT '암호', -- 암호
+	`TEL`         VARCHAR(30)  NOT NULL COMMENT '전화번호', -- 전화번호
+	`BLOG`        VARCHAR(255) NULL     COMMENT '블로그', -- 블로그
+	`REG_DATE`    DATETIME     NULL     COMMENT '가입일', -- 가입일
+	`UPDATE_DATE` DATETIME     NULL     COMMENT '변경일', -- 변경일
+	`ANO`         INTEGER      NULL     COMMENT '주소번호', -- 주소번호
+	`DET_ADDR`    VARCHAR(255) NULL     COMMENT '상세주소', -- 상세주소
+	`TAG`         VARCHAR(255) NULL     COMMENT '태그' -- 태그
 )
-COMMENT '??';
+COMMENT '멤버';
 
--- ??
+-- 멤버
 ALTER TABLE `SPMS_MEMBS`
-	ADD CONSTRAINT `PK_SPMS_MEMBS` -- ?? ???
+	ADD CONSTRAINT `PK_SPMS_MEMBS` -- 멤버 기본키
 		PRIMARY KEY (
-			`EMAIL` -- ???
+			`EMAIL` -- 이메일
 		);
 
--- ????
+-- 멤버사진
 CREATE TABLE `SPMS_MEMIMG` (
-	`INO`    INTEGER      NOT NULL COMMENT '????', -- ????
-	`EMAIL`  VARCHAR(50)  NOT NULL COMMENT '???', -- ???
-	`IMGURL` VARCHAR(255) NOT NULL COMMENT '????' -- ????
+	`INO`    INTEGER      NOT NULL COMMENT '사진번호', -- 사진번호
+	`EMAIL`  VARCHAR(50)  NOT NULL COMMENT '이메일', -- 이메일
+	`IMGURL` VARCHAR(255) NOT NULL COMMENT '사진경로' -- 사진경로
 )
-COMMENT '????';
+COMMENT '멤버사진';
 
--- ????
+-- 멤버사진
 ALTER TABLE `SPMS_MEMIMG`
-	ADD CONSTRAINT `PK_SPMS_MEMIMG` -- ???? ???
+	ADD CONSTRAINT `PK_SPMS_MEMIMG` -- 멤버사진 기본키
 		PRIMARY KEY (
-			`INO` -- ????
+			`INO` -- 사진번호
 		);
 
 ALTER TABLE `SPMS_MEMIMG`
-	MODIFY COLUMN `INO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '????';
+	MODIFY COLUMN `INO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '사진번호';
 
--- ????
+-- 주소정보
 CREATE TABLE `SPMS_ADDR` (
-	`ANO`      INTEGER      NOT NULL COMMENT '????', -- ????
-	`POSTNO`   VARCHAR(10)  NOT NULL COMMENT '????', -- ????
-	`BAS_ADDR` VARCHAR(255) NOT NULL COMMENT '????' -- ????
+	`ANO`      INTEGER      NOT NULL COMMENT '주소번호', -- 주소번호
+	`POSTNO`   VARCHAR(10)  NOT NULL COMMENT '우편번호', -- 우편번호
+	`BAS_ADDR` VARCHAR(255) NOT NULL COMMENT '기본주소' -- 기본주소
 )
-COMMENT '????';
+COMMENT '주소정보';
 
--- ????
+-- 주소정보
 ALTER TABLE `SPMS_ADDR`
-	ADD CONSTRAINT `PK_SPMS_ADDR` -- ???? ???
+	ADD CONSTRAINT `PK_SPMS_ADDR` -- 주소정보 기본키
 		PRIMARY KEY (
-			`ANO` -- ????
+			`ANO` -- 주소번호
 		);
 
 ALTER TABLE `SPMS_ADDR`
-	MODIFY COLUMN `ANO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '????';
+	MODIFY COLUMN `ANO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '주소번호';
 
--- ????
+-- 프로젝트
 CREATE TABLE `SPMS_PRJS` (
-	`PNO`        INTEGER      NOT NULL COMMENT '??????', -- ??????
-	`TITLE`      VARCHAR(255) NOT NULL COMMENT '??', -- ??
-	`CONTENT`    MEDIUMTEXT   NOT NULL COMMENT '??', -- ??
-	`START_DATE` DATETIME     NOT NULL COMMENT '???', -- ???
-	`END_DATE`   DATETIME     NOT NULL COMMENT '???', -- ???
-	`TAG`        VARCHAR(255) NULL     COMMENT '??' -- ??
+	`PNO`        INTEGER      NOT NULL COMMENT '프로젝트번호', -- 프로젝트번호
+	`TITLE`      VARCHAR(255) NOT NULL COMMENT '제목', -- 제목
+	`CONTENT`    MEDIUMTEXT   NOT NULL COMMENT '내용', -- 내용
+	`START_DATE` DATETIME     NOT NULL COMMENT '시작일', -- 시작일
+	`END_DATE`   DATETIME     NOT NULL COMMENT '종료일', -- 종료일
+	`TAG`        VARCHAR(255) NULL     COMMENT '태그' -- 태그
 )
-COMMENT '????';
+COMMENT '프로젝트';
 
--- ????
+-- 프로젝트
 ALTER TABLE `SPMS_PRJS`
-	ADD CONSTRAINT `PK_SPMS_PRJS` -- ???? ???
+	ADD CONSTRAINT `PK_SPMS_PRJS` -- 프로젝트 기본키
 		PRIMARY KEY (
-			`PNO` -- ??????
+			`PNO` -- 프로젝트번호
 		);
 
 ALTER TABLE `SPMS_PRJS`
-	MODIFY COLUMN `PNO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '??????';
+	MODIFY COLUMN `PNO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '프로젝트번호';
 
--- ??????
+-- 프로젝트멤버
 CREATE TABLE `SPMS_PRJMEMB` (
-	`EMAIL` VARCHAR(50) NOT NULL COMMENT '???', -- ???
-	`PNO`   INTEGER     NOT NULL COMMENT '??????', -- ??????
-	`LEVEL` INTEGER     NULL     DEFAULT 1 COMMENT '??' -- ??
+	`EMAIL` VARCHAR(50) NOT NULL COMMENT '이메일', -- 이메일
+	`PNO`   INTEGER     NOT NULL COMMENT '프로젝트번호', -- 프로젝트번호
+	`LEVEL` INTEGER     NULL     DEFAULT 1 COMMENT '레벨' -- 레벨
 )
-COMMENT '??????';
+COMMENT '프로젝트멤버';
 
--- ??????
+-- 프로젝트멤버
 ALTER TABLE `SPMS_PRJMEMB`
-	ADD CONSTRAINT `PK_SPMS_PRJMEMB` -- ?????? ???
+	ADD CONSTRAINT `PK_SPMS_PRJMEMB` -- 프로젝트멤버 기본키
 		PRIMARY KEY (
-			`EMAIL`, -- ???
-			`PNO`    -- ??????
+			`EMAIL`, -- 이메일
+			`PNO`    -- 프로젝트번호
 		);
 
--- ???
+-- 태스크
 CREATE TABLE `SPMS_TASKS` (
-	`TNO`        INTEGER      NOT NULL COMMENT '?????', -- ?????
-	`PNO`        INTEGER      NOT NULL COMMENT '??????', -- ??????
-	`TITLE`      VARCHAR(255) NOT NULL COMMENT '???', -- ???
-	`UIPROTOURL` VARCHAR(255) NULL     COMMENT 'UI?????', -- UI?????
-	`CONTENT`    TEXT         NULL     COMMENT '??', -- ??
-	`START_DATE` DATETIME     NULL     COMMENT '???', -- ???
-	`END_DATE`   DATETIME     NULL     COMMENT '???', -- ???
-	`STATUS`     INTEGER      NULL     DEFAULT 0 COMMENT '??' -- ??
+	`TNO`        INTEGER      NOT NULL COMMENT '태스크번호', -- 태스크번호
+	`PNO`        INTEGER      NOT NULL COMMENT '프로젝트번호', -- 프로젝트번호
+	`TITLE`      VARCHAR(255) NOT NULL COMMENT '작업명', -- 작업명
+	`UIPROTOURL` VARCHAR(255) NULL     COMMENT 'UI프로토타입', -- UI프로토타입
+	`CONTENT`    TEXT         NULL     COMMENT '내용', -- 내용
+	`START_DATE` DATETIME     NULL     COMMENT '착수일', -- 착수일
+	`END_DATE`   DATETIME     NULL     COMMENT '종료일', -- 종료일
+	`STATUS`     INTEGER      NULL     DEFAULT 0 COMMENT '상태' -- 상태
 )
-COMMENT '???';
+COMMENT '태스크';
 
--- ???
+-- 태스크
 ALTER TABLE `SPMS_TASKS`
-	ADD CONSTRAINT `PK_SPMS_TASKS` -- ??? ???
+	ADD CONSTRAINT `PK_SPMS_TASKS` -- 태스크 기본키
 		PRIMARY KEY (
-			`TNO` -- ?????
+			`TNO` -- 태스크번호
 		);
 
 ALTER TABLE `SPMS_TASKS`
-	MODIFY COLUMN `TNO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '?????';
+	MODIFY COLUMN `TNO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '태스크번호';
 
--- ????
+-- 작업할당
 CREATE TABLE `SPMS_MEMBTASK` (
-	`TNO`   INTEGER     NOT NULL COMMENT '?????', -- ?????
-	`EMAIL` VARCHAR(50) NOT NULL COMMENT '???', -- ???
-	`PNO`   INTEGER     NOT NULL COMMENT '??????' -- ??????
+	`TNO`   INTEGER     NOT NULL COMMENT '태스크번호', -- 태스크번호
+	`EMAIL` VARCHAR(50) NOT NULL COMMENT '이메일', -- 이메일
+	`PNO`   INTEGER     NOT NULL COMMENT '프로젝트번호' -- 프로젝트번호
 )
-COMMENT '????';
+COMMENT '작업할당';
 
--- ????
+-- 작업할당
 ALTER TABLE `SPMS_MEMBTASK`
-	ADD CONSTRAINT `PK_SPMS_MEMBTASK` -- ???? ???
+	ADD CONSTRAINT `PK_SPMS_MEMBTASK` -- 작업할당 기본키
 		PRIMARY KEY (
-			`TNO`,   -- ?????
-			`EMAIL`, -- ???
-			`PNO`    -- ??????
+			`TNO`,   -- 태스크번호
+			`EMAIL`, -- 이메일
+			`PNO`    -- 프로젝트번호
 		);
 
--- ??
+-- 피드
 CREATE TABLE `SPMS_FEEDS` (
-	`FNO`      INTEGER     NOT NULL COMMENT '????', -- ????
-	`CONTENT`  TEXT        NOT NULL COMMENT '??', -- ??
-	`REG_DATE` DATETIME    NOT NULL COMMENT '???', -- ???
-	`EMAIL`    VARCHAR(50) NOT NULL COMMENT '???', -- ???
-	`PNO`      INTEGER     NOT NULL COMMENT '??????' -- ??????
+	`FNO`      INTEGER     NOT NULL COMMENT '피드번호', -- 피드번호
+	`CONTENT`  TEXT        NOT NULL COMMENT '내용', -- 내용
+	`REG_DATE` DATETIME    NOT NULL COMMENT '작성일', -- 작성일
+	`EMAIL`    VARCHAR(50) NOT NULL COMMENT '이메일', -- 이메일
+	`PNO`      INTEGER     NOT NULL COMMENT '프로젝트번호' -- 프로젝트번호
 )
-COMMENT '??';
+COMMENT '피드';
 
--- ??
+-- 피드
 ALTER TABLE `SPMS_FEEDS`
-	ADD CONSTRAINT `PK_SPMS_FEEDS` -- ?? ???
+	ADD CONSTRAINT `PK_SPMS_FEEDS` -- 피드 기본키
 		PRIMARY KEY (
-			`FNO` -- ????
+			`FNO` -- 피드번호
 		);
 
 ALTER TABLE `SPMS_FEEDS`
-	MODIFY COLUMN `FNO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '????';
+	MODIFY COLUMN `FNO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '피드번호';
 
--- ????
+-- 첨부파일
 CREATE TABLE `SPMS_FILES` (
-	`FNO`      INTEGER      NOT NULL COMMENT '????', -- ????
-	`FILEID`   VARCHAR(50)  NOT NULL COMMENT '?????', -- ?????
-	`TITLE`    VARCHAR(255) NOT NULL COMMENT '???', -- ???
-	`FSIZE`    VARCHAR(20)  NOT NULL COMMENT '????', -- ????
-	`REG_DATE` DATETIME     NOT NULL COMMENT '???', -- ???
-	`EMAIL`    VARCHAR(50)  NOT NULL COMMENT '???', -- ???
-	`PNO`      INTEGER      NOT NULL COMMENT '??????', -- ??????
-	`TAG`      VARCHAR(255) NULL     COMMENT '??' -- ??
+	`FNO`      INTEGER      NOT NULL COMMENT '파일번호', -- 파일번호
+	`FILEID`   VARCHAR(50)  NOT NULL COMMENT '파일아이디', -- 파일아이디
+	`TITLE`    VARCHAR(255) NOT NULL COMMENT '파일명', -- 파일명
+	`FSIZE`    VARCHAR(20)  NOT NULL COMMENT '파일크기', -- 파일크기
+	`REG_DATE` DATETIME     NOT NULL COMMENT '등록일', -- 등록일
+	`EMAIL`    VARCHAR(50)  NOT NULL COMMENT '이메일', -- 이메일
+	`PNO`      INTEGER      NOT NULL COMMENT '프로젝트번호', -- 프로젝트번호
+	`TAG`      VARCHAR(255) NULL     COMMENT '태그' -- 태그
 )
-COMMENT '????';
+COMMENT '첨부파일';
 
--- ????
+-- 첨부파일
 ALTER TABLE `SPMS_FILES`
-	ADD CONSTRAINT `PK_SPMS_FILES` -- ???? ???
+	ADD CONSTRAINT `PK_SPMS_FILES` -- 첨부파일 기본키
 		PRIMARY KEY (
-			`FNO` -- ????
+			`FNO` -- 파일번호
 		);
 
 ALTER TABLE `SPMS_FILES`
-	MODIFY COLUMN `FNO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '????';
+	MODIFY COLUMN `FNO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '파일번호';
 
--- ????
+-- 피드파일
 CREATE TABLE `SPMS_FEEDFILE` (
-	`FEEDNO` INTEGER NOT NULL COMMENT '????', -- ????
-	`FILENO` INTEGER NOT NULL COMMENT '????' -- ????
+	`FEEDNO` INTEGER NOT NULL COMMENT '피드번호', -- 피드번호
+	`FILENO` INTEGER NOT NULL COMMENT '파일번호' -- 파일번호
 )
-COMMENT '????';
+COMMENT '피드파일';
 
--- ????
+-- 피드파일
 ALTER TABLE `SPMS_FEEDFILE`
-	ADD CONSTRAINT `PK_SPMS_FEEDFILE` -- ???? ???
+	ADD CONSTRAINT `PK_SPMS_FEEDFILE` -- 피드파일 기본키
 		PRIMARY KEY (
-			`FEEDNO`, -- ????
-			`FILENO`  -- ????
+			`FEEDNO`, -- 피드번호
+			`FILENO`  -- 파일번호
 		);
 
--- ??
+-- 멤버
 ALTER TABLE `SPMS_MEMBS`
-	ADD CONSTRAINT `FK_SPMS_ADDR_TO_SPMS_MEMBS` -- ???? -> ??
+	ADD CONSTRAINT `FK_SPMS_ADDR_TO_SPMS_MEMBS` -- 주소정보 -> 멤버
 		FOREIGN KEY (
-			`ANO` -- ????
+			`ANO` -- 주소번호
 		)
-		REFERENCES `SPMS_ADDR` ( -- ????
-			`ANO` -- ????
+		REFERENCES `SPMS_ADDR` ( -- 주소정보
+			`ANO` -- 주소번호
 		);
 
--- ????
+-- 멤버사진
 ALTER TABLE `SPMS_MEMIMG`
-	ADD CONSTRAINT `FK_SPMS_MEMBS_TO_SPMS_MEMIMG` -- ?? -> ????
+	ADD CONSTRAINT `FK_SPMS_MEMBS_TO_SPMS_MEMIMG` -- 멤버 -> 멤버사진
 		FOREIGN KEY (
-			`EMAIL` -- ???
+			`EMAIL` -- 이메일
 		)
-		REFERENCES `SPMS_MEMBS` ( -- ??
-			`EMAIL` -- ???
+		REFERENCES `SPMS_MEMBS` ( -- 멤버
+			`EMAIL` -- 이메일
 		);
 
--- ??????
+-- 프로젝트멤버
 ALTER TABLE `SPMS_PRJMEMB`
-	ADD CONSTRAINT `FK_SPMS_MEMBS_TO_SPMS_PRJMEMB` -- ?? -> ??????
+	ADD CONSTRAINT `FK_SPMS_MEMBS_TO_SPMS_PRJMEMB` -- 멤버 -> 프로젝트멤버
 		FOREIGN KEY (
-			`EMAIL` -- ???
+			`EMAIL` -- 이메일
 		)
-		REFERENCES `SPMS_MEMBS` ( -- ??
-			`EMAIL` -- ???
+		REFERENCES `SPMS_MEMBS` ( -- 멤버
+			`EMAIL` -- 이메일
 		);
 
--- ??????
+-- 프로젝트멤버
 ALTER TABLE `SPMS_PRJMEMB`
-	ADD CONSTRAINT `FK_SPMS_PRJS_TO_SPMS_PRJMEMB` -- ???? -> ??????
+	ADD CONSTRAINT `FK_SPMS_PRJS_TO_SPMS_PRJMEMB` -- 프로젝트 -> 프로젝트멤버
 		FOREIGN KEY (
-			`PNO` -- ??????
+			`PNO` -- 프로젝트번호
 		)
-		REFERENCES `SPMS_PRJS` ( -- ????
-			`PNO` -- ??????
+		REFERENCES `SPMS_PRJS` ( -- 프로젝트
+			`PNO` -- 프로젝트번호
 		);
 
--- ???
+-- 태스크
 ALTER TABLE `SPMS_TASKS`
-	ADD CONSTRAINT `FK_SPMS_PRJS_TO_SPMS_TASKS` -- ???? -> ???
+	ADD CONSTRAINT `FK_SPMS_PRJS_TO_SPMS_TASKS` -- 프로젝트 -> 태스크
 		FOREIGN KEY (
-			`PNO` -- ??????
+			`PNO` -- 프로젝트번호
 		)
-		REFERENCES `SPMS_PRJS` ( -- ????
-			`PNO` -- ??????
+		REFERENCES `SPMS_PRJS` ( -- 프로젝트
+			`PNO` -- 프로젝트번호
 		);
 
--- ????
+-- 작업할당
 ALTER TABLE `SPMS_MEMBTASK`
-	ADD CONSTRAINT `FK_SPMS_TASKS_TO_SPMS_MEMBTASK` -- ??? -> ????
+	ADD CONSTRAINT `FK_SPMS_TASKS_TO_SPMS_MEMBTASK` -- 태스크 -> 작업할당
 		FOREIGN KEY (
-			`TNO` -- ?????
+			`TNO` -- 태스크번호
 		)
-		REFERENCES `SPMS_TASKS` ( -- ???
-			`TNO` -- ?????
+		REFERENCES `SPMS_TASKS` ( -- 태스크
+			`TNO` -- 태스크번호
 		);
 
--- ????
+-- 작업할당
 ALTER TABLE `SPMS_MEMBTASK`
-	ADD CONSTRAINT `FK_SPMS_PRJMEMB_TO_SPMS_MEMBTASK` -- ?????? -> ????
+	ADD CONSTRAINT `FK_SPMS_PRJMEMB_TO_SPMS_MEMBTASK` -- 프로젝트멤버 -> 작업할당
 		FOREIGN KEY (
-			`EMAIL`, -- ???
-			`PNO`    -- ??????
+			`EMAIL`, -- 이메일
+			`PNO`    -- 프로젝트번호
 		)
-		REFERENCES `SPMS_PRJMEMB` ( -- ??????
-			`EMAIL`, -- ???
-			`PNO`    -- ??????
+		REFERENCES `SPMS_PRJMEMB` ( -- 프로젝트멤버
+			`EMAIL`, -- 이메일
+			`PNO`    -- 프로젝트번호
 		);
 
--- ??
+-- 피드
 ALTER TABLE `SPMS_FEEDS`
-	ADD CONSTRAINT `FK_SPMS_PRJMEMB_TO_SPMS_FEEDS` -- ?????? -> ??
+	ADD CONSTRAINT `FK_SPMS_PRJMEMB_TO_SPMS_FEEDS` -- 프로젝트멤버 -> 피드
 		FOREIGN KEY (
-			`EMAIL`, -- ???
-			`PNO`    -- ??????
+			`EMAIL`, -- 이메일
+			`PNO`    -- 프로젝트번호
 		)
-		REFERENCES `SPMS_PRJMEMB` ( -- ??????
-			`EMAIL`, -- ???
-			`PNO`    -- ??????
+		REFERENCES `SPMS_PRJMEMB` ( -- 프로젝트멤버
+			`EMAIL`, -- 이메일
+			`PNO`    -- 프로젝트번호
 		);
 
--- ????
+-- 첨부파일
 ALTER TABLE `SPMS_FILES`
-	ADD CONSTRAINT `FK_SPMS_PRJMEMB_TO_SPMS_FILES` -- ?????? -> ????
+	ADD CONSTRAINT `FK_SPMS_PRJMEMB_TO_SPMS_FILES` -- 프로젝트멤버 -> 첨부파일
 		FOREIGN KEY (
-			`EMAIL`, -- ???
-			`PNO`    -- ??????
+			`EMAIL`, -- 이메일
+			`PNO`    -- 프로젝트번호
 		)
-		REFERENCES `SPMS_PRJMEMB` ( -- ??????
-			`EMAIL`, -- ???
-			`PNO`    -- ??????
+		REFERENCES `SPMS_PRJMEMB` ( -- 프로젝트멤버
+			`EMAIL`, -- 이메일
+			`PNO`    -- 프로젝트번호
 		);
 
--- ????
+-- 피드파일
 ALTER TABLE `SPMS_FEEDFILE`
-	ADD CONSTRAINT `FK_SPMS_FEEDS_TO_SPMS_FEEDFILE` -- ?? -> ????
+	ADD CONSTRAINT `FK_SPMS_FEEDS_TO_SPMS_FEEDFILE` -- 피드 -> 피드파일
 		FOREIGN KEY (
-			`FEEDNO` -- ????
+			`FEEDNO` -- 피드번호
 		)
-		REFERENCES `SPMS_FEEDS` ( -- ??
-			`FNO` -- ????
+		REFERENCES `SPMS_FEEDS` ( -- 피드
+			`FNO` -- 피드번호
 		);
 
--- ????
+-- 피드파일
 ALTER TABLE `SPMS_FEEDFILE`
-	ADD CONSTRAINT `FK_SPMS_FILES_TO_SPMS_FEEDFILE` -- ???? -> ????
+	ADD CONSTRAINT `FK_SPMS_FILES_TO_SPMS_FEEDFILE` -- 첨부파일 -> 피드파일
 		FOREIGN KEY (
-			`FILENO` -- ????
+			`FILENO` -- 파일번호
 		)
-		REFERENCES `SPMS_FILES` ( -- ????
-			`FNO` -- ????
+		REFERENCES `SPMS_FILES` ( -- 첨부파일
+			`FNO` -- 파일번호
 		);
