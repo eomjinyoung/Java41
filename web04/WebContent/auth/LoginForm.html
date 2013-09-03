@@ -17,6 +17,14 @@
 
 . 요청URL에 데이터를 붙여서 서버에 보낸다.
 . URL에 데이터가 포함되어 있기 때문에 검색결과를 공유할 때는 유용하다.
+[보안] 
+. 하지만, URL이 웹브라우저에 캐시되기 때문에 쉽게 노출된다.
+. 또한 URL이 웹브라우저 주소창에 보이기 때문에 입력 데이터가 쉽게 노출된다.
+[Binary]
+. URL에 포함되기 때문에 image, 동영상과 같은 binary 데이터를 서버에 보낼 수 없다.
+[전송크기]
+. HTTP 프로토콜에서 요청라인과 헤더정보의 크기가 제한되어 있기 때문에, 대량의 데이터를 서버에 보낼 수 없다.
+  
 2) POST
 	POST /web04/auth/login HTTP/1.1
 	..
@@ -24,8 +32,16 @@
 	email=m02%40test.com&password=2222
 
 . HTTP 요청 프로토콜에서 Message body 영역에 데이터를 서버에 보낸다.
+. URL을 저장해봐야 입력 데이터를 포함하지 않기 때문에, 게시물조회나 검색에 맞지 않는다. 
+[보안]
+. 보내는 값은 웹브라우저 주소창에 노출되지 않고, 캐쉬되지 않는다.
+[binary]
+. HTTP 요청정보에서 Message body 영역에 보내기 때문에 바이너리 데이터 전송이 가능하다.
+[전송크기]
+. 제약없다.
 
 -->
+<!-- form태그의 method 속성의 기본값은 get이다. -->
 <form action="login" method="post"> 
 Email: <input type="text" name="email" placeholder="hong@test.com"><br>
 Password: <input type="password" name="password" placeholder="password"><br>
