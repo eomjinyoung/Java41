@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,9 +13,39 @@ import javax.servlet.http.HttpSession;
 import net.bitacademy.java41.dao.MemberDao;
 import net.bitacademy.java41.vo.Member;
 
-@WebServlet("/auth/login")
+/* HTTP 요청을 구분하여 쉽게 다루는 방법 
+ * - GenericServlet을 상속받지 말고, HttpServlet을 상속 받아라.
+ * - get 요청을 처리하고 싶으면 doGet()을 재정의.
+ * - post 요청을 처리하고 싶으면 doPost()을 재정의.
+ * - xxx 요청을 처리하고 싶으면 doXxx()을 재정의.
+ * - 상속 및 구현관계
+ * 		- public interface Servlet {...}
+ * 		- public abstract class GenericServlet implements Servlet {
+ * 			init() {...} 구현
+ *  			destroy() {...} 구현
+ *  			getServletInfo() {...} 구현
+ *  			getServletConfig() {...} 구현
+ *  			service()는 구현하지 않음.
+ * 		}
+ * 		- public abstract class HttpServlet extends GenericServlet {
+ * 			service() {
+ * 				String method = ...getMethod();
+ * 				if("get".equals(method)) {
+ * 					doGet();
+ * 				} else if("post".equals(method)) {
+ * 					doPost();
+ * 				} ...
+ * 				...
+ * 			}
+ * 			doGet() {...}
+ * 			doPost() {...}
+ * 			doXxx() {...}
+ * 			...
+ * 		}
+ */
+//@WebServlet("/auth/login")
 @SuppressWarnings("serial")
-public class LoginServlet extends HttpServlet {
+public class LoginServlet05 extends HttpServlet {
 	@Override
 	protected void doGet(
 			HttpServletRequest request, HttpServletResponse response)
@@ -34,29 +63,9 @@ public class LoginServlet extends HttpServlet {
 		out.println("<body>");
 		out.println("<h1>사용자 로그인</h1> ");
 		out.println("<form action=\"login\" method=\"post\"> ");
-		// 만약 쿠키 정보에 email의 값이 있다면, 기본적으로 그 값을 입력 상자에 출력한다.
-		Cookie[] cookies = request.getCookies();
-		String email = "";
-		String checked = "";
-		if ( cookies != null) {
-			for(Cookie c : cookies) {
-				if (c.getName().equals("email")) {
-					email = "value='" + c.getValue() + "'";
-					if (!c.getValue().equals("")) {
-						checked = "checked";
-					}
-					break;
-				}
-			}
-		}
-
-		out.println("Email: <input type=\"text\" name=\"email\" "
-				+ email
-				+ " placeholder=\"hong@test.com\"><br>");
+		out.println("Email: <input type=\"text\" name=\"email\" placeholder=\"hong@test.com\"><br>");
 		out.println("Password: <input type=\"password\" name=\"password\" placeholder=\"password\"><br>");
-		out.println("<input type=\"checkbox\" name=\"saveId\" "
-				+ checked
-				+ " >ID저장<br>");
+		out.println("<input type=\"checkbox\" name=\"saveId\">ID저장<br>");
 		out.println("<input type=\"submit\" value=\"Login\">");
 		out.println("</form>");
 		out.println("</body>");
@@ -77,30 +86,30 @@ public class LoginServlet extends HttpServlet {
 				(MemberDao) this.getServletContext().getAttribute("memberDao");
 		try {
 			Member member = memberDao.getMember(email, password);
+			/* getSession()
+			 * - 클라이언트에서 보낸 쿠키 정보 중에 세션 아이디가 있다면,
+			 * 		- 세션 ID에 해당하는 세션 객체를 찾는다.
+			 * 		- 유효하다면 그 객체를 리턴한다.
+			 * 		- 유효하지 않다면(타임아웃이 되어 무효로 처리된 객체) 새로운 세션 객체를 리턴한다.
+			 * - 세션 아이디가 없다면,
+			 * 		- 새로운 세션 객체를 만들어 리턴한다. 
+			 */
 			HttpSession session = request.getSession();
-			
-			if(request.getParameter("saveId") != null) {
-				Cookie cookie = new Cookie("email", email);
-				cookie.setMaxAge(60); // 쿠키의 생존 시간을 지정한다.
-				// 컴퓨터를 껐다가 켜도 해당 시간 동안은 유효하다. 
-				// 유효하다는 의미는 서버에 해당 쿠키정보를 보낸다는 의미이다.
-				response.addCookie(cookie);
-			} else {
-				Cookie cookie = new Cookie("email", null);
-				// 쿠키의 생존 시간을 지정하지 않으면, 웹브라우저가 실행되는 동안만 유효하다.
-				response.addCookie(cookie);
-			}
 			
 			if (member != null) {
 				session.setAttribute("member", member);
 				response.sendRedirect("../main");
 				
 			} else {
+				/* invalidate()
+				 * - 기존 세션 객체를 무효화 시키고, 새로운 세션 객체를 만든다.
+				 * - 응답할 때 새로운 세션아이디를 쿠키로 전달한다.
+				 */
 				session.invalidate();
 				out.println("<html><head><title>로그인 결과!</title></head>");
 				out.println("<body><p>해당 사용자를 찾을 수 없습니다.2</p></body></html>");
 				response.setHeader(
-						"Refresh", "1;url=login");
+						"Refresh", "1;url=LoginForm.html");
 			}
 	
 		} catch (Exception e) {
