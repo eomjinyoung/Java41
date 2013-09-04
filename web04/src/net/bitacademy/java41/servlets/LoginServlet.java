@@ -42,9 +42,7 @@ public class LoginServlet extends HttpServlet {
 			for(Cookie c : cookies) {
 				if (c.getName().equals("email")) {
 					email = "value='" + c.getValue() + "'";
-					if (!c.getValue().equals("")) {
-						checked = "checked";
-					}
+					checked = "checked";
 					break;
 				}
 			}
@@ -87,6 +85,7 @@ public class LoginServlet extends HttpServlet {
 				response.addCookie(cookie);
 			} else {
 				Cookie cookie = new Cookie("email", null);
+				cookie.setMaxAge(0); // 브라우저에 더이상 email 쿠키를 보내지 말 것을 요청.
 				// 쿠키의 생존 시간을 지정하지 않으면, 웹브라우저가 실행되는 동안만 유효하다.
 				response.addCookie(cookie);
 			}
