@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// 만약 쿠키 정보에 email의 값이 있다면, 기본적으로 그 값을 입력 상자에 출력한다.
 		Cookie[] cookies = request.getCookies();
-		String email = null;
+		String email = "";
 		boolean isSaveId = false;
 		if ( cookies != null) {
 			for(Cookie c : cookies) {

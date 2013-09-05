@@ -36,6 +36,11 @@ public class SigninServlet extends HttpServlet {
 				(MemberDao) this.getServletContext().getAttribute("memberDao");
 		
 		try {
+			/* post 요청 데이터의 한글 처리 
+			 * 반드시 최초의 getParameter() 호출 전에 먼저 설정해야 한다.
+			 */
+			request.setCharacterEncoding("UTF-8");
+			
 			Member member = new Member()
 							.setEmail(request.getParameter("email"))
 							.setName(request.getParameter("name"))
@@ -47,10 +52,13 @@ public class SigninServlet extends HttpServlet {
 			
 			memberDao.add(member);
 			
+			// 로그인 처리!
 			request.getSession().setAttribute("member", member);
 			
-			
-												
+			// Redirect나 Refresh를 지정할 때,
+			// 클라이언트가 다시 서버에 요청하는 것이므로, 
+			// 컨트롤러의 주소를 주도록한다. 
+			response.sendRedirect("../main");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
