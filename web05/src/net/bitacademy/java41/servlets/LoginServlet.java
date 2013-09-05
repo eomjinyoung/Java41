@@ -79,17 +79,16 @@ public class LoginServlet extends HttpServlet {
 				response.sendRedirect("../main");
 				
 			} else {
-				session.invalidate();
-				out.println("<html><head><title>로그인 결과!</title></head>");
-				out.println("<body><p>해당 사용자를 찾을 수 없습니다.2</p></body></html>");
-				response.setHeader(
-						"Refresh", "1;url=login");
+				RequestDispatcher rd = 
+						request.getRequestDispatcher("/auth/loginFail.jsp");
+				rd.forward(request, response);
 			}
 	
 		} catch (Exception e) {
 			e.printStackTrace();
-			out.println("<html><head><title>시스템오류!</title></head>");
-			out.println("<body><p>실행 오류입니다.</p></body></html>");
+			RequestDispatcher rd = 
+					request.getRequestDispatcher("/error.jsp");
+			rd.forward(request, response);
 		}
 	}
 
