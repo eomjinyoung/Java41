@@ -79,6 +79,7 @@ public class LoginServlet extends HttpServlet {
 				response.sendRedirect("../main");
 				
 			} else {
+				session.invalidate();
 				RequestDispatcher rd = 
 						request.getRequestDispatcher("/auth/loginFail.jsp");
 				rd.forward(request, response);
