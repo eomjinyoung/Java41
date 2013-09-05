@@ -22,6 +22,7 @@ Password: <input type="password" name="password" placeholder="password"><br>
 	<%= isSaveId ? "checked" : ""%>
 >ID저장<br>
 <input type="submit" value="Login">
+<a href="../member/signin">회원가입</a>
 </form>
 </body>
 </html>
