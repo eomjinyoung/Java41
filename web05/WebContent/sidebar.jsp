@@ -1,3 +1,4 @@
+<%@page import="net.bitacademy.java41.vo.MemberProject"%>
 <%@page import="net.bitacademy.java41.vo.Member"%>
 <%@ page language="java" 
 	contentType="text/html; charset=UTF-8"
@@ -14,12 +15,15 @@
 <p id="email"><%=member.getEmail()%></p>
 </div>
 </div>
-
+<jsp:useBean id="myprojects" 
+	scope="session" 
+	type="java.util.List<net.bitacademy.java41.vo.MemberProject>"></jsp:useBean>
 <h3>프로젝트들 <a href="<%=application.getContextPath()%>/project/list">[전체]</a></h3>
 <ul>
-	<li><a href="<%=application.getContextPath()%>/project/view?no=1">프로젝트1</a></li>
-	<li>프로젝트2</li>
-	<li>프로젝트3</li>
+<%for(MemberProject project : myprojects) { %>
+	<li><a href="<%=application.getContextPath()%>/project/view?no=<%=project.getNo()%>"
+	><%=project.getTitle()%><%=(project.getLevel() == 0) ? "(PL)" : ""%></a></li>
+<%}%>
 </ul>
 
 </div>

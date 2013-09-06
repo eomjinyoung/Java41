@@ -363,3 +363,37 @@ values('project4', 'project4', '2013-4-1', '2013-5-2');
 
 insert into spms_prjs(title,content,start_date,end_date)
 values('project5', 'project5', '2013-5-1', '2013-6-2');
+
+
+
+/* m01@test.com의 참여프로젝트
+1 - 1일반
+2 - PL
+3 - 일반
+*/
+insert into SPMS_PRJMEMB(EMAIL, PNO, LEVEL)
+values('m01@test.com', 1, 1);
+
+insert into SPMS_PRJMEMB(EMAIL, PNO, LEVEL)
+values('m01@test.com', 2, 0);
+
+insert into SPMS_PRJMEMB(EMAIL, PNO, LEVEL)
+values('m01@test.com', 3, 1);
+
+/* m02@test.com의 참여프로젝트
+2 - 일반
+3 - PL
+4 - PL
+5 - 일반
+*/
+insert into SPMS_PRJMEMB(EMAIL, PNO, LEVEL)
+values('m02@test.com', 2, 1);
+
+insert into SPMS_PRJMEMB(EMAIL, PNO, LEVEL)
+values('m02@test.com', 3, 0);
+
+insert into SPMS_PRJMEMB(EMAIL, PNO, LEVEL)
+values('m02@test.com', 4, 0);
+
+insert into SPMS_PRJMEMB(EMAIL, PNO, LEVEL)
+values('m02@test.com', 5, 1);

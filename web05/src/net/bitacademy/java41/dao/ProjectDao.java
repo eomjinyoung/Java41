@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bitacademy.java41.util.DBConnectionPool;
+import net.bitacademy.java41.vo.MemberProject;
 import net.bitacademy.java41.vo.Project;
 
 public class ProjectDao {
@@ -79,6 +80,45 @@ public class ProjectDao {
 				return null;
 			}
 			
+		} catch (Exception e) {
+			throw e;
+			
+		} finally {
+			try {rs.close();} catch (Exception e) {}
+			try {stmt.close();} catch (Exception e) {}
+			if (con != null) {
+				conPool.returnConnection(con);
+			}
+		}
+	}
+	
+	public List<MemberProject> listByMember(String email) throws Exception {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<MemberProject> list = new ArrayList<MemberProject>();
+
+		try {
+			con = conPool.getConnection();
+			
+			String sql = "select t1.PNO,t1.TITLE,t2.LEVEL ";
+			sql += " from SPMS_PRJS t1, SPMS_PRJMEMB t2 ";
+			sql += " where t1.PNO=t2.PNO ";
+			sql += " and t2.EMAIL=?";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, email);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new MemberProject()
+							.setNo(rs.getInt("PNO"))
+							.setTitle(rs.getString("TITLE"))
+							.setLevel(rs.getInt("LEVEL")));
+			}
+			
+			return list;
 		} catch (Exception e) {
 			throw e;
 			
