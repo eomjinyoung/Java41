@@ -7,25 +7,17 @@ public class Project implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	protected int 		no;
-	protected String 	managerEmail;
 	protected String 	title;
 	protected String 	content;
 	protected Date 		startDate;
 	protected Date 		endDate;
-	protected Date 		createdDate;
+	protected String 	tag;
 	
 	public int getNo() {
 		return no;
 	}
 	public Project setNo(int no) {
 		this.no = no;
-		return this;
-	}
-	public String getManagerEmail() {
-		return managerEmail;
-	}
-	public Project setManagerEmail(String managerEmail) {
-		this.managerEmail = managerEmail;
 		return this;
 	}
 	public String getTitle() {
@@ -56,25 +48,12 @@ public class Project implements Serializable {
 		this.endDate = endDate;
 		return this;
 	}
-	public Date getCreatedDate() {
-		return createdDate;
+	public String getTag() {
+		return tag;
 	}
-	public Project setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public Project setTag(String tag) {
+		this.tag = tag;
 		return this;
-	}
-	
-	public Project clone() {
-		Project obj = new Project();
-		obj.no = this.no;
-		obj.managerEmail = this.managerEmail;
-		obj.title = this.title;
-		obj.content = this.content;
-		obj.startDate = this.startDate;
-		obj.endDate = this.endDate;
-		obj.createdDate = this.createdDate;
-		
-		return obj;
 	}
 	
 }

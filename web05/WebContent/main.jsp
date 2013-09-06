@@ -27,6 +27,10 @@ body {
 	color: white;
 }
 
+#header a:VISITED {
+	color: white;
+}
+
 #logout {
 /* 	border: 1px solid red; */
 	margin-top: 15px;
@@ -86,6 +90,7 @@ body {
 }
 
 #email {
+	font-size: 90%;
 	line-height: 130%;
 	padding: 0px;
 	margin: 0px;

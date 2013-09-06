@@ -28,18 +28,16 @@ public class ProjectDao {
 			con = conPool.getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(
-					"select PNO,TITLE,START_DAT,END_DAT"
-					+ " from PROJECTS"
+					"select PNO,TITLE,START_DATE,END_DATE"
+					+ " from SPMS_PRJS"
 					+ " order by PNO desc");
 			
-			Project project = null;
 			while(rs.next()) {
-				project = new Project();
-				project.setNo(rs.getInt("PNO"));
-				project.setTitle(rs.getString("TITLE"));
-				project.setStartDate(rs.getDate("START_DAT"));
-				project.setEndDate(rs.getDate("END_DAT"));
-				list.add(project);
+				list.add(new Project()
+							.setNo(rs.getInt("PNO"))
+							.setTitle(rs.getString("TITLE"))
+							.setStartDate(rs.getDate("START_DATE"))
+							.setEndDate(rs.getDate("END_DATE")));
 			}
 			
 			return list;
@@ -54,7 +52,7 @@ public class ProjectDao {
 			}
 		}
 	}
-
+/*
 	public int add(Project project) throws Exception {
 		Connection con = null;
 		PreparedStatement stmt = null;
@@ -175,5 +173,5 @@ public class ProjectDao {
 			}
 		}
 	}
-
+*/
 }
