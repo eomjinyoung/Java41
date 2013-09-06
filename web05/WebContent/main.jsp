@@ -10,12 +10,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SPMS by java41</title>
 <style type="text/css">
+body {
+	font-size: small;
+}
+
 /*header정보를 출력하는 태그를 찾아아 다음 블럭의 스타일을 적용하라*/ 
 #header {
 	background-color: #00008b;
 	color: #ffffff;
 /* 	border: 2px solid gray; */
 	height: 40px;
+	margin-bottom: 5px;
 }
 
 #header a:LINK {
@@ -34,11 +39,64 @@
 	background-color: #dcdcdc;
 	border-top: 2px solid gray;
 	height: 40px;
+	clear: left;
+	text-align: center;
 }
+
+#sidebar {
+/* 	border: 2px solid red; */
+	background: #fff8dc;
+	float: left;
+	width: 180px; 
+	margin-bottom: 5px;
+	padding: 0px 5px 0px 5px;
+}
+
+#content {
+/* 	border: 2px solid blue; */
+	margin-left: 200px;
+}
+
+#memberPhoto {
+	width: 50px;
+	float: left;
+}
+
+#memberInfo {
+/* 	border: 2px solid blue; */
+	padding: 10px;
+	margin-left: 55px;
+}
+
+#name {
+	font-size: 120%;
+	font-weight: bold;
+	line-height: 130%;
+	padding: 0px;
+	margin: 0px;
+}
+
+#tel {
+	font-size: 80%;
+	color: gray;
+	line-height: 130%;
+	padding: 0px;
+	margin: 0px;
+	
+}
+
+#email {
+	line-height: 130%;
+	padding: 0px;
+	margin: 0px;
+}
+
 </style>
 </head>
 <body>
 <jsp:include page="/header.jsp"></jsp:include>
+
+<jsp:include page="/sidebar.jsp"></jsp:include>
 
 <div id="content">
 <h1>사용자정보2</h1>
