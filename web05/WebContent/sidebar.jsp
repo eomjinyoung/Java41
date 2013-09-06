@@ -17,7 +17,7 @@
 
 <h3>프로젝트들 <a href="<%=application.getContextPath()%>/project/list">[전체]</a></h3>
 <ul>
-	<li>프로젝트1</li>
+	<li><a href="<%=application.getContextPath()%>/project/view?no=1">프로젝트1</a></li>
 	<li>프로젝트2</li>
 	<li>프로젝트3</li>
 </ul>

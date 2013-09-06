@@ -347,3 +347,19 @@ values('m02@test.com','m02','1111','m02');
 
 insert into SPMS_MEMBS(EMAIL,MNAME,PWD,TEL)
 values('m03@test.com','m03','1111','m03');		
+
+
+insert into spms_prjs(title,content,start_date,end_date)
+values('project1', 'project1', '2013-1-1', '2013-2-2');
+
+insert into spms_prjs(title,content,start_date,end_date)
+values('project2', 'project2', '2013-2-2', '2013-3-2');
+
+insert into spms_prjs(title,content,start_date,end_date)
+values('project3', 'project3', '2013-3-1', '2013-4-2');
+
+insert into spms_prjs(title,content,start_date,end_date)
+values('project4', 'project4', '2013-4-1', '2013-5-2');
+
+insert into spms_prjs(title,content,start_date,end_date)
+values('project5', 'project5', '2013-5-1', '2013-6-2');

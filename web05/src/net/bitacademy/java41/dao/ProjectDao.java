@@ -52,6 +52,44 @@ public class ProjectDao {
 			}
 		}
 	}
+	
+	public Project get(int no) throws Exception {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = conPool.getConnection();
+			stmt = con.prepareStatement(
+					"select PNO,TITLE,CONTENT,START_DATE,END_DATE,TAG"
+							+ " from SPMS_PRJS"
+							+ " where PNO=?");
+			stmt.setInt(1, no);
+			rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				return new Project()
+							.setNo(rs.getInt("PNO"))
+							.setTitle(rs.getString("TITLE"))
+							.setContent(rs.getString("CONTENT"))
+							.setStartDate(rs.getDate("START_DATE"))
+							.setEndDate(rs.getDate("END_DATE"))
+							.setTag(rs.getString("TAG"));
+			} else {
+				return null;
+			}
+			
+		} catch (Exception e) {
+			throw e;
+			
+		} finally {
+			try {rs.close();} catch (Exception e) {}
+			try {stmt.close();} catch (Exception e) {}
+			if (con != null) {
+				conPool.returnConnection(con);
+			}
+		}
+	}
 /*
 	public int add(Project project) throws Exception {
 		Connection con = null;
@@ -81,44 +119,7 @@ public class ProjectDao {
 		}
 	}
 	
-	public Project get(int no) throws Exception {
-		Connection con = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		try {
-			con = conPool.getConnection();
-			stmt = con.prepareStatement(
-					"select PNO,MGR,TITLE,CONTENT,START_DAT,END_DAT"
-							+ " from PROJECTS"
-							+ " where PNO=?");
-			stmt.setInt(1, no);
-			rs = stmt.executeQuery();
-			
-			if (rs.next()) {
-				Project project = new Project();
-				project.setNo(rs.getInt("PNO"));
-				project.setTitle(rs.getString("TITLE"));
-				project.setContent(rs.getString("CONTENT"));
-				project.setStartDate(rs.getDate("START_DAT"));
-				project.setEndDate(rs.getDate("END_DAT"));
-				project.setManagerEmail(rs.getString("MGR"));
-				return project;
-				
-			} else {
-				return null;
-			}
-		} catch (Exception e) {
-			throw e;
-			
-		} finally {
-			try {rs.close();} catch (Exception e) {}
-			try {stmt.close();} catch (Exception e) {}
-			if (con != null) {
-				conPool.returnConnection(con);
-			}
-		}
-	}
+	
 	
 	public int change(Project project) throws Exception {
 		Connection con = null;
