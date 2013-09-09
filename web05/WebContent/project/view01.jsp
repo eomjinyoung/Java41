@@ -15,13 +15,16 @@
 
 <div id="content">
 <h1>프로젝트 정보</h1>
-번호: ${project.no}<br>
-프로젝트명: ${project.title }<br>
+<jsp:useBean id="project" 
+		scope="request" 
+		type="net.bitacademy.java41.vo.Project"></jsp:useBean>
+번호: <%=project.getNo() %><br>
+프로젝트명: <%=project.getTitle() %><br>
 내용:<br> 
-${project.content }<br>
-시작일: ${project.startDate }<br>
-종료일: ${project.endDate }<br>
-태그: ${project.tag }<br>
+<%=project.getContent() %><br>
+시작일: <%=project.getStartDate() %><br>
+종료일: <%=project.getEndDate() %><br>
+태그: <%=project.getTag() %><br>
 </div>
 
 <jsp:include page="/tail.jsp"></jsp:include>
