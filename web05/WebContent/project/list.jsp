@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>프로젝트 목록</title>
-<link rel="stylesheet" href="<%=application.getContextPath()%>/css/base.css">
+<link rel="stylesheet" href="${rootPath}/css/base.css">
 </head>
 <body>
 <jsp:include page="/header.jsp"></jsp:include>
@@ -26,21 +26,25 @@
 <%-- Expression Language
 . ServletContext, HttpSession, ServletRequest 등으로부터 데이터를 좀 더 쉽게 꺼내고,
 . VO 객체의 getXXX() 메서드 호출을 좀 더 쉽게 하기 위해 등장한 문법.
-. ${applicationScope.xxxx}  <== ServletContext
-. ${sessionScope.xxxx}  <== HttpSession
-. ${requestScope.xxxx}  <== ServletRequest
-. ${pageScope.xxxx}  <== PageContext
+. ${applicationScope.xxxx}  <== ServletContext.getAttribute("xxxx");
+. ${sessionScope.xxxx}  <== HttpSession.getAttribute("xxxx");
+. ${requestScope.xxxx}  <== ServletRequest.getAttribute("xxxx");
+. ${pageScope.xxxx}  <== PageContext.getAttribute("xxxx");
 . ${xxxx}  <== PageContext > ServletRequest > HttpSession > ServletContext 
+. 
  --%>
 <c:forEach var="project" items="${list}">
 <tr>
 	<td>${project.no}</td>
-	<td>${project.title}</td>
+	<td><a href="view?no=${project.no}">${project.title}</a></td>
 	<td>${project.startDate}</td>
 	<td>${project.endDate}</td>
 </tr>	
 </c:forEach>
 </table>
+
+<p><a href="${rootPath}/project/add">[신규 프로젝트]</a></p>
+
 </div>
 
 <jsp:include page="/tail.jsp"></jsp:include>

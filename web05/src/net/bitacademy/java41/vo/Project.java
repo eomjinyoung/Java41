@@ -12,6 +12,7 @@ public class Project implements Serializable {
 	protected Date 		startDate;
 	protected Date 		endDate;
 	protected String 	tag;
+	protected String 	leader;
 	
 	public int getNo() {
 		return no;
@@ -53,6 +54,13 @@ public class Project implements Serializable {
 	}
 	public Project setTag(String tag) {
 		this.tag = tag;
+		return this;
+	}
+	public String getLeader() {
+		return leader;
+	}
+	public Project setLeader(String leader) {
+		this.leader = leader;
 		return this;
 	}
 	

@@ -24,6 +24,7 @@ public class ContextLoaderListener implements ServletContextListener {
 		
 		ctx.setAttribute("memberDao", memberDao);
 		ctx.setAttribute("projectDao", projectDao);
+		ctx.setAttribute("rootPath", ctx.getContextPath());
 		
 	}
 	

@@ -130,23 +130,44 @@ public class ProjectDao {
 			}
 		}
 	}
-/*
+	
 	public int add(Project project) throws Exception {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		
 		try {
 			con = conPool.getConnection();
+			
+			// 1. 프로젝트를 등록한다.
 			stmt = con.prepareStatement(
-				"insert into PROJECTS("
-				+ " MGR,TITLE,CONTENT,START_DAT,END_DAT,CREATED_DAT)"
-				+ " values(?,?,?,?,?,now())");
-			stmt.setString(1, project.getManagerEmail());
-			stmt.setString(2, project.getTitle());
-			stmt.setString(3, project.getContent());
-			stmt.setDate(4, project.getStartDate());
-			stmt.setDate(5, project.getEndDate());
-			return stmt.executeUpdate();
+				"insert into SPMS_PRJS("
+				+ " TITLE,CONTENT,START_DATE,END_DATE,TAG)"
+				+ " values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, project.getTitle());
+			stmt.setString(2, project.getContent());
+			stmt.setDate(3, project.getStartDate());
+			stmt.setDate(4, project.getEndDate());
+			stmt.setString(5, project.getTag());
+			stmt.executeUpdate();
+			
+			// * 자동 생성된 PK 값 알아내기
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				project.setNo( rs.getInt(1) );
+			}
+			rs.close();
+			stmt.close();
+			
+			// 2. 프로젝트의 PL을 등록한다.
+			stmt = con.prepareStatement(
+					"insert into SPMS_PRJMEMB("
+					+ " EMAIL,PNO,LEVEL)"
+					+ " values(?,?,0)");
+			stmt.setString(1, project.getLeader());
+			stmt.setInt(2, project.getNo());
+			stmt.executeUpdate();
+			
+			return project.getNo();
 			
 		} catch (Exception e) {
 			throw e;
@@ -158,6 +179,8 @@ public class ProjectDao {
 			}
 		}
 	}
+/*
+	
 	
 	
 	

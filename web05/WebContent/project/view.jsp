@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>프로젝트 정보</title>
-<link rel="stylesheet" href="<%=application.getContextPath()%>/css/base.css">
+<link rel="stylesheet" href="${rootPath}/css/base.css">
 </head>
 <body>
 <jsp:include page="/header.jsp"></jsp:include>
@@ -22,6 +22,8 @@ ${project.content }<br>
 시작일: ${project.startDate }<br>
 종료일: ${project.endDate }<br>
 태그: ${project.tag }<br>
+
+<p><a href="list">[목록]</a></p>
 </div>
 
 <jsp:include page="/tail.jsp"></jsp:include>

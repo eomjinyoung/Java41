@@ -3,27 +3,25 @@
 <%@ page language="java" 
 	contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:useBean id="member" 
-	scope="session" 
-	type="net.bitacademy.java41.vo.Member"/>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <div id="sidebar">
 <div id="member">
-<img id="memberPhoto" src="<%=application.getContextPath()%>/images/test01.png">
+<img id="memberPhoto" src="${rootPath}/images/test01.png">
 <div id="memberInfo">
-<p id="name"><%=member.getName()%></p>
-<p id="tel"><%=member.getTel()%></p>
-<p id="email"><%=member.getEmail()%></p>
+<p id="name">${member.name }</p>
+<p id="tel">${member.tel }</p>
+<p id="email">${member.email }</p>
 </div>
 </div>
 <jsp:useBean id="myprojects" 
 	scope="session" 
 	type="java.util.List<net.bitacademy.java41.vo.MemberProject>"></jsp:useBean>
-<h3>프로젝트들 <a href="<%=application.getContextPath()%>/project/list">[전체]</a></h3>
+<h3>프로젝트들3 <a href="${rootPath}/project/list">[전체]</a></h3>
 <ul>
-<%for(MemberProject project : myprojects) { %>
-	<li><a href="<%=application.getContextPath()%>/project/view?no=<%=project.getNo()%>"
-	><%=project.getTitle()%><%=(project.getLevel() == 0) ? "(PL)" : ""%></a></li>
-<%}%>
+<c:forEach var="project" items="${myprojects}">
+	<li><a href="${rootPath}/project/view?no=${project.no}"
+	>${project.title}<c:if test="${project.level == 0}">(PL)</c:if></a></li>
+</c:forEach>
 </ul>
 
 </div>
