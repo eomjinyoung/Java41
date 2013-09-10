@@ -1,7 +1,6 @@
 package net.bitacademy.java41.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,7 +35,7 @@ public class SigninServlet extends HttpServlet {
 			/* post 요청 데이터의 한글 처리 
 			 * 반드시 최초의 getParameter() 호출 전에 먼저 설정해야 한다.
 			 */
-			request.setCharacterEncoding("UTF-8");
+			//request.setCharacterEncoding("UTF-8"); // CharSetFilter에서 처리
 			
 			Member member = new Member()
 							.setEmail(request.getParameter("email"))

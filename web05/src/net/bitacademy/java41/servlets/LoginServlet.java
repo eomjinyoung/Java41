@@ -22,6 +22,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(
 			HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("LoginServlet.doGet() 호출됨.");
 		// 만약 쿠키 정보에 email의 값이 있다면, 기본적으로 그 값을 입력 상자에 출력한다.
 		Cookie[] cookies = request.getCookies();
 		String email = "";
@@ -49,6 +50,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(
 			HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("LoginServlet.doPost() 호출됨.");
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		

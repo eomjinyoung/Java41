@@ -34,7 +34,7 @@ public class ProjectAddServlet extends HttpServlet {
 				(ProjectDao) this.getServletContext().getAttribute("projectDao");
 		
 		try {
-			request.setCharacterEncoding("UTF-8");
+			//request.setCharacterEncoding("UTF-8"); // CharSetFilter에서 처리
 			Member member = (Member)request.getSession().getAttribute("member");
 			Project project = new Project()
 							.setTitle(request.getParameter("title"))

@@ -165,6 +165,33 @@ public class MemberDao {
 			}
 		}
 	}
+	
+	public int changePassword(
+			String email, String oldPassword, String newPassword) throws Exception {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			con = conPool.getConnection();
+			stmt = con.prepareStatement(
+				"update SPMS_MEMBS set"
+				+ " PWD=?,UPDATE_DATE=now()"
+				+ " where EMAIL=? and PWD=?");
+			stmt.setString(1, newPassword);
+			stmt.setString(2, email);
+			stmt.setString(3, oldPassword);
+			return stmt.executeUpdate();
+
+		} catch (Exception e) {
+			throw e;
+		
+		} finally {
+			try {stmt.close();} catch(Exception e) {}
+			if (con != null) {
+				conPool.returnConnection(con);
+			}
+		}
+	}
 	/*
 	public int change(Member member) throws Exception {
 		Connection con = null;

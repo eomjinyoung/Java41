@@ -10,17 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bitacademy.java41.dao.MemberDao;
-import net.bitacademy.java41.vo.Member;
 
-@WebServlet("/member/add")
+@WebServlet("/member/passwordChange")
 @SuppressWarnings("serial")
-public class MemberAddServlet extends HttpServlet {
+public class PasswordChangeServlet extends HttpServlet {
 	@Override
 	protected void doGet(
 			HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher rd = 
-				request.getRequestDispatcher("/member/newForm.jsp");
+				request.getRequestDispatcher("/member/passwordForm.jsp");
 		rd.forward(request, response);
 	}
 	
@@ -32,19 +31,26 @@ public class MemberAddServlet extends HttpServlet {
 				(MemberDao) this.getServletContext().getAttribute("memberDao");
 		
 		try {
-			//request.setCharacterEncoding("UTF-8"); // CharSetFilter에서 처리
-			Member member = new Member()
-				.setEmail(request.getParameter("email"))
-				.setName(request.getParameter("name"))
-				.setPassword(request.getParameter("password"))
-				.setTel(request.getParameter("tel"))
-				.setBlog(request.getParameter("blog"))
-				.setDetailAddress(request.getParameter("detailAddr"))
-				.setTag(request.getParameter("tag"))
-				.setLevel(Integer.parseInt(request.getParameter("level")));
+			request.setCharacterEncoding("UTF-8");
 			
-			memberDao.add(member);
-			response.sendRedirect("list");
+			String email = request.getParameter("email");
+			String oldPassword = request.getParameter("password");
+			String newPassword = request.getParameter("newPassword");
+			String newPassword2 = request.getParameter("newPassword2");
+			
+			if (newPassword.equals(newPassword2)) {
+				if (memberDao.changePassword(email, oldPassword, newPassword) > 0) {
+					request.setAttribute("status", "SUCCESS");
+				} else {
+					request.setAttribute("status", "OLD_PASSWORD_ERROR");
+				}
+			} else {
+				request.setAttribute("status", "NEW_PASSWORD_ERROR");
+			}
+			
+			RequestDispatcher rd = 
+					request.getRequestDispatcher("/member/passwordChangeResult.jsp");
+			rd.forward(request, response);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
