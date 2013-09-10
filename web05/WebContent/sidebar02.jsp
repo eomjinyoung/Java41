@@ -13,9 +13,9 @@
 <p id="email">${member.email }</p>
 </div>
 </div>
-
-<c:choose>
-<c:when test="${member.level == 0}">
+<jsp:useBean id="myprojects" 
+	scope="session" 
+	type="java.util.List<net.bitacademy.java41.vo.MemberProject>"></jsp:useBean>
 <h3>프로젝트들3 <a href="${rootPath}/project/list">[전체]</a></h3>
 <ul>
 <c:forEach var="project" items="${myprojects}">
@@ -23,15 +23,7 @@
 	>${project.title}<c:if test="${project.level == 0}">(PL)</c:if></a></li>
 </c:forEach>
 </ul>
-</c:when>
-<c:when test="${member.level == 1}">
-<h3>관리</h3>
-<ul>
-	<li><a href="${rootPath}/member/list">멤버관리</a></li>
-	<li><a href="${rootPath}/project/list">프로젝트관리</a></li>
-</ul>
-</c:when>
-</c:choose>
+
 </div>
 
 

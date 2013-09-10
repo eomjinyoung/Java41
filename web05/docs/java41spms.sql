@@ -397,3 +397,13 @@ values('m02@test.com', 4, 0);
 
 insert into SPMS_PRJMEMB(EMAIL, PNO, LEVEL)
 values('m02@test.com', 5, 1);
+
+
+alter table SPMS_MEMBS
+	add column LEVEL int null default 0;
+	
+insert into SPMS_MEMBS(EMAIL,MNAME,PWD,TEL,LEVEL)
+values('admin01@test.com','admin01','1111','111-2222',1);	
+
+
+	

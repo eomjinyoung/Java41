@@ -16,6 +16,7 @@ public class Member implements Serializable {
 	private int		addressNo;
 	private String	detailAddress;
 	private String	tag;
+	private int		level;
 	
 	public String getEmail() {
 		return email;
@@ -85,6 +86,13 @@ public class Member implements Serializable {
 	}
 	public Member setTag(String tag) {
 		this.tag = tag;
+		return this;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public Member setLevel(int level) {
+		this.level = level;
 		return this;
 	}
 	

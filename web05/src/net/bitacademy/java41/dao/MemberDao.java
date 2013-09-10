@@ -25,17 +25,18 @@ public class MemberDao {
 		try {
 			con = conPool.getConnection();
 			stmt = con.prepareStatement(
-				"select EMAIL,MNAME,TEL from SPMS_MEMBS "
+				"select EMAIL,MNAME,TEL,LEVEL from SPMS_MEMBS "
 				+ " where EMAIL=? and PWD=?"); // ? -> in-parameter
 			stmt.setString(1, email);
 			stmt.setString(2, password);
 			rs = stmt.executeQuery();
 			
 			if (rs.next()) {
-				Member member = new Member();
-				member.setEmail(rs.getString("EMAIL"));
-				member.setName(rs.getString("MNAME"));
-				member.setTel(rs.getString("TEL"));
+				Member member = new Member()
+								.setEmail(rs.getString("EMAIL"))
+								.setName(rs.getString("MNAME"))
+								.setTel(rs.getString("TEL"))
+								.setLevel(rs.getInt("LEVEL"));
 				
 				return member;
 				
