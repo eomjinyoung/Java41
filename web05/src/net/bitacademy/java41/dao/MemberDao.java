@@ -64,8 +64,8 @@ public class MemberDao {
 			stmt = con.prepareStatement(
 				"insert into SPMS_MEMBS("
 				+ " EMAIL,MNAME,PWD,TEL,"
-				+ " BLOG,REG_DATE,UPDATE_DATE,DET_ADDR,TAG)"
-				+ " values(?,?,?,?,?,now(),now(),?,?)");
+				+ " BLOG,REG_DATE,UPDATE_DATE,DET_ADDR,TAG,LEVEL)"
+				+ " values(?,?,?,?,?,now(),now(),?,?,?)");
 			stmt.setString(1, member.getEmail());
 			stmt.setString(2, member.getName());
 			stmt.setString(3, member.getPassword());
@@ -73,6 +73,7 @@ public class MemberDao {
 			stmt.setString(5, member.getBlog());
 			stmt.setString(6, member.getDetailAddress());
 			stmt.setString(7, member.getTag());
+			stmt.setInt(8, member.getLevel());
 			return stmt.executeUpdate();
 			
 		} catch (Exception e) {

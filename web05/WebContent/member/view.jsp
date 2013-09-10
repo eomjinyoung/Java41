@@ -1,6 +1,7 @@
 <%@page import="net.bitacademy.java41.vo.Project"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>      
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,8 +23,18 @@
 상세주소: ${memberInfo.detailAddress }<br>
 태그: ${memberInfo.tag }<br>
 등록일: ${memberInfo.regDate }<br>
+권한:
+<c:choose>
+<c:when test="${memberInfo.level == 0}">일반회원</c:when>
+<c:when test="${memberInfo.level == 1}">관리자</c:when>
+<c:when test="${memberInfo.level == 2}">PM</c:when>
+<c:otherwise>손님</c:otherwise>
+</c:choose><br>
 
-<p><a href="list">[목록]</a></p>
+<p>
+<a href="list">[목록]</a>
+<a href="passwordChange?email=${memberInfo.email}">[암호변경]</a>
+</p>
 </div>
 
 <jsp:include page="/tail.jsp"></jsp:include>
