@@ -85,7 +85,7 @@ public class MemberDao {
 			}
 		}
 	}
-/*
+	
 	public List<Member> list() throws Exception {
 		Connection con = null;
 		Statement stmt = null;
@@ -97,14 +97,17 @@ public class MemberDao {
 			con = conPool.getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(
-					"select MNAME,PHONE,EMAIL from MEMBERS order by MNAME");
+					"select EMAIL,MNAME,TEL,BLOG from SPMS_MEMBS "
+					+ " order by MNAME");
 			
 			Member m = null;
 			while(rs.next()) {
-				m = new Member();
-				m.setName(rs.getString("MNAME"));
-				m.setPhone(rs.getString("PHONE"));
-				m.setEmail(rs.getString("EMAIL"));
+				m = new Member()
+						.setEmail(rs.getString("EMAIL"))
+						.setName(rs.getString("MNAME"))
+						.setTel(rs.getString("TEL"))
+						.setBlog(rs.getString("BLOG"));
+						
 				list.add(m);
 			}
 			
@@ -120,6 +123,8 @@ public class MemberDao {
 			}
 		}
 	}
+/*
+	
 
 	
 
