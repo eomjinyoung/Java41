@@ -26,6 +26,28 @@
   	<listener-class>net.bitacademy.java41.listeners.ContextLoaderListener</listener-class>
   </listener>
   
+  <!-- 필터 선언 -->
+  <filter>
+  	<filter-name>CharSetFilter</filter-name>
+  	<filter-class>net.bitacademy.java41.filters.CharSetFilter</filter-class>
+  </filter>
+  <filter>
+  	<filter-name>AuthFilter</filter-name>
+  	<filter-class>net.bitacademy.java41.filters.AuthFilter</filter-class>
+  </filter>
+  
+  <!-- 필터에 URL을 설정 
+  . URL 패턴의 설정 순서대로 필터를 실행한다.
+  -->
+  <filter-mapping>
+  	<filter-name>CharSetFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+  	<filter-name>AuthFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
   <!-- 서블릿 선언 -->
 
   <!-- 서블릿에 URL을 설정 -->

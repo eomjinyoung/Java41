@@ -8,7 +8,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 
 /* 특징
 - 필터는 서블릿 컨테이너가 관리한다.
@@ -17,7 +16,7 @@ import javax.servlet.annotation.WebFilter;
 - 필터를 정의한 후 어느 요청에 대해 적용할 것인지 설정해야한다.
 */
 
-@WebFilter("/*")
+//@WebFilter("/*")
 public class CharSetFilter implements Filter {
 	FilterConfig config;
 	
