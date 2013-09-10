@@ -8,7 +8,7 @@
 <div id="member">
 <img id="memberPhoto" src="${rootPath}/images/test01.png">
 <div id="memberInfo">
-<p id="name">${member.name }</p>
+<p id="name"><a href="/member/updateMyInfo">${member.name }</a></p>
 <p id="tel">${member.tel }</p>
 <p id="email">${member.email }</p>
 </div>

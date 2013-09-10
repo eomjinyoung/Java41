@@ -23,7 +23,11 @@ ${project.content }<br>
 종료일: ${project.endDate }<br>
 태그: ${project.tag }<br>
 
-<p><a href="list">[목록]</a></p>
+<p>
+<a href="list">[목록]</a>
+<a href="update?no=${project.no}">[변경]</a>
+<a href="delete?no=${project.no}">[삭제]</a>
+</p>
 </div>
 
 <jsp:include page="/tail.jsp"></jsp:include>
