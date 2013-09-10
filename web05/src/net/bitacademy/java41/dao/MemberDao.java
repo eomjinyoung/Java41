@@ -123,33 +123,31 @@ public class MemberDao {
 			}
 		}
 	}
-/*
-	
-
-	
 
 	public Member get(String email) throws Exception {
 		Connection con = null;
-		Statement stmt = null;
+		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
 		try {
 			con = conPool.getConnection();
-			stmt = con.createStatement();
-			
-			rs = stmt.executeQuery(
-					"select MNAME,PHONE,EMAIL,BLOG,AGE,REG_DATE"
-					+ " from MEMBERS"
-					+ " where EMAIL='" + email + "'");
+			stmt = con.prepareStatement(
+					"select EMAIL,MNAME,TEL,BLOG,REG_DATE,DET_ADDR,TAG,LEVEL"
+					+ " from SPMS_MEMBS"
+					+ " where EMAIL=?");
+			stmt.setString(1, email);
+			rs = stmt.executeQuery();
 			
 			if (rs.next()) {
-				Member member = new Member();
-				member.setName(rs.getString("MNAME"));
-				member.setPhone(rs.getString("PHONE"));
-				member.setEmail(rs.getString("EMAIL"));
-				member.setBlog(rs.getString("BLOG"));
-				member.setAge(rs.getInt("AGE"));
-				member.setRegDate(rs.getDate("REG_DATE"));
+				Member member = new Member()
+								.setEmail(rs.getString("EMAIL"))
+								.setName(rs.getString("MNAME"))
+								.setTel(rs.getString("TEL"))
+								.setBlog(rs.getString("BLOG"))
+								.setRegDate(rs.getDate("REG_DATE"))
+								.setDetailAddress(rs.getString("DET_ADDR"))
+								.setTag(rs.getString("TAG"))
+								.setLevel(rs.getInt("LEVEL"));
 				return member;
 				
 			} else {
@@ -166,7 +164,7 @@ public class MemberDao {
 			}
 		}
 	}
-
+	/*
 	public int change(Member member) throws Exception {
 		Connection con = null;
 		PreparedStatement stmt = null;
