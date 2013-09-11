@@ -8,6 +8,7 @@ import net.bitacademy.java41.controls.LoginControl;
 import net.bitacademy.java41.controls.LoginFormControl;
 import net.bitacademy.java41.controls.LogoutControl;
 import net.bitacademy.java41.controls.MainControl;
+import net.bitacademy.java41.controls.SigninControl;
 import net.bitacademy.java41.controls.SigninFormControl;
 import net.bitacademy.java41.dao.MemberDao;
 import net.bitacademy.java41.dao.ProjectDao;
@@ -35,6 +36,8 @@ public class ContextLoaderListener implements ServletContextListener {
 		ctx.setAttribute("/main.do", new MainControl()
 										.setProjectDao(projectDao));
 		ctx.setAttribute("/member/signinForm.do", new SigninFormControl());
+		ctx.setAttribute("/member/signin.do", new SigninControl()
+												.setMemberDao(memberDao) );
 	}
 	
 	@Override
