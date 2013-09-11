@@ -6,6 +6,7 @@ import javax.servlet.ServletContextListener;
 
 import net.bitacademy.java41.controls.LoginControl;
 import net.bitacademy.java41.controls.LoginFormControl;
+import net.bitacademy.java41.controls.MainControl;
 import net.bitacademy.java41.dao.MemberDao;
 import net.bitacademy.java41.dao.ProjectDao;
 import net.bitacademy.java41.util.DBConnectionPool;
@@ -25,9 +26,11 @@ public class ContextLoaderListener implements ServletContextListener {
 		ProjectDao projectDao = new ProjectDao(dbpool);
 		
 		ctx.setAttribute("rootPath", ctx.getContextPath());
-		ctx.setAttribute("/auth/loginForm", new LoginFormControl());
-		ctx.setAttribute("/auth/login", new LoginControl()
+		ctx.setAttribute("/auth/loginForm.do", new LoginFormControl());
+		ctx.setAttribute("/auth/login.do", new LoginControl()
 											.setMemberDao(memberDao));
+		ctx.setAttribute("/main.do", new MainControl()
+										.setProjectDao(projectDao));
 	}
 	
 	@Override

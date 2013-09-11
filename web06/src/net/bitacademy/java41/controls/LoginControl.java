@@ -44,7 +44,7 @@ public class LoginControl implements PageControl {
 		
 		if (member != null) {
 			session.setAttribute("member", member);
-			return "redirect:../main";
+			return "redirect:../main.do";
 			
 		} else {
 			session.invalidate();

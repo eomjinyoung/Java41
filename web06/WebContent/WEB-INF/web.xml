@@ -41,11 +41,11 @@
   -->
   <filter-mapping>
   	<filter-name>CharSetFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
+  	<url-pattern>*.do</url-pattern>
   </filter-mapping>
   <filter-mapping>
   	<filter-name>AuthFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
+  	<url-pattern>*.do</url-pattern>
   </filter-mapping>
   
   <!-- 서블릿 선언 -->
@@ -56,7 +56,7 @@
   <!-- 서블릿에 URL을 설정 -->
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 
   
