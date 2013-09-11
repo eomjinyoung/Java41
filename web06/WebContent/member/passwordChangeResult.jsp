@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Refresh" content="2;url=view?email=${param.email}">
+<meta http-equiv="Refresh" content="2;url=view.do?email=${param.email}">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>암호변경</title>
 <link rel="stylesheet" href="${rootPath}/css/base.css">

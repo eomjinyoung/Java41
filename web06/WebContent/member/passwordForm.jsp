@@ -15,7 +15,7 @@
 
 <div id="content">
 <h1>암호변경</h1>
-<form action="passwordChange" method="post">
+<form action="passwordChange.do" method="post">
 이메일: <input type="text" name="email" value="${param.email}" readonly><br>
 이전 암호: <input type="password" name="password"><br>
 새 암호: <input type="password" name="newPassword"><br>
@@ -24,8 +24,8 @@
 
 </form>
 <p>
-<a href="view?email=${param.email}">[이전]</a>
-<a href="list">[목록]</a></p>
+<a href="view.do?email=${param.email}">[이전]</a>
+<a href="list.do">[목록]</a></p>
 </div>
 
 <jsp:include page="/tail.jsp"></jsp:include>

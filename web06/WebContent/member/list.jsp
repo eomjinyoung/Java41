@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -26,14 +26,14 @@
 <c:forEach var="member" items="${list}">
 <tr>
 	<td>${member.email}</td>
-	<td><a href="view?email=${member.email}">${member.name}</a></td>
+	<td><a href="view.do?email=${member.email}">${member.name}</a></td>
 	<td>${member.tel}</td>
 	<td>${member.blog}</td>
 </tr>	
 </c:forEach>
 </table>
 
-<p><a href="${rootPath}/member/add">[새멤버]</a></p>
+<p><a href="${rootPath}/member/add.do">[새멤버]</a></p>
 
 </div>
 

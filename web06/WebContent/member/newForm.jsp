@@ -15,7 +15,7 @@
 
 <div id="content">
 <h1>멤버 등록</h1>
-<form action="add" method="post">
+<form action="add.do" method="post">
 *이메일: <input type="text" name="email"><br>
 *암호: <input type="password" name="password"><br>
 암호 확인: <input type="password" name="password2"><br>
@@ -37,7 +37,7 @@
 <input type="submit" value="등록">
 <input type="reset" value="취소">
 </form>
-<p><a href="list">[목록]</a></p>
+<p><a href="list.do">[목록]</a></p>
 </div>
 
 <jsp:include page="/tail.jsp"></jsp:include>

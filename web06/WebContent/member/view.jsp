@@ -32,10 +32,10 @@
 </c:choose><br>
 
 <p>
-<a href="list">[목록]</a>
-<a href="passwordChange?email=${memberInfo.email}">[암호변경]</a>
-<a href="update?email=${memberInfo.email}">[변경]</a>
-<a href="delete?email=${memberInfo.email}">[삭제]</a>
+<a href="list.do">[목록]</a>
+<a href="passwordChange.do?email=${memberInfo.email}">[암호변경]</a>
+<a href="update.do?email=${memberInfo.email}">[변경]</a>
+<a href="delete.do?email=${memberInfo.email}">[삭제]</a>
 </p>
 </div>
 

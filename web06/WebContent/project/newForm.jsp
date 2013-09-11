@@ -15,7 +15,7 @@
 
 <div id="content">
 <h1>신규 프로젝트</h1>
-<form action="add" method="post">
+<form action="add.do" method="post">
 프로젝트명: <input type="text" name="title"><br>
 내용:<br> 
 <textarea name="content" rows="4" cols="50"></textarea><br>
@@ -24,7 +24,7 @@
 태그: <input type="text" name="tag" placeholder="예)태그1 태그2 태그3 (공백으로 구분)"><br>
 <input type="submit" value="등록"><input type="reset" value="취소"><br>
 </form>
-<p><a href="list">[목록]</a></p>
+<p><a href="list.do">[목록]</a></p>
 </div>
 
 <jsp:include page="/tail.jsp"></jsp:include>
