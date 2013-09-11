@@ -27,6 +27,9 @@ public class DispatcherServlet extends HttpServlet {
 		Map<String,String> cookieMap = createCookieMap(request);
 		model.put("cookies", cookieMap);
 		model.put("params", request.getParameterMap());
+		model.put("session", request.getSession() );
+		model.put("request", request);
+		model.put("response", response);
 		
 		try {
 			String viewUrl = null;
@@ -48,9 +51,13 @@ public class DispatcherServlet extends HttpServlet {
 	private void processResult(HttpServletRequest request,
 			HttpServletResponse response, String viewUrl)
 			throws ServletException, IOException {
-		RequestDispatcher rd = 
-				request.getRequestDispatcher(viewUrl);
-		rd.forward(request, response);
+		if (viewUrl.startsWith("redirect:")) {
+			response.sendRedirect(viewUrl.substring(9));
+		} else {
+			RequestDispatcher rd = 
+					request.getRequestDispatcher(viewUrl);
+			rd.forward(request, response);
+		}
 	}
 
 	private void transferFromControlDataToRequest(HttpServletRequest request,
