@@ -10,7 +10,7 @@ public class LogoutControl implements PageControl {
 	public String execute(Map<String, Object> model) throws Exception {
 		HttpSession session = (HttpSession) model.get("session");
 		session.invalidate();
-		return "/auth/loginForm.do";
+		return "redirect:loginForm.do";
 	}
 }
 
