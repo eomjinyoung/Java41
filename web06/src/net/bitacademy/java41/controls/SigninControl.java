@@ -1,4 +1,4 @@
-package net.bitacademy.java41.servlets;
+package net.bitacademy.java41.controls;
 
 import java.io.IOException;
 
@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.bitacademy.java41.dao.MemberDao;
 import net.bitacademy.java41.vo.Member;
 
-@WebServlet("/member/signin")
-@SuppressWarnings("serial")
-public class SigninServlet extends HttpServlet {
+public class SigninControl extends HttpServlet {
 	@Override
 	protected void doGet(
 			HttpServletRequest request, HttpServletResponse response)

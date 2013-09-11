@@ -19,7 +19,7 @@ Password: <input type="password" name="password" placeholder="password"><br>
 	<c:if test="${isSaveId}">checked</c:if>
 >ID저장<br>
 <input type="submit" value="Login">
-<a href="../member/signin.do">회원가입</a>
+<a href="../member/signinForm.do">회원가입</a>
 </form>
 </body>
 </html>

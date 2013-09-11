@@ -6,5 +6,5 @@
 . block 타입: 라인 전체를 점유.
  -->
 <div id="header">
-<a id="logout" href="<%=application.getContextPath()%>/auth/logout">로그아웃</a>
+<a id="logout" href="<%=application.getContextPath()%>/auth/logout.do">로그아웃</a>
 </div>
