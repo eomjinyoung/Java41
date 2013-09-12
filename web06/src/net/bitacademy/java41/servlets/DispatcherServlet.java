@@ -52,6 +52,10 @@ public class DispatcherServlet extends HttpServlet {
 			throws ServletException, IOException {
 		if (viewUrl.startsWith("redirect:")) {
 			response.sendRedirect(viewUrl.substring(9));
+		} else if (viewUrl.startsWith("include:")) {
+			RequestDispatcher rd = 
+					request.getRequestDispatcher(viewUrl.substring(8));
+			rd.include(request, response);
 		} else {
 			RequestDispatcher rd = 
 					request.getRequestDispatcher(viewUrl);

@@ -137,6 +137,7 @@ public class ProjectDao {
 		
 		try {
 			con = conPool.getConnection();
+			con.setAutoCommit(false);// commit을 수동으로 바꾼다.
 			
 			// 1. 프로젝트를 등록한다.
 			stmt = con.prepareStatement(
@@ -167,14 +168,17 @@ public class ProjectDao {
 			stmt.setInt(2, project.getNo());
 			stmt.executeUpdate();
 			
+			con.commit();
 			return project.getNo();
 			
 		} catch (Exception e) {
+			con.rollback();
 			throw e;
 			
 		} finally {
 			try {stmt.close();} catch(Exception e) {}
 			if (con != null) {
+				con.setAutoCommit(true);
 				conPool.returnConnection(con);
 			}
 		}
