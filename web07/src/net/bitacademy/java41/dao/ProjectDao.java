@@ -131,56 +131,49 @@ public class ProjectDao {
 		}
 	}
 	
-	public int add(Project project) throws Exception {
-		Connection con = null;
-		PreparedStatement stmt = null;
+	public int add(Project project, Connection transactionConnection) throws Exception {
+		Connection con = transactionConnection;
+		PreparedStatement projectStmt = null;
+		PreparedStatement projectMemberStmt = null;
+		ResultSet rs = null;
 		
 		try {
-			con = conPool.getConnection();
-			con.setAutoCommit(false);// commit을 수동으로 바꾼다.
-			
 			// 1. 프로젝트를 등록한다.
-			stmt = con.prepareStatement(
+			projectStmt = con.prepareStatement(
 				"insert into SPMS_PRJS("
 				+ " TITLE,CONTENT,START_DATE,END_DATE,TAG)"
 				+ " values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-			stmt.setString(1, project.getTitle());
-			stmt.setString(2, project.getContent());
-			stmt.setDate(3, project.getStartDate());
-			stmt.setDate(4, project.getEndDate());
-			stmt.setString(5, project.getTag());
-			stmt.executeUpdate();
+			projectStmt.setString(1, project.getTitle());
+			projectStmt.setString(2, project.getContent());
+			projectStmt.setDate(3, project.getStartDate());
+			projectStmt.setDate(4, project.getEndDate());
+			projectStmt.setString(5, project.getTag());
+			projectStmt.executeUpdate();
 			
 			// * 자동 생성된 PK 값 알아내기
-			ResultSet rs = stmt.getGeneratedKeys();
+			rs = projectStmt.getGeneratedKeys();
 			if (rs.next()) {
 				project.setNo( rs.getInt(1) );
 			}
-			rs.close();
-			stmt.close();
 			
 			// 2. 프로젝트의 PL을 등록한다.
-			stmt = con.prepareStatement(
+			projectMemberStmt = con.prepareStatement(
 					"insert into SPMS_PRJMEMB("
 					+ " EMAIL,PNO,LEVEL)"
 					+ " values(?,?,0)");
-			stmt.setString(1, project.getLeader());
-			stmt.setInt(2, project.getNo());
-			stmt.executeUpdate();
+			projectMemberStmt.setString(1, project.getLeader());
+			projectMemberStmt.setInt(2, project.getNo());
+			projectMemberStmt.executeUpdate();
 			
-			con.commit();
 			return project.getNo();
 			
 		} catch (Exception e) {
-			con.rollback();
 			throw e;
 			
 		} finally {
-			try {stmt.close();} catch(Exception e) {}
-			if (con != null) {
-				con.setAutoCommit(true);
-				conPool.returnConnection(con);
-			}
+			try {rs.close();} catch(Exception e) {}
+			try {projectStmt.close();} catch(Exception e) {}
+			try {projectMemberStmt.close();} catch(Exception e) {}
 		}
 	}
 /*

@@ -43,7 +43,9 @@ public class ContextLoaderListener implements ServletContextListener {
 		MemberService memberService = 
 				new MemberService().setMemberDao(memberDao);
 		ProjectService projectService = 
-				new ProjectService().setProjectDao(projectDao);
+				new ProjectService()
+						.setDBConnectionPool(dbpool)
+						.setProjectDao(projectDao);
 		
 		ctx.setAttribute("rootPath", ctx.getContextPath());
 
