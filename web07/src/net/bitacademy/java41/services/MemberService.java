@@ -1,5 +1,7 @@
 package net.bitacademy.java41.services;
 
+import java.util.List;
+
 import net.bitacademy.java41.dao.MemberDao;
 import net.bitacademy.java41.vo.Member;
 
@@ -13,5 +15,22 @@ public class MemberService {
 	
 	public void signUp(Member member) throws Exception {
 		memberDao.add(member);
+	}
+	
+	public List<Member> getMemberList() throws Exception {
+		return memberDao.list();
+	}
+	
+	public Member getMember(String email) throws Exception {
+		return memberDao.get(email);
+	}
+	
+	public boolean changePassword(
+			String email, String oldPassword, String newPassword) throws Exception {
+		if (memberDao.changePassword(email, oldPassword, newPassword) > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

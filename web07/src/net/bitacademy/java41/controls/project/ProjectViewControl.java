@@ -3,13 +3,13 @@ package net.bitacademy.java41.controls.project;
 import java.util.Map;
 
 import net.bitacademy.java41.controls.PageControl;
-import net.bitacademy.java41.dao.ProjectDao;
+import net.bitacademy.java41.services.ProjectService;
 
 public class ProjectViewControl implements PageControl {
-	ProjectDao projectDao;
-	
-	public ProjectViewControl setProjectDao(ProjectDao projectDao) {
-		this.projectDao = projectDao;
+	ProjectService projectService;
+
+	public ProjectViewControl setProjectService(ProjectService projectService) {
+		this.projectService = projectService;
 		return this;
 	}
 	
@@ -19,7 +19,7 @@ public class ProjectViewControl implements PageControl {
 		Map<String,String[]> params = 
 				(Map<String,String[]>)model.get("params");
 		int no = Integer.parseInt(params.get("no")[0]);
-		model.put("project", projectDao.get(no));
+		model.put("project", projectService.getProject(no));
 		
 		return "/project/view.jsp";
 	}

@@ -3,19 +3,19 @@ package net.bitacademy.java41.controls.member;
 import java.util.Map;
 
 import net.bitacademy.java41.controls.PageControl;
-import net.bitacademy.java41.dao.MemberDao;
+import net.bitacademy.java41.services.MemberService;
 
 public class MemberListControl implements PageControl {
-	MemberDao memberDao;
+	MemberService memberService;
 	
-	public MemberListControl setMemberDao(MemberDao memberDao) {
-		this.memberDao = memberDao;
+	public MemberListControl setMemberService(MemberService memberService) {
+		this.memberService = memberService;
 		return this;
 	}
 
 	@Override
 	public String execute(Map<String, Object> model) throws Exception {
-		model.put("list", memberDao.list());
+		model.put("list", memberService.getMemberList());
 		
 		return "/member/list.jsp";
 	}

@@ -3,13 +3,13 @@ package net.bitacademy.java41.controls.member;
 import java.util.Map;
 
 import net.bitacademy.java41.controls.PageControl;
-import net.bitacademy.java41.dao.MemberDao;
+import net.bitacademy.java41.services.MemberService;
 
 public class MemberViewControl implements PageControl {
-	MemberDao memberDao;
+	MemberService memberService;
 	
-	public MemberViewControl setMemberDao(MemberDao memberDao) {
-		this.memberDao = memberDao;
+	public MemberViewControl setMemberService(MemberService memberService) {
+		this.memberService = memberService;
 		return this;
 	}
 	
@@ -19,7 +19,7 @@ public class MemberViewControl implements PageControl {
 		Map<String,String[]> params = 
 				(Map<String,String[]>)model.get("params");
 		String email = params.get("email")[0];
-		model.put("memberInfo", memberDao.get(email));
+		model.put("memberInfo", memberService.getMember(email));
 		
 		return "/member/view.jsp";
 	}

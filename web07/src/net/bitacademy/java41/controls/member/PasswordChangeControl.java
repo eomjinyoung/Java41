@@ -3,13 +3,13 @@ package net.bitacademy.java41.controls.member;
 import java.util.Map;
 
 import net.bitacademy.java41.controls.PageControl;
-import net.bitacademy.java41.dao.MemberDao;
+import net.bitacademy.java41.services.MemberService;
 
 public class PasswordChangeControl implements PageControl {
-	MemberDao memberDao;
+	MemberService memberService;
 	
-	public PasswordChangeControl setMemberDao(MemberDao memberDao) {
-		this.memberDao = memberDao;
+	public PasswordChangeControl setMemberService(MemberService memberService) {
+		this.memberService = memberService;
 		return this;
 	}
 	
@@ -42,7 +42,7 @@ public class PasswordChangeControl implements PageControl {
 		String newPassword2 = params.get("newPassword2")[0];
 		
 		if (newPassword.equals(newPassword2)) {
-			if (memberDao.changePassword(email, oldPassword, newPassword) > 0) {
+			if (memberService.changePassword(email, oldPassword, newPassword)) {
 				model.put("status", "SUCCESS");
 			} else {
 				model.put("status", "OLD_PASSWORD_ERROR");

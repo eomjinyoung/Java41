@@ -5,11 +5,11 @@
     pageEncoding="UTF-8"%>
 <jsp:useBean id="member" 
 	type="net.bitacademy.java41.vo.Member" scope="session"/>
-<jsp:useBean id="projectDao" 
-	type="net.bitacademy.java41.dao.ProjectDao" scope="application"/>  
+<jsp:useBean id="projectService" 
+	type="net.bitacademy.java41.services.ProjectService" scope="application"/>  
 <%
 pageContext.setAttribute("myprojects", 
-		projectDao.listByMember(member.getEmail()) );
+		projectService.getMyProjects(member.getEmail()) );
 %>	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <div id="sidebar">
