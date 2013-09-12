@@ -21,6 +21,7 @@ import net.bitacademy.java41.controls.project.ProjectViewControl;
 import net.bitacademy.java41.dao.MemberDao;
 import net.bitacademy.java41.dao.ProjectDao;
 import net.bitacademy.java41.services.AuthService;
+import net.bitacademy.java41.services.MemberService;
 import net.bitacademy.java41.util.DBConnectionPool;
 
 public class ContextLoaderListener implements ServletContextListener {
@@ -38,6 +39,8 @@ public class ContextLoaderListener implements ServletContextListener {
 		ProjectDao projectDao = new ProjectDao(dbpool);
 		
 		AuthService authService = new AuthService().setMemberDao(memberDao);
+		MemberService memberService = 
+				new MemberService().setMemberDao(memberDao);
 		
 		ctx.setAttribute("rootPath", ctx.getContextPath());
 		ctx.setAttribute("memberDao", memberDao);
@@ -48,8 +51,8 @@ public class ContextLoaderListener implements ServletContextListener {
 		ctx.setAttribute("/auth/logout.do", new LogoutControl());
 		ctx.setAttribute("/main.do", new MainControl());
 		ctx.setAttribute("/member/signinForm.do", new SigninFormControl());
-		ctx.setAttribute("/member/signin.do", new SigninControl()
-												.setMemberDao(memberDao) );
+		ctx.setAttribute("/member/signin.do", 
+				new SigninControl().setMemberService(memberService) );
 		ctx.setAttribute("/project/list.do", new ProjectListControl()
 												.setProjectDao(projectDao));
 		ctx.setAttribute("/project/view.do", new ProjectViewControl()

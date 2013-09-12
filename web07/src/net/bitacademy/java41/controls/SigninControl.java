@@ -4,14 +4,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import net.bitacademy.java41.dao.MemberDao;
+import net.bitacademy.java41.services.MemberService;
 import net.bitacademy.java41.vo.Member;
 
 public class SigninControl implements PageControl {
-	MemberDao memberDao;
+	MemberService memberService;
 	
-	public SigninControl setMemberDao(MemberDao memberDao) {
-		this.memberDao = memberDao;
+	public SigninControl setMemberService(MemberService memberService) {
+		this.memberService = memberService;
 		return this;
 	}
 
@@ -30,7 +30,7 @@ public class SigninControl implements PageControl {
 						.setDetailAddress(params.get("detailAddr")[0])
 						.setTag(params.get("tag")[0]);
 		
-		memberDao.add(member);
+		memberService.signUp(member);
 		
 		HttpSession session = (HttpSession)model.get("session");
 		session.setAttribute("member", member);
