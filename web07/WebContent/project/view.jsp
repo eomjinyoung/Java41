@@ -14,6 +14,13 @@
 <jsp:include page="/sidebar.jsp"></jsp:include>
 
 <div id="content">
+<div id="submenu">
+<p>
+<a href="view.do?no=${project.no}">[기본정보]</a> | 
+<a href="../task/list.do?projectNo=${project.no}">[작업들]</a> | 
+<a href="../feed/list.do?projectNo=${project.no}">[게시판]</a>
+</p>
+</div>
 <h1>프로젝트 정보</h1>
 번호: ${project.no}<br>
 프로젝트명: ${project.title }<br>
