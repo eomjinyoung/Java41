@@ -131,13 +131,15 @@ public class ProjectDao {
 		}
 	}
 	
-	public int add(Project project, Connection transactionConnection) throws Exception {
-		Connection con = transactionConnection;
+	public int add(Project project) throws Exception {
+		Connection con = null;
 		PreparedStatement projectStmt = null;
 		PreparedStatement projectMemberStmt = null;
 		ResultSet rs = null;
 		
 		try {
+			con = this.conPool.getConnection();
+			
 			// 1. 프로젝트를 등록한다.
 			projectStmt = con.prepareStatement(
 				"insert into SPMS_PRJS("

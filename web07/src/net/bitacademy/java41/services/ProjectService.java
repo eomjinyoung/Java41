@@ -40,7 +40,7 @@ public class ProjectService {
 		Connection con = dbPool.getConnection();
 		con.setAutoCommit(false);
 		try {
-			projectDao.add(project, con);
+			projectDao.add(project);
 			con.commit();
 		} catch (Exception e) {
 			con.rollback();
