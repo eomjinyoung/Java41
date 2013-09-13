@@ -1,5 +1,7 @@
 package net.bitacademy.java41.test;
 
+import java.util.ArrayList;
+
 /* Iterator 패턴
  * - 창고로부터 값을 꺼내는 방법을 객체화 
  * - 값을 꺼내려는 개발자는 일관된 방식으로 메서드를 호출하여 값을 꺼낼 수 있다.
@@ -20,17 +22,118 @@ interface Iterator {
 	Object next();
 }
 
+class AscendentIterator implements Iterator {
+	ArrayList list;
+	int cursor = 0;
+	
+	public AscendentIterator(ArrayList list) {
+		this.list = list;
+	}
+	
+	@Override
+	public boolean hasNext() {
+		if (list.size() > cursor) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
+	@Override
+	public Object next() {
+		Object value = list.get(cursor);
+		cursor++;
+		return value;
+	}
+	
+}
 
+class DescendantIterator implements Iterator {
+	ArrayList list;
+	int cursor;
+	
+	public DescendantIterator(ArrayList list) {
+		this.list = list;
+		cursor = list.size() - 1;
+	}
+	
+	@Override
+	public boolean hasNext() {
+		if (cursor < 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
+	@Override
+	public Object next() {
+		Object value = list.get(cursor);
+		cursor--;
+		return value;
+	}
+	
+}
 
+class EvenIterator implements Iterator {
+	ArrayList list;
+	int cursor;
+	
+	public EvenIterator(ArrayList list) {
+		this.list = list;
+		cursor = 0;
+	}
+	
+	@Override
+	public boolean hasNext() {
+		if (cursor < list.size()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
+	@Override
+	public Object next() {
+		Object value = list.get(cursor);
+		cursor += 2;
+		return value;
+	}
+	
+}
 
 public class IteratorTest {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		ArrayList list = new ArrayList();
+		list.add("1111");
+		list.add("2222");
+		list.add("33333");
+		list.add("4444");
+		list.add("5555");
+		list.add("6666");
+		list.add("7777");
+		list.add("8888");
+		list.add("9999");
+		
+		//Iterator iterator = new AscendentIterator(list);
+		//Iterator iterator = new DescendantIterator(list);
+		Iterator iterator = new EvenIterator(list);
+		
+		while(iterator.hasNext()) {
+			System.out.println(iterator.next());
+		}
+		
 
 	}
 
 }
+
+
+
+
+
+
+
+
+
