@@ -81,7 +81,7 @@ public class MemberDao {
 			
 		} finally {
 			try {stmt.close();} catch(Exception e) {}
-			if (con != null) {
+			if (con != null && con.getAutoCommit()) {
 				conPool.returnConnection(con);
 			}
 		}
@@ -187,7 +187,7 @@ public class MemberDao {
 		
 		} finally {
 			try {stmt.close();} catch(Exception e) {}
-			if (con != null) {
+			if (con != null && con.getAutoCommit()) {
 				conPool.returnConnection(con);
 			}
 		}

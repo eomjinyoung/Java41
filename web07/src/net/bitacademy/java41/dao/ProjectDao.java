@@ -176,6 +176,9 @@ public class ProjectDao {
 			try {rs.close();} catch(Exception e) {}
 			try {projectStmt.close();} catch(Exception e) {}
 			try {projectMemberStmt.close();} catch(Exception e) {}
+			if (con != null && con.getAutoCommit()) {
+				conPool.returnConnection(con);
+			}
 		}
 	}
 /*
