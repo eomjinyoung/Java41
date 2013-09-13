@@ -18,6 +18,8 @@ public class ContextLoaderListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
 		ctx = event.getServletContext();
+		ctx.setAttribute("rootPath", ctx.getContextPath());
+		
 		try {
 			prepareObjects(
 					ctx.getRealPath("/WEB-INF/context.properties"));
@@ -47,25 +49,34 @@ public class ContextLoaderListener implements ServletContextListener {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	private void injectDependancy(Object obj) throws Exception {
 		System.out.println(obj.getClass().getName() + "---------");
-		
 		Method[] methodList = obj.getClass().getMethods();
-		
+		for (Method m : methodList) {
+			callSetter(obj, m);
+		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private void callSetter(Object instance, Method method) throws Exception {
 		Class paramClass = null;
 		Object paramObject = null;
-		for (Method m : methodList) {
-			if (m.getName().startsWith("set")) {
-//				System.out.println("====> " + m.getName());
-//				System.out.println("        " + 
-//							m.getParameterTypes()[0].getName());
-				paramClass = m.getParameterTypes()[0];
+		if (method.getName().startsWith("set")) {
+			paramClass = method.getParameterTypes()[0];
+			if (paramClass == java.lang.String.class) {
+				String propertyName = extractPropertyName(method.getName());
+				method.invoke(instance, objTable.get(propertyName));
+			} else {
 				paramObject = findInstanceByClass(paramClass);
-				m.invoke(obj, paramObject);
+				method.invoke(instance, paramObject);
 			}
+			System.out.println("......" + method.getName());
 		}
-		
+	}
+
+	private String extractPropertyName(String methodName) {
+		return methodName.substring(3, 4).toLowerCase()
+				+ methodName.substring(4);
 	}
 
 	@SuppressWarnings("rawtypes")
