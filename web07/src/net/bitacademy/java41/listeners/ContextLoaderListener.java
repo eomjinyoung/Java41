@@ -1,6 +1,7 @@
 package net.bitacademy.java41.listeners;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -12,6 +13,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import net.bitacademy.java41.annotations.Component;
+
 public class ContextLoaderListener implements ServletContextListener {
 	ServletContext ctx;
 	Hashtable<String,Object> objTable = new Hashtable<String,Object>();
@@ -22,8 +25,12 @@ public class ContextLoaderListener implements ServletContextListener {
 		ctx.setAttribute("rootPath", ctx.getContextPath());
 		
 		try {
-			prepareObjects(
-					ctx.getRealPath("/WEB-INF/context.properties"));
+			loadProperties(
+					ctx.getRealPath("/WEB-INF/db.properties"));
+			
+			prepareObjects( new File(
+					ctx.getRealPath("/WEB-INF/classes")) );
+			
 			prepareDependancy();
 			saveToContext();
 			
@@ -90,48 +97,72 @@ public class ContextLoaderListener implements ServletContextListener {
 		}
 		return null;
 	}
-
+	
 	@SuppressWarnings("rawtypes")
-	private void prepareObjects(String filePath) throws Exception {
-		// /WEB-INF/classes 폴더에 들어있는 클래스 파일들을 뒤져서
-		// @Component라는 애노테이션이 붙은 클래스만 찾아서 
-		// 인스턴스를 생성한다.
-		String classesDir = ctx.getRealPath("/WEB-INF/classes");
-		
-		createInstance( new File(classesDir) );
-		
-		
-		
-		/*
+	private void loadProperties(String propPath) throws Exception {
 		Properties props = new Properties();
-		props.load( new FileReader(filePath));
+		props.load( new FileReader(propPath));
 		
 		Enumeration enums = props.keys();
 		String key = null;
-		String value = null;
-		Class clazz = null;
 		while(enums.hasMoreElements()) {
 			key = (String)enums.nextElement();
-			value = ((String)props.get(key)).trim(); 
-			if (value.charAt(0) == '"') {
-				objTable.put(key, value.substring(1, value.length()-1)); 
-			} else {
-				clazz = Class.forName(value);
-				objTable.put(key, clazz.newInstance());
-			} 
+			objTable.put(key, ((String)props.get(key)).trim()); 
 		}
-		*/
 	}
 	
-	private void createInstance(File file) throws Exception {
+	/**
+	 /WEB-INF/classes 폴더에 들어있는 클래스 파일들을 뒤져서
+	@Component라는 애노테이션이 붙은 클래스만 찾아서 
+	인스턴스를 생성한다.
+			 * 
+	 @param file
+	 @throws Exception
+	 */
+	@SuppressWarnings("rawtypes")
+	private void prepareObjects(File file) throws Exception {
 		if (file.isFile()) {
-			System.out.println( getQName(file.getPath()) );
-			
-		} else if (file.isDirectory()) {
-			File[] childs = file.listFiles(); 
-			for(File f : childs) {
-				createInstance(f);
+			String className = getQName(file.getPath());
+			Class clazz = Class.forName(className);
+			String key = getKeyFromClass(clazz);
+			if (key != null) {
+				System.out.println("====>" + key);
+				objTable.put(key, clazz.newInstance());
 			}
+		} else if (file.isDirectory()) {
+			File[] childs = file.listFiles( new FileFilter() {/*FileFilter를 구현한 객체*/
+						@Override
+						public boolean accept(File file) {
+							if (file.getName().endsWith(".class") || 
+									file.isDirectory()) {
+								return true;
+							} else {
+								return false;
+							}
+						}
+					} ); 
+			for(File f : childs) {
+				prepareObjects(f);
+			}
+		}
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private String getKeyFromClass(Class clazz) throws Exception {
+		Component compAnno = 
+				(Component)clazz.getAnnotation(Component.class);
+		if (compAnno != null) {
+			String value = compAnno.value();
+			if (value.equals("")) {
+				String className = clazz.getSimpleName(); 
+				// ex) ProjectService -> projectService
+				return className.substring(0, 1).toLowerCase() 
+						+ className.substring(1);
+			} else {
+				return value;
+			}
+		} else {
+			return null;
 		}
 	}
 	
