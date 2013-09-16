@@ -1,5 +1,6 @@
 package net.bitacademy.java41.listeners;
 
+import java.io.File;
 import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -97,6 +98,8 @@ public class ContextLoaderListener implements ServletContextListener {
 		// 인스턴스를 생성한다.
 		String classesDir = ctx.getRealPath("/WEB-INF/classes");
 		
+		createInstance( new File(classesDir) );
+		
 		
 		
 		/*
@@ -118,6 +121,27 @@ public class ContextLoaderListener implements ServletContextListener {
 			} 
 		}
 		*/
+	}
+	
+	private void createInstance(File file) throws Exception {
+		if (file.isFile()) {
+			System.out.println( getQName(file.getPath()) );
+			
+		} else if (file.isDirectory()) {
+			File[] childs = file.listFiles(); 
+			for(File f : childs) {
+				createInstance(f);
+			}
+		}
+	}
+	
+	private String getQName(String path) {
+		String temp = path.substring( 
+				path.indexOf("classes") + 8,
+				path.length() - 6);
+		temp = temp.replace('/', '.');
+		temp = temp.replace('\\', '.');
+		return temp;
 	}
 
 	@Override
