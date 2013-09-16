@@ -1,12 +1,13 @@
 package net.bitacademy.java41.listeners;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Properties;
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -14,9 +15,7 @@ import javax.servlet.ServletContextListener;
 
 import net.bitacademy.java41.annotations.Component;
 
-import org.reflections.Reflections;
-
-public class ContextLoaderListener implements ServletContextListener {
+public class ContextLoaderListener03 implements ServletContextListener {
 	ServletContext ctx;
 	Hashtable<String,Object> objTable = new Hashtable<String,Object>();
 	
@@ -28,7 +27,10 @@ public class ContextLoaderListener implements ServletContextListener {
 		try {
 			loadProperties(
 					ctx.getRealPath("/WEB-INF/db.properties"));
-			prepareObjects();
+			
+			prepareObjects( new File(
+					ctx.getRealPath("/WEB-INF/classes")) );
+			
 			prepareDependancy();
 			saveToContext();
 			
@@ -110,17 +112,38 @@ public class ContextLoaderListener implements ServletContextListener {
 	}
 	
 	/**
-	 * 1) classpath를 뒤져서 net.bitacademy.java41 패키지를 찾는다.
+	 /WEB-INF/classes 폴더에 들어있는 클래스 파일들을 뒤져서
+	@Component라는 애노테이션이 붙은 클래스만 찾아서 
+	인스턴스를 생성한다.
+			 * 
+	 @param file
+	 @throws Exception
 	 */
 	@SuppressWarnings("rawtypes")
-	private void prepareObjects() throws Exception {
-		Reflections reflector = new Reflections("net.bitacademy.java41");
-		
-		Set<Class<?>> list = reflector.getTypesAnnotatedWith(Component.class);
-		String key = null;
-		for(Class clazz : list) {
-			key = getKeyFromClass(clazz);
-			objTable.put(key, clazz.newInstance());
+	private void prepareObjects(File file) throws Exception {
+		if (file.isFile()) {
+			String className = getQName(file.getPath());
+			Class clazz = Class.forName(className);
+			String key = getKeyFromClass(clazz);
+			if (key != null) {
+				System.out.println("====>" + key);
+				objTable.put(key, clazz.newInstance());
+			}
+		} else if (file.isDirectory()) {
+			File[] childs = file.listFiles( new FileFilter() {/*FileFilter를 구현한 객체*/
+						@Override
+						public boolean accept(File file) {
+							if (file.getName().endsWith(".class") || 
+									file.isDirectory()) {
+								return true;
+							} else {
+								return false;
+							}
+						}
+					} ); 
+			for(File f : childs) {
+				prepareObjects(f);
+			}
 		}
 	}
 	
@@ -143,6 +166,15 @@ public class ContextLoaderListener implements ServletContextListener {
 		}
 	}
 	
+	private String getQName(String path) {
+		String temp = path.substring( 
+				path.indexOf("classes") + 8,
+				path.length() - 6);
+		temp = temp.replace('/', '.');
+		temp = temp.replace('\\', '.');
+		return temp;
+	}
+
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		
