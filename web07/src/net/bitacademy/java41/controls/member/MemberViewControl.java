@@ -2,9 +2,11 @@ package net.bitacademy.java41.controls.member;
 
 import java.util.Map;
 
+import net.bitacademy.java41.annotations.Component;
 import net.bitacademy.java41.controls.PageControl;
 import net.bitacademy.java41.services.MemberService;
 
+@Component("/member/view.do")
 public class MemberViewControl implements PageControl {
 	MemberService memberService;
 	

@@ -4,9 +4,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import net.bitacademy.java41.annotations.Component;
 import net.bitacademy.java41.services.MemberService;
 import net.bitacademy.java41.vo.Member;
 
+@Component("/member/signin.do")
 public class SigninControl implements PageControl {
 	MemberService memberService;
 	

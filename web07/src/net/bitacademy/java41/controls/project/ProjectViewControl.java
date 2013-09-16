@@ -2,9 +2,11 @@ package net.bitacademy.java41.controls.project;
 
 import java.util.Map;
 
+import net.bitacademy.java41.annotations.Component;
 import net.bitacademy.java41.controls.PageControl;
 import net.bitacademy.java41.services.ProjectService;
 
+@Component("/project/view.do")
 public class ProjectViewControl implements PageControl {
 	ProjectService projectService;
 

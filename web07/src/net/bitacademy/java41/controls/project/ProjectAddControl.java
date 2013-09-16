@@ -5,11 +5,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import net.bitacademy.java41.annotations.Component;
 import net.bitacademy.java41.controls.PageControl;
 import net.bitacademy.java41.services.ProjectService;
 import net.bitacademy.java41.vo.Member;
 import net.bitacademy.java41.vo.Project;
 
+@Component("/project/add.do")
 public class ProjectAddControl implements PageControl {
 	ProjectService projectService;
 

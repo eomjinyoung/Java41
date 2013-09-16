@@ -1,8 +1,10 @@
 package net.bitacademy.java41.services;
 
+import net.bitacademy.java41.annotations.Component;
 import net.bitacademy.java41.dao.MemberDao;
 import net.bitacademy.java41.vo.Member;
 
+@Component
 public class AuthService {
 	MemberDao memberDao;
 	
