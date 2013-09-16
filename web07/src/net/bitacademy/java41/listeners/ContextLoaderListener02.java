@@ -11,7 +11,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-public class ContextLoaderListener implements ServletContextListener {
+public class ContextLoaderListener02 implements ServletContextListener {
 	ServletContext ctx;
 	Hashtable<String,Object> objTable = new Hashtable<String,Object>();
 	
@@ -92,14 +92,6 @@ public class ContextLoaderListener implements ServletContextListener {
 
 	@SuppressWarnings("rawtypes")
 	private void prepareObjects(String filePath) throws Exception {
-		// /WEB-INF/classes 폴더에 들어있는 클래스 파일들을 뒤져서
-		// @Component라는 애노테이션이 붙은 클래스만 찾아서 
-		// 인스턴스를 생성한다.
-		String classesDir = ctx.getRealPath("/WEB-INF/classes");
-		
-		
-		
-		/*
 		Properties props = new Properties();
 		props.load( new FileReader(filePath));
 		
@@ -117,7 +109,7 @@ public class ContextLoaderListener implements ServletContextListener {
 				objTable.put(key, clazz.newInstance());
 			} 
 		}
-		*/
+		
 	}
 
 	@Override
