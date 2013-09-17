@@ -69,8 +69,9 @@ public class SigninControl implements PageControl {
 	}
 	
 	synchronized private String getNewFileName() {
-		long millis = System.currentTimeMillis();
+		long millis = System.currentTimeMillis(); //1000
 		if (currTime != millis) {
+			currTime = millis;
 			count = 0;
 		}
 		return "member_" + millis + "_" + (++count);

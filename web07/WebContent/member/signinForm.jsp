@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>회원가입</h1>
-<form action="signin.do" method="post">
+<form action="signin.do" method="post" enctype="multipart/form-data">
 *이메일: <input type="text" name="email"><br>
 *암호: <input type="password" name="password"><br>
 암호 확인: <input type="password" name="password2"><br>

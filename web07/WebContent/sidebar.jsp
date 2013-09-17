@@ -3,6 +3,7 @@
 <%@ page language="java" 
 	contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>        
 <jsp:useBean id="member" 
 	type="net.bitacademy.java41.vo.Member" scope="session"/>
 <jsp:useBean id="projectService" 
@@ -14,7 +15,14 @@ pageContext.setAttribute("myprojects",
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <div id="sidebar">
 <div id="member">
-<img id="memberPhoto" src="${rootPath}/images/test01.png">
+<c:choose>
+	<c:when test="${member.photos != null}">
+		<img id="memberPhoto" src="${rootPath}/file/${member.photos[0]}">
+	</c:when>
+	<c:otherwise>
+		<img id="memberPhoto" src="${rootPath}/images/test01.png">
+	</c:otherwise>
+</c:choose>
 <div id="memberInfo">
 <p id="name"><a href="${rootPath}/member/updateMyInfo.do">${member.name }</a></p>
 <p id="tel">${member.tel }</p>
