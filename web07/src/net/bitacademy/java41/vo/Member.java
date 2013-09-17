@@ -17,6 +17,7 @@ public class Member implements Serializable {
 	private String	detailAddress;
 	private String	tag;
 	private int		level;
+	private String[] photos;
 	
 	public String getEmail() {
 		return email;
@@ -93,6 +94,13 @@ public class Member implements Serializable {
 	}
 	public Member setLevel(int level) {
 		this.level = level;
+		return this;
+	}
+	public String[] getPhotos() {
+		return photos;
+	}
+	public Member setPhotos(String[] photos) {
+		this.photos = photos;
 		return this;
 	}
 	

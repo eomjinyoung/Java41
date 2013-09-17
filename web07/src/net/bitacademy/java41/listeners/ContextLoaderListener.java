@@ -23,7 +23,9 @@ public class ContextLoaderListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
 		ctx = event.getServletContext();
-		ctx.setAttribute("rootPath", ctx.getContextPath());
+		
+		objTable.put("rootPath", ctx.getContextPath());
+		objTable.put("rootRealPath", ctx.getRealPath("/"));
 		
 		try {
 			loadProperties(

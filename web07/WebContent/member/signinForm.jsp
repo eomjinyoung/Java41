@@ -14,6 +14,7 @@
 암호 확인: <input type="password" name="password2"><br>
 *이름: <input type="text" name="name"><br>
 *전화: <input type="text" name="tel"><br>
+사진: <input type="file" name="photo"><br>
 블로그: <input type="text" name="blog"><br>
 우편번호: <input type="text" name="postno">
 		<input type="button" value="우편번호찾기"><br>
