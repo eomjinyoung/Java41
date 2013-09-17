@@ -1,3 +1,5 @@
+<%@page import="java.io.File"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="java.util.List"%>
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
@@ -5,6 +7,18 @@
 <%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%! 
+long currTime = 0;
+int count = 0;
+
+synchronized private String getNewFileName() {
+	long millis = System.currentTimeMillis();
+	if (currTime != millis) {
+		count = 0;
+	}
+	return "file_" + millis + "_" + (++count);
+}
+%>    
 <%
 boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
@@ -19,15 +33,16 @@ List<FileItem> partList = uploadHandler.parseRequest(request);
 
 // 4. FileItem 객체로부터 파라미터 값이나 파일 데이터를 꺼낸다.
 for(FileItem item : partList) {
+	if (item.isFormField()) { // 일반 파라미터
+		pageContext.setAttribute(item.getFieldName(), item.getString("UTF-8"));
 	
+	} else { // 파일 업로드
+		String newFileName = this.getNewFileName();
+		pageContext.setAttribute(item.getFieldName(), newFileName);
+		String savedPath = application.getRealPath("/file/" + newFileName);
+		item.write(new File(savedPath));
+	}
 }
-
-request.setCharacterEncoding("UTF-8");
-String name = request.getParameter("name");
-String age = request.getParameter("age");
-String photo1 = request.getParameter("photo1");
-String photo2 = request.getParameter("photo2");
-
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -37,9 +52,22 @@ String photo2 = request.getParameter("photo2");
 </head>
 <body>
 멀티파트: <%=isMultipart %><br>
-이름: <%=name %><br>
-나이: <%=age %><br>
-사진1: <%=photo1 %><br>
-사진2: <%=photo2 %><br>
+이름: ${name}<br>
+나이: ${age}<br>
+
+사진1: ${photo1}<br>
+<img src="${photo1}"><br>
+
+사진2: ${photo2}<br>
+<img src="${photo2}"><br>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
