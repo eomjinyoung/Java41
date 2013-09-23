@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -40,36 +41,18 @@ public class ProjectDao {
 	}
 	
 	public Project get(int no) throws Exception {
-		Connection con = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
 		
+		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {
-			stmt = con.prepareStatement(
-					"select PNO,TITLE,CONTENT,START_DATE,END_DATE,TAG"
-							+ " from SPMS_PRJS"
-							+ " where PNO=?");
-			stmt.setInt(1, no);
-			rs = stmt.executeQuery();
-			
-			if (rs.next()) {
-				return new Project()
-							.setNo(rs.getInt("PNO"))
-							.setTitle(rs.getString("TITLE"))
-							.setContent(rs.getString("CONTENT"))
-							.setStartDate(rs.getDate("START_DATE"))
-							.setEndDate(rs.getDate("END_DATE"))
-							.setTag(rs.getString("TAG"));
-			} else {
-				return null;
-			}
-			
+			return sqlSession.selectOne(
+					"net.bitacademy.java41.dao.ProjectMapper.get",
+					no);
 		} catch (Exception e) {
 			throw e;
 			
 		} finally {
-			try {rs.close();} catch (Exception e) {}
-			try {stmt.close();} catch (Exception e) {}
+			try {sqlSession.close();} catch (Exception e) {}
+			
 		}
 	}
 	
@@ -88,48 +71,30 @@ public class ProjectDao {
 	}
 	
 	public int add(Project project) throws Exception {
-		Connection con = null;
-		PreparedStatement projectStmt = null;
-		PreparedStatement projectMemberStmt = null;
-		ResultSet rs = null;
+		SqlSession sqlSession = sqlSessionFactory.openSession();
 		
 		try {
-			// 1. 프로젝트를 등록한다.
-			projectStmt = con.prepareStatement(
-				"insert into SPMS_PRJS("
-				+ " TITLE,CONTENT,START_DATE,END_DATE,TAG)"
-				+ " values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-			projectStmt.setString(1, project.getTitle());
-			projectStmt.setString(2, project.getContent());
-			projectStmt.setDate(3, project.getStartDate());
-			projectStmt.setDate(4, project.getEndDate());
-			projectStmt.setString(5, project.getTag());
-			projectStmt.executeUpdate();
+			sqlSession.insert(
+				"net.bitacademy.java41.dao.ProjectMapper.add", project);
 			
-			// * 자동 생성된 PK 값 알아내기
-			rs = projectStmt.getGeneratedKeys();
-			if (rs.next()) {
-				project.setNo( rs.getInt(1) );
-			}
+			HashMap<String,Object> paramMap = new HashMap<String,Object>();
+			paramMap.put("email", project.getLeader());
+			paramMap.put("projectNo", project.getNo());
+			paramMap.put("memberLevel", 0);
 			
-			// 2. 프로젝트의 PL을 등록한다.
-			projectMemberStmt = con.prepareStatement(
-					"insert into SPMS_PRJMEMB("
-					+ " EMAIL,PNO,LEVEL)"
-					+ " values(?,?,0)");
-			projectMemberStmt.setString(1, project.getLeader());
-			projectMemberStmt.setInt(2, project.getNo());
-			projectMemberStmt.executeUpdate();
+			sqlSession.insert(
+				"net.bitacademy.java41.dao.ProjectMapper.addProjectMember", 
+				paramMap);
 			
+			sqlSession.commit();
 			return project.getNo();
 			
 		} catch (Exception e) {
+			sqlSession.rollback();
 			throw e;
 			
 		} finally {
-			try {rs.close();} catch(Exception e) {}
-			try {projectStmt.close();} catch(Exception e) {}
-			try {projectMemberStmt.close();} catch(Exception e) {}
+			try {sqlSession.close();} catch(Exception e) {}
 		}
 	}
 /*

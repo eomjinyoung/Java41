@@ -39,18 +39,12 @@ public class ProjectService {
 	}
 	
 	public void addProject(Project project) throws Exception {
-		Connection con = dbPool.getConnection();
-		con.setAutoCommit(false);
 		try {
 			projectDao.add(project);
-			con.commit();
 		} catch (Exception e) {
-			con.rollback();
 			throw e;
 			
 		} finally {
-			con.setAutoCommit(true);
-			dbPool.returnConnection(con);
 		}
 	}
 }

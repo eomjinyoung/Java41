@@ -22,6 +22,27 @@
 	    from SPMS_PRJS
 	    order by PNO desc
 	</select>
+	
+	<select id="get" 
+			parameterType="int" 
+			resultType="Project">
+	    select PNO as no,TITLE,CONTENT,
+	    		START_DATE as startDate,
+	    		END_DATE as endDate,TAG
+		from SPMS_PRJS
+		where PNO=#{value}
+	</select>
+	
+	<insert id="add" parameterType="Project"
+		useGeneratedKeys="true" keyProperty="no">
+		insert into SPMS_PRJS(TITLE,CONTENT,START_DATE,END_DATE,TAG)
+		values(#{title},#{content},#{startDate},#{endDate},#{tag})
+	</insert>
+	
+	<insert id="addProjectMember" parameterType="map">
+		insert into SPMS_PRJMEMB(EMAIL,PNO,LEVEL)
+		values(#{email},#{projectNo},#{memberLevel})
+	</insert>
 </mapper> 
 
 
