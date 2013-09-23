@@ -47,39 +47,24 @@ public class MemberDao {
 			try {sqlSession.close();} catch (Exception e) {}
 		}		
 	}
-/*	
+	
 	public int add(Member member) throws Exception {
-		Connection con = null;
-		PreparedStatement stmt = null;
-		
+		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {
-			con = conPool.getConnection();
-			stmt = con.prepareStatement(
-				"insert into SPMS_MEMBS("
-				+ " EMAIL,MNAME,PWD,TEL,"
-				+ " BLOG,REG_DATE,UPDATE_DATE,DET_ADDR,TAG,LEVEL)"
-				+ " values(?,?,?,?,?,now(),now(),?,?,?)");
-			stmt.setString(1, member.getEmail());
-			stmt.setString(2, member.getName());
-			stmt.setString(3, member.getPassword());
-			stmt.setString(4, member.getTel());
-			stmt.setString(5, member.getBlog());
-			stmt.setString(6, member.getDetailAddress());
-			stmt.setString(7, member.getTag());
-			stmt.setInt(8, member.getLevel());
-			return stmt.executeUpdate();
+			int count = sqlSession.insert(
+				"net.bitacademy.java41.dao.MemberMapper.add", member);
+			sqlSession.commit();
 			
+			return count;
 		} catch (Exception e) {
+			sqlSession.rollback();
 			throw e;
 			
 		} finally {
-			try {stmt.close();} catch(Exception e) {}
-			if (con != null && con.getAutoCommit()) {
-				conPool.returnConnection(con);
-			}
+			try {sqlSession.close();} catch(Exception e) {}
 		}
 	}
-	
+/*	
 	public List<Member> list() throws Exception {
 		Connection con = null;
 		Statement stmt = null;
@@ -117,7 +102,8 @@ public class MemberDao {
 			}
 		}
 	}
-
+*/
+/*	
 	public Member get(String email) throws Exception {
 		Connection con = null;
 		PreparedStatement stmt = null;
@@ -158,7 +144,8 @@ public class MemberDao {
 			}
 		}
 	}
-	
+*/
+/*	
 	public int changePassword(
 			String email, String oldPassword, String newPassword) throws Exception {
 		Connection con = null;
@@ -185,31 +172,27 @@ public class MemberDao {
 			}
 		}
 	}
-	
+*/	
 	public void addPhoto(String email, String path) throws Exception {
-		Connection con = null;
-		PreparedStatement stmt = null;
-		
+		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {
-			con = conPool.getConnection();
-			stmt = con.prepareStatement(
-				"insert into SPMS_MEMIMG(EMAIL,IMGURL)"
-				+ " values(?,?)");
-			stmt.setString(1, email);
-			stmt.setString(2, path);
-			stmt.executeUpdate();
+			HashMap<String,Object> paramMap = new HashMap<String,Object>();
+			paramMap.put("email", email);
+			paramMap.put("path", path);
+			
+			sqlSession.insert(
+				"net.bitacademy.java41.dao.MemberMapper.addPhoto", paramMap);
+			sqlSession.commit();
 			
 		} catch (Exception e) {
+			sqlSession.rollback();
 			throw e;
 			
 		} finally {
-			try {stmt.close();} catch(Exception e) {}
-			if (con != null && con.getAutoCommit()) {
-				conPool.returnConnection(con);
-			}
+			try {sqlSession.close();} catch(Exception e) {}
 		}
 	}
-	
+/*	
 	public List<Photo> listPhoto(String email) throws Exception {
 		Connection con = null;
 		PreparedStatement stmt = null;

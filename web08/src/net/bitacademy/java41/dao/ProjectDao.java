@@ -26,34 +26,16 @@ public class ProjectDao {
 	public ProjectDao() {}
 	
 	public List<Project> list() throws Exception {
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
+		SqlSession sqlSession = sqlSessionFactory.openSession();
 		
-		ArrayList<Project> list = new ArrayList<Project>();
-
 		try {
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(
-					"select PNO,TITLE,START_DATE,END_DATE"
-					+ " from SPMS_PRJS"
-					+ " order by PNO desc");
-			
-			while(rs.next()) {
-				list.add(new Project()
-							.setNo(rs.getInt("PNO"))
-							.setTitle(rs.getString("TITLE"))
-							.setStartDate(rs.getDate("START_DATE"))
-							.setEndDate(rs.getDate("END_DATE")));
-			}
-			
-			return list;
+			return sqlSession.selectList(
+					"net.bitacademy.java41.dao.ProjectMapper.list");
 		} catch (Exception e) {
 			throw e;
 			
 		} finally {
-			try {rs.close();} catch (Exception e) {}
-			try {stmt.close();} catch (Exception e) {}
+			try {sqlSession.close();} catch (Exception e) {}
 		}
 	}
 	

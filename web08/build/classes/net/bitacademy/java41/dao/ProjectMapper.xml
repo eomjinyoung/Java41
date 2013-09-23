@@ -11,5 +11,21 @@
 	    from SPMS_PRJS t1, SPMS_PRJMEMB t2 
 	    where t1.PNO=t2.PNO and t2.EMAIL=#{value}
 	</select>
+	
+	<select id="list"  
+			resultType="Project">
+	    select 
+	    		PNO as no,
+	    		TITLE,
+	    		START_DATE as startDate,
+	    		END_DATE as endDate
+	    from SPMS_PRJS
+	    order by PNO desc
+	</select>
 </mapper> 
+
+
+
+
+
 

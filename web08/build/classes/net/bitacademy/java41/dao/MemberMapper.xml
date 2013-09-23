@@ -11,5 +11,22 @@
 	    from SPMS_MEMBS 
 	    where EMAIL=#{email} and PWD=#{password}
 	</select>
+	
+	<insert id="add" parameterType="Member">
+		insert into SPMS_MEMBS(EMAIL,MNAME,PWD,TEL,
+			BLOG,REG_DATE,UPDATE_DATE,DET_ADDR,TAG,LEVEL)
+		values(#{email},#{name},#{password},#{tel},
+			#{blog},now(),now(),#{detailAddress},#{tag},#{level})
+	</insert>
+	
+	<insert id="addPhoto" parameterType="map">
+		insert into SPMS_MEMIMG(EMAIL,IMGURL)
+		values(#{email},#{path})
+	</insert>
 </mapper> 
+
+
+
+
+
 

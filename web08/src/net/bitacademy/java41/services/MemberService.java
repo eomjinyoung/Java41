@@ -23,25 +23,20 @@ public class MemberService {
 	}
 
 	public void signUp(Member member) throws Exception {
-		Connection con = dbConnectionPool.getConnection();
-		con.setAutoCommit(false);
 		try {
-			//memberDao.add(member);
+			memberDao.add(member);
 			String[] photos = member.getPhotos();
 			if (photos != null) {
 				for (String path : photos) {
-					//memberDao.addPhoto(member.getEmail(), path);
+					memberDao.addPhoto(member.getEmail(), path);
 				}
 			}
-			con.commit();
 			
 		} catch (Exception e) {
-			con.rollback();
 			throw e;
 			
 		} finally {
-			con.setAutoCommit(true);
-			dbConnectionPool.returnConnection(con);
+			
 		}
 	}
 	
