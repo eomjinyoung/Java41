@@ -6,6 +6,14 @@
 	<!-- 설정파일에서 사용할 프로퍼티의 파일의 경로 지정: classpath -->
 	<properties resource="net/bitacademy/java41/dao/db.properties"/>
 
+	<!-- 자주 사용하는 클래스는 별도로 별명을 지정한 다음 사용하면 편하다.  -->
+	<typeAliases>
+		<typeAlias type="net.bitacademy.java41.vo.Member" alias="Member"/>
+		<typeAlias type="net.bitacademy.java41.vo.MemberProject" alias="MemberProject"/>
+		<typeAlias type="net.bitacademy.java41.vo.Photo" alias="Photo"/>
+		<typeAlias type="net.bitacademy.java41.vo.Project" alias="Project"/>
+	</typeAliases>
+
 	<!-- DBMS 관련 정보 설정 
 		. default 속성: 프레임워크에서 사용할 DB 환경을 지정한다.
 		               <environment>의 id 값!
@@ -36,6 +44,7 @@
 	<!-- SQL문이 들어있는 파일을 지정 -->
 	<mappers>
 		<mapper resource="net/bitacademy/java41/dao/MemberMapper.xml" />
+		<mapper resource="net/bitacademy/java41/dao/ProjectMapper.xml" />
 	</mappers>
 </configuration>
 

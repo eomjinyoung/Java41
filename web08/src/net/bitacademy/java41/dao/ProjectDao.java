@@ -7,6 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
 import net.bitacademy.java41.annotations.Component;
 import net.bitacademy.java41.util.DBConnectionPool;
 import net.bitacademy.java41.vo.MemberProject;
@@ -14,18 +17,13 @@ import net.bitacademy.java41.vo.Project;
 
 @Component
 public class ProjectDao {
-	DBConnectionPool conPool;
+	SqlSessionFactory sqlSessionFactory;
 	
-	public ProjectDao setDBConnectionPool(DBConnectionPool conPool) {
-		this.conPool = conPool;
-		return this;
+	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+		this.sqlSessionFactory = sqlSessionFactory;
 	}
-	
+
 	public ProjectDao() {}
-	
-	public ProjectDao(DBConnectionPool conPool) {
-		this.conPool = conPool;
-	}
 	
 	public List<Project> list() throws Exception {
 		Connection con = null;
@@ -35,7 +33,6 @@ public class ProjectDao {
 		ArrayList<Project> list = new ArrayList<Project>();
 
 		try {
-			con = conPool.getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(
 					"select PNO,TITLE,START_DATE,END_DATE"
@@ -57,9 +54,6 @@ public class ProjectDao {
 		} finally {
 			try {rs.close();} catch (Exception e) {}
 			try {stmt.close();} catch (Exception e) {}
-			if (con != null) {
-				conPool.returnConnection(con);
-			}
 		}
 	}
 	
@@ -69,7 +63,6 @@ public class ProjectDao {
 		ResultSet rs = null;
 		
 		try {
-			con = conPool.getConnection();
 			stmt = con.prepareStatement(
 					"select PNO,TITLE,CONTENT,START_DATE,END_DATE,TAG"
 							+ " from SPMS_PRJS"
@@ -95,48 +88,20 @@ public class ProjectDao {
 		} finally {
 			try {rs.close();} catch (Exception e) {}
 			try {stmt.close();} catch (Exception e) {}
-			if (con != null) {
-				conPool.returnConnection(con);
-			}
 		}
 	}
 	
 	public List<MemberProject> listByMember(String email) throws Exception {
-		Connection con = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		ArrayList<MemberProject> list = new ArrayList<MemberProject>();
-
+		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {
-			con = conPool.getConnection();
-			
-			String sql = "select t1.PNO,t1.TITLE,t2.LEVEL ";
-			sql += " from SPMS_PRJS t1, SPMS_PRJMEMB t2 ";
-			sql += " where t1.PNO=t2.PNO ";
-			sql += " and t2.EMAIL=?";
-			
-			stmt = con.prepareStatement(sql);
-			stmt.setString(1, email);
-			rs = stmt.executeQuery();
-			
-			while(rs.next()) {
-				list.add(new MemberProject()
-							.setNo(rs.getInt("PNO"))
-							.setTitle(rs.getString("TITLE"))
-							.setLevel(rs.getInt("LEVEL")));
-			}
-			
-			return list;
+			return sqlSession.selectList(
+					"net.bitacademy.java41.dao.ProjectMapper.listByMember",
+					email);
 		} catch (Exception e) {
 			throw e;
 			
 		} finally {
-			try {rs.close();} catch (Exception e) {}
-			try {stmt.close();} catch (Exception e) {}
-			if (con != null) {
-				conPool.returnConnection(con);
-			}
+			try {sqlSession.close();} catch (Exception e) {}
 		}
 	}
 	
@@ -147,8 +112,6 @@ public class ProjectDao {
 		ResultSet rs = null;
 		
 		try {
-			con = this.conPool.getConnection();
-			
 			// 1. 프로젝트를 등록한다.
 			projectStmt = con.prepareStatement(
 				"insert into SPMS_PRJS("
@@ -185,9 +148,6 @@ public class ProjectDao {
 			try {rs.close();} catch(Exception e) {}
 			try {projectStmt.close();} catch(Exception e) {}
 			try {projectMemberStmt.close();} catch(Exception e) {}
-			if (con != null && con.getAutoCommit()) {
-				conPool.returnConnection(con);
-			}
 		}
 	}
 /*

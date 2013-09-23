@@ -6,8 +6,8 @@
 <mapper namespace="net.bitacademy.java41.dao.MemberMapper">
 	<select id="getMember" 
 			parameterType="map" 
-			resultType="net.bitacademy.java41.vo.Member">
-	    select EMAIL,MNAME,TEL,LEVEL 
+			resultType="Member">
+	    select EMAIL,MNAME as name,TEL,LEVEL 
 	    from SPMS_MEMBS 
 	    where EMAIL=#{email} and PWD=#{password}
 	</select>
