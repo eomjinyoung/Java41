@@ -43,6 +43,26 @@
 		insert into SPMS_PRJMEMB(EMAIL,PNO,LEVEL)
 		values(#{email},#{projectNo},#{memberLevel})
 	</insert>
+	
+	<update id="update" parameterType="Project">
+		update SPMS_PRJS set
+			TITLE=#{title},
+			CONTENT=#{content},
+	 		START_DATE=#{startDate},
+			END_DATE=#{endDate},
+			TAG=#{tag}
+		where PNO=#{no}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from SPMS_PRJS 
+		where PNO=#{value}
+	</delete>
+	
+	<delete id="deleteProjectMember" parameterType="int">
+		delete from SPMS_PRJMEMB 
+		where PNO=#{value}
+	</delete>
 </mapper> 
 
 

@@ -1,6 +1,5 @@
 package net.bitacademy.java41.services;
 
-import java.sql.Connection;
 import java.util.List;
 
 import net.bitacademy.java41.annotations.Component;
@@ -46,6 +45,28 @@ public class ProjectService {
 			
 		} finally {
 		}
+	}
+
+	public void updateProject(Project project) {
+		try {
+			projectDao.update(project);
+		} catch (Exception e) {
+			throw e;
+			
+		} finally {
+		}
+		
+	}
+
+	public void removeProject(int no) {
+		try {
+			projectDao.delete(no);
+		} catch (Exception e) {
+			throw e;
+			
+		} finally {
+		}
+		
 	}
 }
 
