@@ -3,8 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!--  
-<select id="getUser" resultMap="usermap">
-    select * from users
-</select>
--->        
+<mapper namespace="net.bitacademy.java41.dao.MemberMapper">
+	<select id="getMember" 
+			parameterType="map" 
+			resultType="net.bitacademy.java41.vo.Member">
+	    select EMAIL,MNAME,TEL,LEVEL 
+	    from SPMS_MEMBS 
+	    where EMAIL=#{email} and PWD=#{password}
+	</select>
+</mapper> 
+

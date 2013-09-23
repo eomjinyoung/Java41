@@ -5,7 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import net.bitacademy.java41.annotations.Component;
 import net.bitacademy.java41.util.DBConnectionPool;
@@ -14,68 +18,36 @@ import net.bitacademy.java41.vo.Photo;
 
 @Component
 public class MemberDao {
-	DBConnectionPool conPool;
+	SqlSessionFactory sqlSessionFactory;
 	
-	public MemberDao setDBConnectionPool(DBConnectionPool conPool) {
-		this.conPool = conPool;
-		return this;
+	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+		this.sqlSessionFactory = sqlSessionFactory;
 	}
-	
+
 	public MemberDao() {	}
 	
-	public MemberDao(DBConnectionPool conPool) {
-		this.conPool = conPool;
-	}
-	
 	public Member getMember(String email, String password) throws Exception {
-		Connection con = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
+		SqlSession sqlSession = sqlSessionFactory.openSession();
 		
 		try {
-			con = conPool.getConnection();
-			stmt = con.prepareStatement(
-				"select EMAIL,MNAME,TEL,LEVEL from SPMS_MEMBS "
-				+ " where EMAIL=? and PWD=?"); // ? -> in-parameter
-			stmt.setString(1, email);
-			stmt.setString(2, password);
-			rs = stmt.executeQuery();
+			HashMap<String,Object> paramMap = new HashMap<String,Object>();
+			paramMap.put("email", email);
+			paramMap.put("password", password);
 			
-			if (rs.next()) {
-				List<Photo> list = this.listPhoto(email);
-				String[] photos = null;
-				if (list.size() > 0) {
-					photos = new String[list.size()];
-					int index = 0;
-					for(Photo photo : list) {
-						photos[index] = photo.getFilename();
-						index++;
-					}
-				}
-				Member member = new Member()
-								.setEmail(rs.getString("EMAIL"))
-								.setName(rs.getString("MNAME"))
-								.setTel(rs.getString("TEL"))
-								.setLevel(rs.getInt("LEVEL"))
-								.setPhotos(photos);
-								
-				return member;
+			Member member = sqlSession.selectOne(
+				"net.bitacademy.java41.dao.MemberMapper.getMember",
+				paramMap);
 				
-			} else {
-				return null;
-			}
+			return member;
+			
 		} catch (Exception e) {
 			throw e;
 			
 		} finally {
-			try {rs.close();} catch (Exception e) {}
-			try {stmt.close();} catch (Exception e) {}
-			if (con != null) {
-				conPool.returnConnection(con);
-			}
+			try {sqlSession.close();} catch (Exception e) {}
 		}		
 	}
-	
+/*	
 	public int add(Member member) throws Exception {
 		Connection con = null;
 		PreparedStatement stmt = null;
@@ -271,6 +243,7 @@ public class MemberDao {
 			}
 		}		
 	}
+*/	
 	/*
 	public int change(Member member) throws Exception {
 		Connection con = null;

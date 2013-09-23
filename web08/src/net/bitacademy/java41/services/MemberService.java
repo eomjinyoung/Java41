@@ -21,16 +21,16 @@ public class MemberService {
 		this.memberDao = memberDao;
 		return this;
 	}
-	
+
 	public void signUp(Member member) throws Exception {
 		Connection con = dbConnectionPool.getConnection();
 		con.setAutoCommit(false);
 		try {
-			memberDao.add(member);
+			//memberDao.add(member);
 			String[] photos = member.getPhotos();
 			if (photos != null) {
 				for (String path : photos) {
-					memberDao.addPhoto(member.getEmail(), path);
+					//memberDao.addPhoto(member.getEmail(), path);
 				}
 			}
 			con.commit();
@@ -46,19 +46,22 @@ public class MemberService {
 	}
 	
 	public List<Member> getMemberList() throws Exception {
-		return memberDao.list();
+		//return memberDao.list();
+		return null;
 	}
 	
 	public Member getMember(String email) throws Exception {
-		return memberDao.get(email);
+		//return memberDao.get(email);
+		return null;
 	}
 	
 	public boolean changePassword(
 			String email, String oldPassword, String newPassword) throws Exception {
-		if (memberDao.changePassword(email, oldPassword, newPassword) > 0) {
-			return true;
-		} else {
-			return false;
-		}
+//		if (memberDao.changePassword(email, oldPassword, newPassword) > 0) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+		return true;
 	}
 }

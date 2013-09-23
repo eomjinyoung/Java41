@@ -102,7 +102,7 @@ public class ContextLoaderListener implements ServletContextListener {
 	private Object findInstanceByClass(Class paramClass) {
 		Collection<Object> instanceList = objTable.values();
 		for(Object obj : instanceList) {
-			if (obj.getClass() == paramClass) {
+			if (paramClass.isInstance(obj) /*obj.getClass() == paramClass*/) {
 				return obj;
 			}
 		}
