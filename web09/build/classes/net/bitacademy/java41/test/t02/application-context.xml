@@ -5,100 +5,23 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<!-- 빈 컨테이너에서 관리할 객체를 선언한다. . 빈 컨테이너가 객체를 생성하여 보관한다. . 해당 객체의 setter 메서드를 
-		호출하여 의존 객체를 넣어준다. -->
-
-	<!-- Student 객체 생성 => 's1'이라는 키로 저장하라. -->
-	<bean id="s1" class="net.bitacademy.java41.test.t01.Student"></bean>
-
-	<!-- 기본 생성자를 이용해 객체 생성 => setter 호출하는 방법 -->
-	<bean id="s2" class="net.bitacademy.java41.test.t01.Student">
-		<property name="name" value="홍길동"></property>
-		<property name="age">
-			<value>50</value>
-		</property>
-		<property name="tel" value="111-2222"/>
+	<bean id="st1" class="net.bitacademy.java41.test.t02.Student"
+		p:name="일지매1" p:age="20" p:tel="3434-3434">
+		<property name="school" ref="sc2"/>
 	</bean>
 	
-	<!-- 호출할 생성자를 지정하는 방법 -->
-	<bean id="s3" class="net.bitacademy.java41.test.t01.Student">
-		<constructor-arg value="임꺽정"  />
-		<property name="age" value="22"/>
-		<property name="tel" value="333-3333"/>
+	<bean id="sc1" class="net.bitacademy.java41.test.t02.School">
+		<property name="name" value="비트초등학교"/>
+		<property name="level" value="1"/>
+		<property name="tel" value="111-1212"/>
+		<property name="homepage" value="http://elementary.bit.net"/>
 	</bean>
 	
-	<!-- 객체를 요구할 때마다 생성하게 하는 방법  
-	 . scope: singleton(기본), prototype
-	-->
-	<bean id="s4" class="net.bitacademy.java41.test.t01.Student"
-			scope="prototype">
-		<constructor-arg value="임꺽정"  />
-		<property name="age" value="22"/>
-		<property name="tel" value="333-3333"/>
-	</bean>
-	
-	<!-- bean 태그의 속성을 이용하여 setter 메서드 호출하기 
-		1) 기존의 속성과 프로퍼티를 호출하는 속성을 구분하기 위해 태그 네임스페이스 지정
-		  네임스페이스? 태그들을 모아 놓은 패키지를 말함.
-		xmlns:p="http://www.springframework.org/schema/p"
-		
-		2) 'p'라는 접두사를 사용하여 프로퍼티 이름을 지정하면 된다.
-		p:name="홍길동"
-	-->
-	<bean id="s5" class="net.bitacademy.java41.test.t01.Student"
-		p:name="일지매" p:age="60" p:tel="3434-3434"/>
-	
-	<!-- setter 메서드에 배열 파라미터 넘기기 -->
-	<bean id="s6" class="net.bitacademy.java41.test.t01.Student"
-		p:name="일지매" p:age="60" p:tel="3434-3434">
-		<property name="scores">
-			<array>
-				<value>90</value>
-				<value>80</value>
-				<value>100</value>
-			</array>
-		</property>
-	</bean>
-	
-	<!-- setter 메서드에 List 객체 전달 -->
-	<bean id="s7" class="net.bitacademy.java41.test.t01.Student"
-		p:name="일지매" p:age="60" p:tel="3434-3434">
-		<property name="schoolList">
-			<list>
-				<value>강남초등학교</value>
-				<value>강남중학교</value>
-				<value>강남고등학교</value>
-				<value>강남고등학교</value>
-			</list>
-		</property>
-	</bean>
-	
-	<!-- setter 메서드에 Set 객체 전달 -->
-	<bean id="s8" class="net.bitacademy.java41.test.t01.Student"
-		p:name="일지매8" p:age="60" p:tel="3434-3434">
-		<property name="courseList">
-			<set>
-				<value>자바기초반8월반</value>
-				<value>자바웹프로그래밍8월반</value>
-				<value>자바고급반41기</value>
-				<value>자바고급반41기</value>
-			</set>
-		</property>
-	</bean>
-	
-	<!-- setter 메서드에 Map 객체 전달 -->
-	<bean id="s9" class="net.bitacademy.java41.test.t01.Student"
-		p:name="일지매9" p:age="60" p:tel="3434-3434">
-		<property name="familyMap">
-			<map>
-				<entry>
-					<key><value>아빠</value></key>
-					<value>일기토</value>
-				</entry>
-				<entry key="엄마" value="우뢰매"/>
-				<entry key="동생" value="마징가"/>
-			</map>
-		</property>
+	<bean id="sc2" class="net.bitacademy.java41.test.t02.School">
+		<property name="name" value="비트중학교"/>
+		<property name="level" value="2"/>
+		<property name="tel" value="111-1213"/>
+		<property name="homepage" value="http://middle.bit.net"/>
 	</bean>
 </beans>
 

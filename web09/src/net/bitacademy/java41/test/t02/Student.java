@@ -8,10 +8,7 @@ public class Student {
 	private String name;
 	private int age;
 	private String tel;
-	private int[] scores;
-	private List<String> schoolList;
-	private Set<String> courseList;
-	private Map<String,String> familyMap;
+	private School school;
 	
 	public Student() {}
 	
@@ -37,29 +34,13 @@ public class Student {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	public int[] getScores() {
-		return scores;
+
+	public School getSchool() {
+		return school;
 	}
-	public void setScores(int[] scores) {
-		this.scores = scores;
-	}
-	public List<String> getSchoolList() {
-		return schoolList;
-	}
-	public void setSchoolList(List<String> schoolList) {
-		this.schoolList = schoolList;
-	}
-	public Set<String> getCourseList() {
-		return courseList;
-	}
-	public void setCourseList(Set<String> courseList) {
-		this.courseList = courseList;
-	}
-	public Map<String, String> getFamilyMap() {
-		return familyMap;
-	}
-	public void setFamilyMap(Map<String, String> familyMap) {
-		this.familyMap = familyMap;
+
+	public void setSchool(School school) {
+		this.school = school;
 	}
 	
 	
