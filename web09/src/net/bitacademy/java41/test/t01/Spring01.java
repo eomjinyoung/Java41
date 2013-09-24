@@ -8,6 +8,59 @@ public class Spring01 {
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(
 			"net/bitacademy/java41/test/t01/application-context.xml");
+		Student s = (Student)ctx.getBean("s5");
+		
+		System.out.println(s.getName());
+		System.out.println(s.getAge());
+		System.out.println(s.getTel());
+	}
+	
+	public static void main04(String[] args) {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext(
+			"net/bitacademy/java41/test/t01/application-context.xml");
+		Student s = (Student)ctx.getBean("s4");
+		
+		// 기본으로 객체는 싱글톤 방식으로 관리한다.
+		Student s2 = (Student)ctx.getBean("s4");
+		s2.setName("임꺽정2");
+		s2.setAge(50);
+		s2.setTel("7878-7979");
+		
+		System.out.println(s.getName());
+		System.out.println(s.getAge());
+		System.out.println(s.getTel());
+		
+		System.out.println("--------------------------");
+		System.out.println(s2.getName());
+		System.out.println(s2.getAge());
+		System.out.println(s2.getTel());
+		
+		if(s == s2) {
+			System.out.println("우리는 같은 객체^^");
+		} else {
+			System.out.println("우리는 서로 달라요!");
+		}
+	}
+	
+	public static void main03(String[] args) {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext(
+			"net/bitacademy/java41/test/t01/application-context.xml");
+		Student s = (Student)ctx.getBean("s3");
+		
+		System.out.println(s.getName());
+		System.out.println(s.getAge());
+		System.out.println(s.getTel());
+		
+		// 기본으로 객체는 싱글톤 방식으로 관리한다.
+		Student s2 = (Student)ctx.getBean("s3");
+		if(s == s2) {
+			System.out.println("우리는 같은 객체^^");
+		}
+	}
+	
+	public static void main02(String[] args) {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext(
+			"net/bitacademy/java41/test/t01/application-context.xml");
 		Student s2 = (Student)ctx.getBean("s2");
 		
 		System.out.println(s2.getName());

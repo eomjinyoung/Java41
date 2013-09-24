@@ -5,6 +5,12 @@ public class Student {
 	private int age;
 	private String tel;
 	
+	public Student() {}
+	
+	public Student(String name) {
+		this.name = name;
+	}
+	
 	public String getName() {
 		return name;
 	}
