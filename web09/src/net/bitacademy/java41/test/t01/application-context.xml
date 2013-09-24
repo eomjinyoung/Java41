@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 빈 컨테이너에서 관리할 객체를 선언한다. . 빈 컨테이너가 객체를 생성하여 보관한다. . 해당 객체의 setter 메서드를 
+		호출하여 의존 객체를 넣어준다. -->
+
+	<!-- Student 객체 생성 => 's1'이라는 키로 저장하라. -->
+	<bean id="s1" class="net.bitacademy.java41.test.t01.Student"></bean>
+
+	<bean id="s2" class="net.bitacademy.java41.test.t01.Student">
+		<property name="name" value="홍길동"></property>
+		<property name="age" value="30"></property>
+		<property name="tel" value="111-2222"/>
+	</bean>
+</beans>
