@@ -45,12 +45,14 @@
 	</insert>
 	
 	<update id="update" parameterType="Project">
-		update SPMS_PRJS set
-			TITLE=#{title},
-			CONTENT=#{content},
-	 		START_DATE=#{startDate},
-			END_DATE=#{endDate},
-			TAG=#{tag}
+		update SPMS_PRJS
+		<set>
+			<if test="title != null">TITLE=#{title},</if>
+			<if test="content != null">CONTENT=#{content},</if>
+	 		<if test="startDate != null">START_DATE=#{startDate},</if>
+			<if test="endDate != null">END_DATE=#{endDate},</if>
+			<if test="tag != null">TAG=#{tag}</if>
+		</set>
 		where PNO=#{no}
 	</update>
 	

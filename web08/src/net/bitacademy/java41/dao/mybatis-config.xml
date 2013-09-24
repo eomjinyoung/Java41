@@ -3,8 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	
 	<!-- 설정파일에서 사용할 프로퍼티의 파일의 경로 지정: classpath -->
 	<properties resource="net/bitacademy/java41/dao/db.properties"/>
+
+	<settings>
+		<setting name="logImpl" value="LOG4J"/>
+	</settings>
 
 	<!-- 자주 사용하는 클래스는 별도로 별명을 지정한 다음 사용하면 편하다.  -->
 	<typeAliases>
