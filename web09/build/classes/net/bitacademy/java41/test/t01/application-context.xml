@@ -48,6 +48,58 @@
 	<bean id="s5" class="net.bitacademy.java41.test.t01.Student"
 		p:name="일지매" p:age="60" p:tel="3434-3434"/>
 	
+	<!-- setter 메서드에 배열 파라미터 넘기기 -->
+	<bean id="s6" class="net.bitacademy.java41.test.t01.Student"
+		p:name="일지매" p:age="60" p:tel="3434-3434">
+		<property name="scores">
+			<array>
+				<value>90</value>
+				<value>80</value>
+				<value>100</value>
+			</array>
+		</property>
+	</bean>
+	
+	<!-- setter 메서드에 List 객체 전달 -->
+	<bean id="s7" class="net.bitacademy.java41.test.t01.Student"
+		p:name="일지매" p:age="60" p:tel="3434-3434">
+		<property name="schoolList">
+			<list>
+				<value>강남초등학교</value>
+				<value>강남중학교</value>
+				<value>강남고등학교</value>
+				<value>강남고등학교</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- setter 메서드에 Set 객체 전달 -->
+	<bean id="s8" class="net.bitacademy.java41.test.t01.Student"
+		p:name="일지매8" p:age="60" p:tel="3434-3434">
+		<property name="courseList">
+			<set>
+				<value>자바기초반8월반</value>
+				<value>자바웹프로그래밍8월반</value>
+				<value>자바고급반41기</value>
+				<value>자바고급반41기</value>
+			</set>
+		</property>
+	</bean>
+	
+	<!-- setter 메서드에 Map 객체 전달 -->
+	<bean id="s9" class="net.bitacademy.java41.test.t01.Student"
+		p:name="일지매9" p:age="60" p:tel="3434-3434">
+		<property name="familyMap">
+			<map>
+				<entry>
+					<key><value>아빠</value></key>
+					<value>일기토</value>
+				</entry>
+				<entry key="엄마" value="우뢰매"/>
+				<entry key="동생" value="마징가"/>
+			</map>
+		</property>
+	</bean>
 </beans>
 
 

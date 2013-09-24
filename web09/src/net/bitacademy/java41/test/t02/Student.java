@@ -1,4 +1,4 @@
-package net.bitacademy.java41.test.t01;
+package net.bitacademy.java41.test.t02;
 
 import java.util.List;
 import java.util.Map;

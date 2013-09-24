@@ -1,11 +1,11 @@
-package net.bitacademy.java41.test.t01;
+package net.bitacademy.java41.test.t02;
 
 import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class Spring01 {
+public class Spring02 {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(
