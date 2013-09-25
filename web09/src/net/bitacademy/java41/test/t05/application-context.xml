@@ -24,6 +24,22 @@
 	<bean id="st2" class="net.bitacademy.java41.test.t05.Student2">
 		<property name="name" value="홍길동"/>   
 	</bean>
+	
+	<!-- 만약 같은 타입의 의존 객체가 여러개 있을 경우 @Autowired에서 어떻게 처리할 것인가?
+		@Qualifier(객체이름)
+	 -->
+	<bean id="st3" class="net.bitacademy.java41.test.t05.Student3">
+		<property name="name" value="홍길동"/>   
+	</bean>
+	
+	<bean id="award1" class="net.bitacademy.java41.test.t05.Award">
+		<property name="title" value="안드로이드 공모전 대상"/>
+		<property name="producer" value="비트컴퓨터"/>
+	</bean> 
+	<bean id="award2" class="net.bitacademy.java41.test.t05.Award">
+		<property name="title" value="Tizen 공모전 금상"/>
+		<property name="producer" value="삼성전자"/>
+	</bean> 
 </beans>
 
 
