@@ -2,28 +2,16 @@ package net.bitacademy.java41.services;
 
 import java.util.List;
 
-import net.bitacademy.java41.annotations.Component;
-import net.bitacademy.java41.dao.MemberDao;
 import net.bitacademy.java41.dao.ProjectDao;
-import net.bitacademy.java41.util.DBConnectionPool;
 import net.bitacademy.java41.vo.MemberProject;
 import net.bitacademy.java41.vo.Project;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 @Component
 public class ProjectService {
-	ProjectDao projectDao;
-	DBConnectionPool dbPool;
-	MemberDao memberDao;
-	
-	public ProjectService setProjectDao(ProjectDao projectDao) {
-		this.projectDao = projectDao;
-		return this;
-	}
-	
-	public ProjectService setDBConnectionPool(DBConnectionPool dbPool) {
-		this.dbPool = dbPool;
-		return this;
-	}
+	@Autowired ProjectDao projectDao;
 	
 	public List<Project> getProjectList() throws Exception {
 		return projectDao.list();

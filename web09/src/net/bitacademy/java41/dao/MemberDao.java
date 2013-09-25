@@ -1,20 +1,12 @@
 package net.bitacademy.java41.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
+import net.bitacademy.java41.vo.Member;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-
-import net.bitacademy.java41.annotations.Component;
-import net.bitacademy.java41.util.DBConnectionPool;
-import net.bitacademy.java41.vo.Member;
-import net.bitacademy.java41.vo.Photo;
+import org.springframework.stereotype.Component;
 
 @Component
 public class MemberDao {

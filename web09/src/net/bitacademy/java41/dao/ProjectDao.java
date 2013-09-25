@@ -3,12 +3,12 @@ package net.bitacademy.java41.dao;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-
-import net.bitacademy.java41.annotations.Component;
 import net.bitacademy.java41.vo.MemberProject;
 import net.bitacademy.java41.vo.Project;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ProjectDao {

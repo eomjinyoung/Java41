@@ -1,26 +1,16 @@
 package net.bitacademy.java41.services;
 
-import java.sql.Connection;
 import java.util.List;
 
-import net.bitacademy.java41.annotations.Component;
 import net.bitacademy.java41.dao.MemberDao;
-import net.bitacademy.java41.util.DBConnectionPool;
 import net.bitacademy.java41.vo.Member;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class MemberService {
-	DBConnectionPool dbConnectionPool;
-	MemberDao memberDao;
-	
-	public void setDbConnectionPool(DBConnectionPool dbConnectionPool) {
-		this.dbConnectionPool = dbConnectionPool;
-	}
-
-	public MemberService setMemberDao(MemberDao memberDao) {
-		this.memberDao = memberDao;
-		return this;
-	}
+	@Autowired MemberDao memberDao;
 
 	public void signUp(Member member) throws Exception {
 		try {

@@ -5,27 +5,23 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.fileupload.FileItem;
-
-import net.bitacademy.java41.annotations.Component;
 import net.bitacademy.java41.services.MemberService;
 import net.bitacademy.java41.vo.Member;
+
+import org.apache.commons.fileupload.FileItem;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component("/member/signin.do")
 public class SigninControl implements PageControl {
 	String rootRealPath;
-	MemberService memberService;
+	@Autowired MemberService memberService;
 	long currTime = 0;
 	int count = 0;
 	
 	public void setRootRealPath(String rootRealPath) {
 		this.rootRealPath = rootRealPath;
 		System.out.println(rootRealPath);
-	}
-
-	public SigninControl setMemberService(MemberService memberService) {
-		this.memberService = memberService;
-		return this;
 	}
 
 	@Override

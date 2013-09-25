@@ -2,20 +2,18 @@ package net.bitacademy.java41.controls.member;
 
 import java.util.Map;
 
-import net.bitacademy.java41.annotations.Component;
 import net.bitacademy.java41.controls.PageControl;
 import net.bitacademy.java41.services.MemberService;
 import net.bitacademy.java41.vo.Member;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 @Component("/member/add.do")
 public class MemberAddControl implements PageControl {
+	@Autowired
 	MemberService memberService;
 	
-	public MemberAddControl setMemberService(MemberService memberService) {
-		this.memberService = memberService;
-		return this;
-	}
-
 	@Override
 	public String execute(Map<String, Object> model) throws Exception {
 		@SuppressWarnings("unchecked")
