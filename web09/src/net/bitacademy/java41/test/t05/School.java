@@ -1,4 +1,4 @@
-package net.bitacademy.java41.test.t04;
+package net.bitacademy.java41.test.t05;
 
 import org.springframework.beans.factory.annotation.Required;
 
