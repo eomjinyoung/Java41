@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- factory-method 속성에 static 메서드의 이름을 지정하면,
+		실제 빈 컨테이너에 보관되는 것은 StudentFactory 객체가 아니라
+		factory-method에서 지정한 메서드의 리턴 값이 보관된다.
+	 -->
+	<bean id="s1" class="net.bitacademy.java41.test.t03.StudentFactory"
+			factory-method="createStudent"/>
+	
+	<!-- Factory에서 생성한 객체를 프로퍼티에 할당하기 -->
+	<bean id="s2" class="net.bitacademy.java41.test.t03.SchoolFactory"
+			factory-method="createSchool"/>
+			
+	<bean id="st1" class="net.bitacademy.java41.test.t03.Student">
+		<property name="school" ref="s2"/>
+	</bean>		
+	
+	<!-- 스프링에서 제공하는 클래스를 상속 받아서 Factory 클래스를 만들면,
+		factory-meethod 속성을 지정할 필요가 없다.
+	 -->
+	<bean id="s3" class="net.bitacademy.java41.test.t03.SchoolFactoryBean"/>
+			
+	<bean id="st2" class="net.bitacademy.java41.test.t03.Student">
+		<property name="school" ref="s3"/>
+	</bean>	
+</beans>
+
+
+
+
+
+
+
+
+
