@@ -15,6 +15,8 @@
 	<context:component-scan base-package="net.bitacademy.java41">
 		<context:exclude-filter type="regex" 
 				expression="net.bitacademy.java41.test.*"/>
+		<context:exclude-filter type="regex" 
+				expression="net.bitacademy.java41.controls.*"/>		
 	</context:component-scan>
 	
 	<!-- mybatis 객체 준비 -->

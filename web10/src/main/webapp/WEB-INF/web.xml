@@ -37,8 +37,21 @@
 	<!-- 서블릿 선언 -->
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
-		<servlet-class>net.bitacademy.java41.servlets.DispatcherServlet</servlet-class>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
+		</init-param>
+		<!-- 
+			.서블릿 컨테이너에게 웹 애플리케이션을 시작할 때 
+			  이 서블릿 객체를 미리 만들어 둘 것을 지시한다. => init() 호출된다.
+			  => 숫자는 객체를 생성하는 순서이다. 작은 순서부터 생성한다.
+			. <load-on-startup> 태그를 지정하지 않으면, 해당 서블릿은 
+			  첫번째 요청이 들어올 때 생성된다.
+		 -->
+		<load-on-startup>99</load-on-startup>
 	</servlet>
+	
 	<!-- 서블릿에 URL을 설정 -->
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>

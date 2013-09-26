@@ -12,26 +12,26 @@ import net.bitacademy.java41.vo.Member;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@Component("/auth/login.do")
-public class LoginControl implements PageControl {
+@Controller
+public class LoginControl {
 	@Autowired AuthService authService;
 
-	@Override
-	public String execute(Map<String, Object> model) throws Exception {
-		@SuppressWarnings("unchecked")
-		Map<String,String[]> paramMap = 
-				(Map<String,String[]>)model.get("params");
-		
-		String email = paramMap.get("email")[0];
-		String password = paramMap.get("password")[0];
-		
+	@RequestMapping("/auth/login.do")
+	public String executejkldfsjklfdsljkdfskljsdfsdfjkldfs(
+			String email, 
+			String password, 
+			HttpSession session,
+			HttpServletRequest request,
+			HttpServletResponse resposne) throws Exception {
 		Member member = authService.getUserInfo(email, password);
 		
-		HttpSession session = (HttpSession)model.get("session");
-		HttpServletRequest request = (HttpServletRequest) model.get("request");
-		HttpServletResponse response = (HttpServletResponse) model.get("response");
-		
+		if (request != null) {
+			System.out.println("오호라..놀라워라..이럴수가...");
+		}
+		/*
 		if(request.getParameter("saveId") != null) {
 			Cookie cookie = new Cookie("email", email);
 			cookie.setMaxAge(60); 
@@ -40,7 +40,7 @@ public class LoginControl implements PageControl {
 			Cookie cookie = new Cookie("email", null);
 			cookie.setMaxAge(0); 
 			response.addCookie(cookie);
-		}
+		}*/
 		
 		if (member != null) {
 			session.setAttribute("member", member);
