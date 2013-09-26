@@ -18,6 +18,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import net.bitacademy.java41.controls.PageControl;
 
@@ -45,8 +47,14 @@ public class DispatcherServlet extends HttpServlet {
 			model.put("rootRealPath", getServletContext().getRealPath("/"));
 			
 			String viewUrl = null;
-			PageControl control = (PageControl)request.getServletContext()
-									.getAttribute(request.getServletPath());
+			
+			// Spring의 ContextLoaderListener가 준비한 ApplicationContext를 얻는 방법
+			WebApplicationContext ctx = 
+				WebApplicationContextUtils.getWebApplicationContext(
+						request.getServletContext());
+			
+			// Spring의 ApplicationContext로부터 페이지 컨트롤러를 꺼내기
+			PageControl control = (PageControl)ctx.getBean(request.getServletPath());
 			if (control != null) {
 				viewUrl = control.execute(model);
 				transferFromControlDataToRequest(request, model);

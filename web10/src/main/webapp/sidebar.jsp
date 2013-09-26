@@ -1,3 +1,6 @@
+<%@page import="net.bitacademy.java41.services.ProjectService"%>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.web.context.WebApplicationContext"%>
 <%@page import="net.bitacademy.java41.vo.MemberProject"%>
 <%@page import="net.bitacademy.java41.vo.Member"%>
 <%@ page language="java" 
@@ -6,9 +9,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>        
 <jsp:useBean id="member" 
 	type="net.bitacademy.java41.vo.Member" scope="session"/>
-<jsp:useBean id="projectService" 
-	type="net.bitacademy.java41.services.ProjectService" scope="application"/>  
+
 <%
+WebApplicationContext ctx = 
+WebApplicationContextUtils.getWebApplicationContext(
+		request.getServletContext());
+
+ProjectService projectService = (ProjectService) ctx.getBean("projectService");
+
 pageContext.setAttribute("myprojects", 
 		projectService.getMyProjects(member.getEmail()) );
 %>	

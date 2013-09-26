@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="st1" class="net.bitacademy.java41.test.t02.Student"
+		p:name="일지매1" p:age="20" p:tel="3434-3434">
+		<property name="school" ref="sc2"/>
+	</bean>
+	
+	<bean id="sc1" class="net.bitacademy.java41.test.t02.School">
+		<property name="name" value="비트초등학교"/>
+		<property name="level" value="1"/>
+		<property name="tel" value="111-1212"/>
+		<property name="homepage" value="http://elementary.bit.net"/>
+	</bean>
+	
+	<bean id="sc2" class="net.bitacademy.java41.test.t02.School">
+		<property name="name" value="비트중학교"/>
+		<property name="level" value="2"/>
+		<property name="tel" value="111-1213"/>
+		<property name="homepage" value="http://middle.bit.net"/>
+	</bean>
+</beans>
+
+
+
+
+
+
+
+
+
