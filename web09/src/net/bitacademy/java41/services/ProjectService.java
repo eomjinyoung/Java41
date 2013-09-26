@@ -3,6 +3,7 @@ package net.bitacademy.java41.services;
 import java.util.List;
 
 import net.bitacademy.java41.dao.ProjectDao;
+import net.bitacademy.java41.dao.ProjectMemberDao;
 import net.bitacademy.java41.vo.MemberProject;
 import net.bitacademy.java41.vo.Project;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProjectService {
 	@Autowired ProjectDao projectDao;
+	@Autowired ProjectMemberDao projectMemberDao;
 	
 	public List<Project> getProjectList() throws Exception {
 		return projectDao.list();
@@ -28,6 +30,7 @@ public class ProjectService {
 	public void addProject(Project project) throws Exception {
 		try {
 			projectDao.add(project);
+			projectMemberDao.add(project.getLeader(), 100, 0);
 		} catch (Exception e) {
 			throw e;
 			

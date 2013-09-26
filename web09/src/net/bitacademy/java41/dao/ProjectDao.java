@@ -64,20 +64,11 @@ public class ProjectDao {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		
 		try {
-			sqlSession.insert(
+			int count = sqlSession.insert(
 				"net.bitacademy.java41.dao.ProjectMapper.add", project);
 			
-			HashMap<String,Object> paramMap = new HashMap<String,Object>();
-			paramMap.put("email", project.getLeader());
-			paramMap.put("projectNo", project.getNo());
-			paramMap.put("memberLevel", 0);
-			
-			sqlSession.insert(
-				"net.bitacademy.java41.dao.ProjectMapper.addProjectMember", 
-				paramMap);
-			
 			sqlSession.commit();
-			return project.getNo();
+			return count;
 			
 		} catch (Exception e) {
 			sqlSession.rollback();

@@ -14,16 +14,10 @@ import org.springframework.stereotype.Component;
 
 @Component("/member/signin.do")
 public class SigninControl implements PageControl {
-	String rootRealPath;
 	@Autowired MemberService memberService;
 	long currTime = 0;
 	int count = 0;
 	
-	public void setRootRealPath(String rootRealPath) {
-		this.rootRealPath = rootRealPath;
-		System.out.println(rootRealPath);
-	}
-
 	@Override
 	public String execute(Map<String, Object> model) throws Exception {
 		@SuppressWarnings("unchecked")
@@ -32,19 +26,9 @@ public class SigninControl implements PageControl {
 		
 		FileItem photo = (FileItem)params.get("photo");
 		String filename = this.getNewFileName();
-		String path = rootRealPath + "file/" + filename;
-		photo.write(new File(path) );
 		
-		/*
-		String[] names = new String[3];
-		names[0] = new String("aaaa");
-		names[1] = new String("bbb");
-		names[2] = new String("ccc");
-		*/
-		/*
-		String[] names = new String[]{
-				new String("aaaa"), new String("bbb"), new String("ccc")};
-		*/
+		String path = model.get("rootRealPath") + "file/" + filename;
+		photo.write(new File(path) );
 		
 		Member member = new Member()
 						.setEmail((String)params.get("email"))

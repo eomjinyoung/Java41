@@ -40,7 +40,10 @@ public class DispatcherServlet extends HttpServlet {
 			model.put("session", request.getSession() );
 			model.put("request", request);
 			model.put("response", response);
-		
+			model.put("application", getServletContext());
+			model.put("rootPath", getServletContext().getContextPath());
+			model.put("rootRealPath", getServletContext().getRealPath("/"));
+			
 			String viewUrl = null;
 			PageControl control = (PageControl)request.getServletContext()
 									.getAttribute(request.getServletPath());
@@ -95,7 +98,12 @@ public class DispatcherServlet extends HttpServlet {
 		// ServletRequest 저장소에 옮겨 실어야 한다.
 		Set<String> keyList = model.keySet();
 		for(String key : keyList) {
-			if (!key.equals("cookies") && !key.equals("params")) {
+			if (!key.equals("cookies") && 
+				!key.equals("params") &&
+				!key.equals("session") &&
+				!key.equals("request") &&
+				!key.equals("response") &&
+				!key.equals("application")) {
 				request.setAttribute(key, model.get(key));	
 			}
 		}

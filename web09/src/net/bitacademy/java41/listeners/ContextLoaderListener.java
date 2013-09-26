@@ -15,9 +15,6 @@ public class ContextLoaderListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent event) {
 		servletContext = event.getServletContext();
 		
-		servletContext.setAttribute("rootPath", servletContext.getContextPath());
-		servletContext.setAttribute("rootRealPath", servletContext.getRealPath("/"));
-		
 		try {
 			ApplicationContext applicationContext = 
 				new ClassPathXmlApplicationContext(
