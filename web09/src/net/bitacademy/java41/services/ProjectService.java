@@ -9,9 +9,14 @@ import net.bitacademy.java41.vo.Project;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 @Component
 public class ProjectService {
+	@Autowired PlatformTransactionManager txManager;
 	@Autowired ProjectDao projectDao;
 	@Autowired ProjectMemberDao projectMemberDao;
 	
@@ -28,35 +33,64 @@ public class ProjectService {
 	}
 	
 	public void addProject(Project project) throws Exception {
+		// 1. 트랜잭션 처리 정책 정의
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// 2. 트랜잭션 정책을 적용한 작업자 얻기
+		TransactionStatus txStatus = txManager.getTransaction(def);
+		
 		try {
 			projectDao.add(project);
-			projectMemberDao.add(project.getLeader(), 100, 0);
-		} catch (Exception e) {
-			throw e;
+			projectMemberDao.add(project.getLeader(), project.getNo(), 0);
 			
-		} finally {
+			StringBuffer buf = new StringBuffer();
+			for(int i = 0; i < 300; i++) {
+				buf.append("X");
+			}
+			
+			try {
+				project.setTitle(project.getTitle() + buf.toString());
+				updateProject(project);
+			} catch (Throwable e) {}
+			
+			txManager.commit(txStatus);
+			
+		} catch (Throwable e) {
+			txManager.rollback(txStatus);
+			throw e;
 		}
 	}
 
 	public void updateProject(Project project) {
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		TransactionStatus txStatus = txManager.getTransaction(def);
 		try {
 			projectDao.update(project);
-		} catch (Exception e) {
+			txManager.commit(txStatus);
+			
+		} catch (Throwable e) {
+			txManager.rollback(txStatus);
 			throw e;
 			
-		} finally {
-		}
+		} 
 		
 	}
 
 	public void removeProject(int no) {
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		TransactionStatus txStatus = txManager.getTransaction(def);
 		try {
 			projectDao.delete(no);
+			txManager.commit(txStatus);
+			
 		} catch (Exception e) {
+			txManager.rollback(txStatus);
 			throw e;
 			
-		} finally {
-		}
+		} 
 		
 	}
 }
