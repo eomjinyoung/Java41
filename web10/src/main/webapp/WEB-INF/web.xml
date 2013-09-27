@@ -14,6 +14,11 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<listener>
+		<listener-class>net.bitacademy.java41.listeners.WebAppListener</listener-class>
+	</listener>
+	
+	
 	<!-- 필터 선언 -->
 	<filter>
 		<filter-name>CharSetFilter</filter-name>

@@ -6,20 +6,7 @@
 <%@ page language="java" 
 	contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>        
-<jsp:useBean id="member" 
-	type="net.bitacademy.java41.vo.Member" scope="session"/>
 
-<%
-WebApplicationContext ctx = 
-WebApplicationContextUtils.getWebApplicationContext(
-		request.getServletContext());
-
-ProjectService projectService = (ProjectService) ctx.getBean("projectService");
-
-pageContext.setAttribute("myprojects", 
-		projectService.getMyProjects(member.getEmail()) );
-%>	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <div id="sidebar">
 <div id="member">

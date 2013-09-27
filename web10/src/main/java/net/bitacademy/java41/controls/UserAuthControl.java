@@ -1,9 +1,6 @@
 package net.bitacademy.java41.controls;
 
-import java.util.Map;
-
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -11,8 +8,9 @@ import net.bitacademy.java41.services.AuthService;
 import net.bitacademy.java41.vo.Member;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,39 +32,38 @@ public class UserAuthControl {
 	@Autowired AuthService authService;
 
 	@RequestMapping("/logout")
-	public String execute(HttpSession session) throws Exception {
+	public String logout(HttpSession session) throws Exception {
 		session.invalidate();
 		return "redirect:loginForm.do";
 	}
 	
 	@RequestMapping("/loginForm")
-	public String execute() {
-		/*
-		String email = "";
+	public String form(
+			@CookieValue(value="email", required=false) String email,
+			Model model) {
 		boolean isSaveId = false;
-		if (cookies.get("email") != null) {
-			email = cookies.get("email");
+		if (email != null) {
 			isSaveId = true;
 		}
-		*/
-		String email = "";
-		boolean isSaveId = false;
 		
-		//model.put("email", email);
-		//model.put("isSaveId", isSaveId);
+		model.addAttribute("email", email);
+		model.addAttribute("isSaveId", isSaveId);
 		
 		return "/auth/LoginForm.jsp";
 	}
 	
 	@RequestMapping("/login")
-	public String execute(
-			@RequestParam("email") String email, 
-			@RequestParam("password") String password, 
+	public String login(
+			/* 요청 파라미터명과 메서드 파라미터명 같다면 애노테이션 생략 가능*/
+			String email,
+			/* 요청 파라미터명과 메서드 파라미터명 다르다면 애노테이션 사용해야 한다.*/
+			@RequestParam("password") String pwd,
+			String saveId,
+			HttpServletResponse response,
 			HttpSession session) throws Exception {
-		Member member = authService.getUserInfo(email, password);
+		Member member = authService.getUserInfo(email, pwd);
 		
-		/*
-		if(request.getParameter("saveId") != null) {
+		if(saveId != null) {
 			Cookie cookie = new Cookie("email", email);
 			cookie.setMaxAge(60); 
 			response.addCookie(cookie);
@@ -74,7 +71,7 @@ public class UserAuthControl {
 			Cookie cookie = new Cookie("email", null);
 			cookie.setMaxAge(0); 
 			response.addCookie(cookie);
-		}*/
+		}
 		
 		if (member != null) {
 			session.setAttribute("member", member);

@@ -1,14 +1,14 @@
 package net.bitacademy.java41.controls;
 
-import java.util.Map;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.stereotype.Component;
+@Controller
+@RequestMapping("/main")
+public class MainControl{
 
-@Component("/main.do")
-public class MainControl implements PageControl {
-
-	@Override
-	public String execute(Map<String, Object> model) throws Exception {
+	@RequestMapping
+	public String execute() throws Exception {
 		return "/main.jsp";
 	}
 
