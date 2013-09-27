@@ -11,7 +11,7 @@
 <body>
 <jsp:include page="/header.jsp"></jsp:include>
 
-<jsp:include page="/sidebar.jsp"></jsp:include>
+<jsp:include page="/sidebar.do"></jsp:include>
 
 <div id="content">
 <div id="submenu">

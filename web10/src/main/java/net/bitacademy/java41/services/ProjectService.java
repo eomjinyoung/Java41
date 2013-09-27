@@ -43,17 +43,6 @@ public class ProjectService {
 		try {
 			projectDao.add(project);
 			projectMemberDao.add(project.getLeader(), project.getNo(), 0);
-			
-			StringBuffer buf = new StringBuffer();
-			for(int i = 0; i < 300; i++) {
-				buf.append("X");
-			}
-			
-			try {
-				project.setTitle(project.getTitle() + buf.toString());
-				updateProject(project);
-			} catch (Throwable e) {}
-			
 			txManager.commit(txStatus);
 			
 		} catch (Throwable e) {
@@ -73,7 +62,6 @@ public class ProjectService {
 		} catch (Throwable e) {
 			txManager.rollback(txStatus);
 			throw e;
-			
 		} 
 		
 	}

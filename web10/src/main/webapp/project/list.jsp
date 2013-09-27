@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="/header.jsp"></jsp:include>
 
-<jsp:include page="/sidebar.jsp"></jsp:include>
+<jsp:include page="/sidebar.do"></jsp:include>
 
 <div id="content">
 <h1>프로젝트</h1>
@@ -33,7 +33,7 @@
 </c:forEach>
 </table>
 
-<p><a href="${rootPath}/project/addForm.do">[신규 프로젝트]</a></p>
+<p><a href="${rootPath}/project/add.do">[신규 프로젝트]</a></p>
 
 </div>
 
