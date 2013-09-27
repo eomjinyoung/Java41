@@ -1,7 +1,5 @@
 package net.bitacademy.java41.controls.project;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import net.bitacademy.java41.services.ProjectService;
