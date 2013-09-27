@@ -12,10 +12,18 @@
 <body>
 <jsp:include page="/header.jsp"></jsp:include>
 
-<jsp:include page="/sidebar.jsp"></jsp:include>
+<jsp:include page="/sidebar.do"></jsp:include>
 
 <div id="content">
 <h1>멤버 정보</h1>
+<c:choose>
+	<c:when test="${memberInfo.photos != null}">
+		<img src="${rootPath}/file/${memberInfo.photos[0]}"><br>
+	</c:when>
+	<c:otherwise>
+		<img src="${rootPath}/images/test01.png"><br>
+	</c:otherwise>
+</c:choose>
 이메일: ${memberInfo.email}<br>
 이름: ${memberInfo.name }<br>
 전화: ${memberInfo.tel }<br> 

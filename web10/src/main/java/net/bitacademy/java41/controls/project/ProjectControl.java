@@ -21,7 +21,7 @@ public class ProjectControl {
 	@Autowired ProjectService projectService;
 
 	@RequestMapping("/list2")
-	public String list(Model model) throws Exception {
+	public String list2(Model model) throws Exception {
 		model.addAttribute("list", projectService.getProjectList());
 		return "/project/list.jsp";
 	}
