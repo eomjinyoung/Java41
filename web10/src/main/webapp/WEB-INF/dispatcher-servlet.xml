@@ -12,12 +12,15 @@
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<context:annotation-config/>
+<!-- <mvn:annotation-driven> 태그가 있으면 다음 태그를 생략할 수 있다. -->
+<!-- 	<context:annotation-config/> -->
+	
+	<mvc:annotation-driven/>
 
 	<!-- 자동으로 등록할 컴포넌트가 있는 패키지를 지정한다. -->
 	<context:component-scan base-package="net.bitacademy.java41.controls"/>
     
-<!-- 	<mvc:annotation-driven/> -->
+	
 </beans> 
 
 
