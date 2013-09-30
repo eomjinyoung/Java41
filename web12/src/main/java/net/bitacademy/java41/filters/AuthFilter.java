@@ -35,7 +35,7 @@ public class AuthFilter implements Filter {
 		} else {
 			response.sendRedirect(
 					request.getServletContext().getContextPath() + 
-					"/auth/login");
+					"/auth/login.do");
 		}
 	}
 

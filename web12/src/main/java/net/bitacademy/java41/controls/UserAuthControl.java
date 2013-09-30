@@ -12,32 +12,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-/*
- * @Conroller 애노테이션
- * . DispatcherServlet(프론트 컨트롤러)에게 이 객체가 페이지 컨트롤러임을 선언한다.
- * . @RequestMapping(요청URL) 정보를 읽어서 '요청URL'과 같은 요청이 들어오면,
- *   해당 메서드를 호출할 것을 지정한다.
- *   
- * @Component 애노테이션
- * . 만약 이 애노테이션을 선언하게 되면, DipatcherServlet은 일반 객체로 취급한다.
- * . 요청처리와 상관없게 된다.
- * 
- */
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
+@SessionAttributes("member")
 @RequestMapping("/auth")
 public class UserAuthControl {
 	@Autowired AuthService authService;
 
 	@RequestMapping("/logout")
-	public String logout(HttpSession session) throws Exception {
-		session.invalidate();
-		return "redirect:loginForm.do";
+	public String logout(SessionStatus status) throws Exception {
+		status.setComplete();
+		return "redirect:login.do";
 	}
 	
-	@RequestMapping("/loginForm")
+	@RequestMapping(value="/login",
+			method=RequestMethod.GET)
 	public String form(
 			@CookieValue(value="email", required=false) String email,
 			Model model) {
@@ -52,15 +45,16 @@ public class UserAuthControl {
 		return "auth/LoginForm";
 	}
 	
-	@RequestMapping("/login")
+	@RequestMapping(value="/login",
+			method=RequestMethod.POST)
 	public String login(
-			/* 요청 파라미터명과 메서드 파라미터명 같다면 애노테이션 생략 가능*/
 			String email,
-			/* 요청 파라미터명과 메서드 파라미터명 다르다면 애노테이션 사용해야 한다.*/
 			@RequestParam("password") String pwd,
 			String saveId,
 			HttpServletResponse response,
-			HttpSession session) throws Exception {
+			HttpSession session,
+			Model model,
+			SessionStatus status) throws Exception {
 		Member member = authService.getUserInfo(email, pwd);
 		
 		if(saveId != null) {
@@ -74,11 +68,11 @@ public class UserAuthControl {
 		}
 		
 		if (member != null) {
-			session.setAttribute("member", member);
+			model.addAttribute("member", member);
 			return "redirect:../main.do";
 			
 		} else {
-			session.invalidate();
+			status.setComplete();
 			return "auth/loginFail";
 		}
 	}
