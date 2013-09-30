@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.bitacademy.java41.dao.MemberDao">
+	<select id="getMember"
+			parameterType="map" 
+			resultType="Member">
+	    select EMAIL,MNAME as name,TEL,LEVEL 
+	    from SPMS_MEMBS 
+	    <where> 
+	    		<if test="tel != null">
+	    			TEL=#{tel}
+	    		</if>
+	    		<if test="email != null">
+	    			and EMAIL=#{email}	
+	    		</if>
+	    		<if test="password != null">
+	    	 		and PWD=#{password}
+	    	 	</if>
+		</where>	
+	</select>
+	
+	<insert id="add" parameterType="Member">
+		insert into SPMS_MEMBS(EMAIL,MNAME,PWD,TEL,
+			BLOG,REG_DATE,UPDATE_DATE,DET_ADDR,TAG,LEVEL)
+		values(#{email},#{name},#{password},#{tel},
+			#{blog},now(),now(),#{detailAddress},#{tag},#{level})
+	</insert>
+	
+	<select id="list" resultType="Member">
+		select EMAIL,MNAME as name,TEL,BLOG from SPMS_MEMBS 
+		order by MNAME
+	</select>
+	
+	<select id="view" parameterType="string" resultType="Member">
+		select 
+			EMAIL,
+			MNAME as name,
+			TEL,
+			BLOG,
+			REG_DATE as regDate,
+			DET_ADDR as detailAddress,
+			TAG,
+			LEVEL
+		from SPMS_MEMBS
+		where EMAIL=#{value}
+	</select>
+	
+	<update id="update" parameterType="Member">
+		update SPMS_MEMBS set
+			MNAME=#{name},
+			PWD=#{password},
+			TEL=#{tel},
+			BLOG=#{blog},
+			UPDATE_DATE=now(),
+			DET_ADDR=#{detailAddress},
+			TAG=#{tag},
+			LEVEL=#{level}
+		where EMAIL=#{email}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		delete from SPMS_MEMBS
+		where EMAIL=#{email}
+	</delete>
+	
+	<update id="changePassword" parameterType="map">
+		update SPMS_MEMBS set
+			PWD=#{newPassword},
+			UPDATE_DATE=now()
+		where EMAIL=#{email} and PWD=#{oldPassword}
+	</update>
+	
+	<insert id="addPhoto" parameterType="map">
+		insert into SPMS_MEMIMG(EMAIL,IMGURL)
+		values(#{email},#{path})
+	</insert>
+	
+	<select id="listPhoto" parameterType="string" resultType="string">
+		select IMGURL 
+		from SPMS_MEMIMG 
+		where EMAIL=#{value}
+	</select>
+	
+	<delete id="deleteAllPhoto" parameterType="string">
+		delete from SPMS_MEMIMG
+		where EMAIL=#{value}
+	</delete>
+</mapper> 
+
+
+
+
+
+
