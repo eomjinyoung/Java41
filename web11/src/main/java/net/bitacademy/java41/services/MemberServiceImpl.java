@@ -7,29 +7,24 @@ import net.bitacademy.java41.dao.MemberDao;
 import net.bitacademy.java41.vo.Member;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-@Component
+@Service
 public class MemberServiceImpl implements MemberService {
 	@Autowired PlatformTransactionManager txManager;
 	@Autowired MemberDao memberDao;
 
+	@Transactional(
+			propagation=Propagation.REQUIRED,
+			rollbackFor=Throwable.class)
 	public void signUp(Member member) throws Exception {
-		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		TransactionStatus txStatus = txManager.getTransaction(def);
 		try {
 			memberDao.add(member);
 			addMemberPhoto(member.getEmail(), member.getPhotos());
-
-			txManager.commit(txStatus);
-			
 		} catch (Exception e) {
-			txManager.rollback(txStatus);
 			throw e;
 		} 
 	}
@@ -51,6 +46,9 @@ public class MemberServiceImpl implements MemberService {
 		return member;
 	}
 	
+	@Transactional(
+			propagation=Propagation.REQUIRED,
+			rollbackFor=Throwable.class)
 	public boolean changePassword(
 			String email, String oldPassword, String newPassword) throws Exception {
 		
@@ -66,10 +64,10 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 	
+	@Transactional(
+			propagation=Propagation.REQUIRED,
+			rollbackFor=Throwable.class)
 	public void updateMember(Member member) throws Exception {
-		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		TransactionStatus txStatus = txManager.getTransaction(def);
 		try {
 			if (memberDao.udpate(member) == 0) {
 				throw new Exception("멤버 변경 오류!");
@@ -77,11 +75,7 @@ public class MemberServiceImpl implements MemberService {
 			
 			memberDao.deleteAllPhoto(member.getEmail());
 			addMemberPhoto(member.getEmail(), member.getPhotos());
-			
-			txManager.commit(txStatus);
-			
 		} catch (Exception e) {
-			txManager.rollback(txStatus);
 			throw e;
 		}
 	}
@@ -98,18 +92,14 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 	
+	@Transactional(
+			propagation=Propagation.REQUIRED,
+			rollbackFor=Throwable.class)
 	public void deleteMember(String email) throws Exception {
-		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		TransactionStatus txStatus = txManager.getTransaction(def);
 		try {
 			memberDao.deleteAllPhoto(email);
 			memberDao.delete(email);
-			
-			txManager.commit(txStatus);
-			
 		} catch (Exception e) {
-			txManager.rollback(txStatus);
 			throw e;
 		}
 	}

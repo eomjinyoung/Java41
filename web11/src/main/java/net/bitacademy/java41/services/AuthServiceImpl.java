@@ -6,9 +6,9 @@ import net.bitacademy.java41.dao.MemberDao;
 import net.bitacademy.java41.vo.Member;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class AuthServiceImpl implements AuthService {
 	@Autowired MemberDao memberDao;
 	

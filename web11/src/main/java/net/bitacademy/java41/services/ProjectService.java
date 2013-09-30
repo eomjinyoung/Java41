@@ -14,9 +14,9 @@ public interface ProjectService {
 	
 	void addProject(Project project) throws Exception;
 
-	void updateProject(Project project);
+	void updateProject(Project project) throws Exception;
 
-	void removeProject(int no);
+	void removeProject(int no) throws Exception;
 }
 
 

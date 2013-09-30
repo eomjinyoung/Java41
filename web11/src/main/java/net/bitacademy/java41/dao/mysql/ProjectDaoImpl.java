@@ -2,16 +2,17 @@ package net.bitacademy.java41.dao.mysql;
 
 import java.util.List;
 
+import net.bitacademy.java41.dao.ProjectDao;
 import net.bitacademy.java41.vo.MemberProject;
 import net.bitacademy.java41.vo.Project;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
-public class ProjectDaoImpl {
+@Repository
+public class ProjectDaoImpl implements ProjectDao{
 	@Autowired SqlSessionFactory sqlSessionFactory;
 
 	public ProjectDaoImpl() {}
