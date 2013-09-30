@@ -49,7 +49,7 @@ public class UserAuthControl {
 		model.addAttribute("email", email);
 		model.addAttribute("isSaveId", isSaveId);
 		
-		return "/auth/LoginForm.jsp";
+		return "auth/LoginForm";
 	}
 	
 	@RequestMapping("/login")
@@ -79,7 +79,7 @@ public class UserAuthControl {
 			
 		} else {
 			session.invalidate();
-			return "/auth/loginFail.jsp";
+			return "auth/loginFail";
 		}
 	}
 

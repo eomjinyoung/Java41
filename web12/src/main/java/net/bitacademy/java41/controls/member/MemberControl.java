@@ -26,7 +26,7 @@ public class MemberControl {
 	
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
 	public String signupForm() {
-		return "/member/signupForm.jsp";
+		return "member/signupForm";
 	}
 	
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
@@ -48,12 +48,12 @@ public class MemberControl {
 	@RequestMapping("/list")
 	public String list(Model model) throws Exception {
 		model.addAttribute("list", memberService.getMemberList());
-		return "/member/list.jsp";
+		return "member/list";
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.GET)
 	public String form() {
-		return "/member/newForm.jsp";
+		return "member/newForm";
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
@@ -71,12 +71,12 @@ public class MemberControl {
 	@RequestMapping("/view")
 	public String view(String email, Model model) throws Exception {
 		model.addAttribute("memberInfo", memberService.getMember(email));
-		return "/member/view.jsp";
+		return "member/view";
 	}
 	
 	@RequestMapping(value="/passwordChange", method=RequestMethod.GET)
 	public String passwordForm() {
-		return "/member/passwordForm.jsp";
+		return "member/passwordForm";
 	}
 	
 	@RequestMapping(value="/passwordChange", method=RequestMethod.POST)
@@ -96,13 +96,13 @@ public class MemberControl {
 			model.addAttribute("status", "NEW_PASSWORD_ERROR");
 		}
 		
-		return "/member/passwordChangeResult.jsp";
+		return "member/passwordChangeResult";
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.GET)
 	public String updateForm(String email, Model model) throws Exception {
 		model.addAttribute("memberInfo", memberService.getMember(email));
-		return "/member/updateForm.jsp";
+		return "member/updateForm";
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)

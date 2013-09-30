@@ -20,7 +20,7 @@ public class SidebarControl {
 		Member member = (Member) session.getAttribute("member");
 		model.addAttribute("myprojects", 
 				projectService.getMyProjects(member.getEmail()));
-		return "/sidebar.jsp";
+		return "sidebar";
 	}
 }
 

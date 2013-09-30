@@ -21,20 +21,20 @@ public class ProjectControl {
 	@RequestMapping("/list2")
 	public String list2(Model model) throws Exception {
 		model.addAttribute("list", projectService.getProjectList());
-		return "/project/list.jsp";
+		return "project/list";
 	}
 	
 	@RequestMapping("/list")
 	public ModelAndView list() throws Exception {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/project/list.jsp");
+		mv.setViewName("project/list");
 		mv.addObject("list", projectService.getProjectList());
 		return mv;
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String form() {
-		return "/project/newForm.jsp";
+		return "project/newForm";
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
@@ -53,13 +53,13 @@ public class ProjectControl {
 	public String view(int no, Model model) throws Exception {
 		model.addAttribute("project", projectService.getProject(no));
 		
-		return "/project/view.jsp";
+		return "project/view";
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.GET)
 	public String updateForm(int no, Model model) throws Exception {
 		model.addAttribute("project", projectService.getProject(no));
-		return "/project/updateForm.jsp";
+		return "project/updateForm";
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
