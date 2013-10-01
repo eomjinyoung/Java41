@@ -34,7 +34,7 @@
 		order by MNAME
 	</select>
 	
-	<select id="view" parameterType="string" resultType="Member">
+	<select id="get" parameterType="string" resultType="Member">
 		select 
 			EMAIL,
 			MNAME as name,
