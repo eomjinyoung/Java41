@@ -20,11 +20,11 @@
 	</select>
 	
 	<select id="list"  
-			resultMap="projectMap">
+			resultMap="projectMap"><![CDATA[
 	    select PNO, TITLE, START_DATE, END_DATE
 	    from SPMS_PRJS
 	    order by PNO desc
-	</select>
+	]]></select>
 	
 	<select id="get" 
 			parameterType="int" 
