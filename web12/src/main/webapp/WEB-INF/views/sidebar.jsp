@@ -11,22 +11,22 @@
 <div id="sidebar">
 <div id="member">
 <c:choose>
-	<c:when test="${member.photos != null}">
-		<img id="memberPhoto" src="${rootPath}/file/${member.photos[0]}">
+	<c:when test="${loginInfo.photoPath != null}">
+		<img id="memberPhoto" src="${rootPath}/file/${loginInfo.photoPath}">
 	</c:when>
 	<c:otherwise>
 		<img id="memberPhoto" src="${rootPath}/images/test01.png">
 	</c:otherwise>
 </c:choose>
 <div id="memberInfo">
-<p id="name"><a href="${rootPath}/member/updateMyInfo.do">${member.name }</a></p>
-<p id="tel">${member.tel }</p>
-<p id="email">${member.email }</p>
+<p id="name"><a href="${rootPath}/member/updateMyInfo.do">${loginInfo.name }</a></p>
+<p id="tel">${loginInfo.tel }</p>
+<p id="email">${loginInfo.email }</p>
 </div>
 </div>
 
 <c:choose>
-<c:when test="${member.level == 0}">
+<c:when test="${loginInfo.level == 0}">
 <h3>프로젝트들3 <a href="${rootPath}/project/list.do">[전체]</a></h3>
 <ul>
 <c:forEach var="project" items="${myprojects}">
@@ -35,7 +35,7 @@
 </c:forEach>
 </ul>
 </c:when>
-<c:when test="${member.level == 1}">
+<c:when test="${loginInfo.level == 1}">
 <h3>관리</h3>
 <ul>
 	<li><a href="${rootPath}/member/list.do">멤버관리</a></li>

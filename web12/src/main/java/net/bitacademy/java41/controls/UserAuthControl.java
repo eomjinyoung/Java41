@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.bitacademy.java41.services.AuthService;
-import net.bitacademy.java41.vo.Member;
+import net.bitacademy.java41.vo.LoginInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
-@SessionAttributes("member")
+@SessionAttributes("loginInfo")
 @RequestMapping("/auth")
 public class UserAuthControl {
 	@Autowired AuthService authService;
@@ -55,7 +55,7 @@ public class UserAuthControl {
 			HttpSession session,
 			Model model,
 			SessionStatus status) throws Exception {
-		Member member = authService.getUserInfo(email, pwd);
+		LoginInfo loginInfo = authService.getLoginInfo(email, pwd);
 		
 		if(saveId != null) {
 			Cookie cookie = new Cookie("email", email);
@@ -67,8 +67,8 @@ public class UserAuthControl {
 			response.addCookie(cookie);
 		}
 		
-		if (member != null) {
-			model.addAttribute("member", member);
+		if (loginInfo != null) {
+			model.addAttribute("loginInfo", loginInfo);
 			return "redirect:../main.do";
 			
 		} else {

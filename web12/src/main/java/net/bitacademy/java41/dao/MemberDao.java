@@ -3,10 +3,11 @@ package net.bitacademy.java41.dao;
 import java.util.List;
 import java.util.Map;
 
+import net.bitacademy.java41.vo.LoginInfo;
 import net.bitacademy.java41.vo.Member;
 
 public interface MemberDao {
-	Member getMember(Map<String,String> paramMap) throws Exception;
+	LoginInfo getLoginInfo(Map<String,String> paramMap) throws Exception;
 	
 	int add(Member member) throws Exception;
 	
@@ -16,7 +17,7 @@ public interface MemberDao {
 	
 	int changePassword (Map<String,String> paramMap) throws Exception;
 	
-	int udpate(Member member) throws Exception;
+	int update(Member member) throws Exception;
 	
 	int delete(String email) throws Exception;
 

@@ -3,9 +3,9 @@ package net.bitacademy.java41.controls.member;
 import java.io.File;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 
 import net.bitacademy.java41.services.MemberService;
+import net.bitacademy.java41.vo.LoginInfo;
 import net.bitacademy.java41.vo.Member;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +14,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+/*
+ * @SessionAttributes("member")
+ * - DispatcherServlet이 요청에 해당하는 페이지 컨트롤러의 메서드를 호출할 때,
+ * 	1) 파라미터 중에서 세션에 저장된 "member"와 같은 타입의 객체가 있다면 
+ * 		새로 객체를 만들지 않고 기존 세션에 저장된 객체를 꼽아준다.
+ */
+
 @Controller
+@SessionAttributes({"member","loginInfo"})
 @RequestMapping("/member")
 public class MemberControl {
 	@Autowired ServletContext sc;
@@ -33,14 +42,19 @@ public class MemberControl {
 	public String signup(
 			Member member,
 			MultipartFile photo,
-			HttpSession session) throws Exception {
+			Model model) throws Exception {
 		String filename = this.getNewFileName();
 		String path = sc.getAttribute("rootRealPath") + "file/" + filename;
 		photo.transferTo(new File(path));
 		member.setPhotos(new String[]{filename});
 		
 		memberService.signUp(member);
-		session.setAttribute("member", member);
+		LoginInfo loginInfo = new LoginInfo()
+							.setName(member.getName())
+							.setEmail(member.getEmail())
+							.setTel(member.getTel())
+							.setPhotoPath(member.getPhotos()[0]);
+		model.addAttribute("loginInfo", loginInfo);
 		
 		return "redirect:../main.do";
 	}
@@ -57,7 +71,8 @@ public class MemberControl {
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public String add(Member member, MultipartFile photo) throws Exception {
+	public String add(
+			Member member, MultipartFile photo) throws Exception {
 		String filename = this.getNewFileName();
 		String path = sc.getAttribute("rootRealPath") + "file/" + filename;
 		photo.transferTo(new File(path));

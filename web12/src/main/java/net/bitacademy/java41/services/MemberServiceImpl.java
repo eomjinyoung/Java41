@@ -69,7 +69,7 @@ public class MemberServiceImpl implements MemberService {
 			rollbackFor=Throwable.class)
 	public void updateMember(Member member) throws Exception {
 		try {
-			if (memberDao.udpate(member) == 0) {
+			if (memberDao.update(member) == 0) {
 				throw new Exception("멤버 변경 오류!");
 			}
 			

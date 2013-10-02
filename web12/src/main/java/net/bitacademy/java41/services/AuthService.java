@@ -1,9 +1,9 @@
 package net.bitacademy.java41.services;
 
-import net.bitacademy.java41.vo.Member;
+import net.bitacademy.java41.vo.LoginInfo;
 
 public interface AuthService {
-	Member getUserInfo(String email, String password) throws Exception;
+	LoginInfo getLoginInfo(String email, String password) throws Exception;
 }
 
 
