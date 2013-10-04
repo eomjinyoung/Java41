@@ -1,28 +1,26 @@
 package net.bitacademy.java41.controls;
 
-import javax.servlet.http.HttpSession;
-
 import net.bitacademy.java41.services.ProjectService;
-import net.bitacademy.java41.vo.Member;
+import net.bitacademy.java41.vo.LoginInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-//@SessionAttributes("member")
+@SessionAttributes("loginInfo")
 public class SidebarControl {
 	@Autowired ProjectService projectService;
 	
 	@RequestMapping("/sidebar")
 	public String execute(
-			//@ModelAttribute("member") Member member,
-			HttpSession session,
+			@ModelAttribute("loginInfo") LoginInfo loginInfo,
 			Model model) throws Exception {
-		Member member = (Member) session.getAttribute("member");
 		model.addAttribute("myprojects", 
-				projectService.getMyProjects(member.getEmail()));
+				projectService.getMyProjects(loginInfo.getEmail()));
 		return "sidebar";
 	}
 }
