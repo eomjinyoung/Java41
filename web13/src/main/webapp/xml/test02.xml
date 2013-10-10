@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE books SYSTEM "books.dtd">
+<books>
+	<author id="A001" gender="male">
+		<name>&hong;</name>
+		<email>hong@test.com</email>
+		<tel>111-2222</tel>
+	</author>
+	
+	<author id="A002" country="internal">
+		<name>임꺽정</name>
+		<email>leem@test.com</email>
+	</author>
+    
+    <book isbn="K1002" authors="A001" press="P001">
+    		<title>오호라 자바 프로그래밍</title>
+    		<price>20000</price>
+    		<in/>
+    </book> 
+
+	<book isbn="K1003" authors="A001 A002" press="P001">
+    		<title>오호라 자바 웹 프로그래밍</title>
+    		<price>20000</price>
+    		<in/>
+    </book>
+    
+    <press id="P001">
+    		<name>&bit;</name>
+		<email>help@bitbook.com</email>
+		<tel>111-3333</tel>
+    </press>
+   
+</books>
+
+
+
+
+
+
+
+
+
+
