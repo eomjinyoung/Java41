@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+body {
+	font-family:     Verdana, Geneva, Arial, sans-serif;
+	font-size: small;
+	width: 900px;
+	margin: 0px auto;
+	background-color: white;
+/* 	border: 2px solid red; */
+}
+
+header {
+	font-size: 150%;
+}
+
+footer {
+	text-align: center;
+	padding: 10px 20px;
+	margin-top: 10px;
+	border-top: 3px solid black;
+	border-bottom: 1px solid lightgray;
+	background-color: #ececec;
+}
+
+
+
+
+
+
+
+
