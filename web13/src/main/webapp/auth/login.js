@@ -18,6 +18,7 @@ window.onload = function() {
 		xhr.open("POST", "login.do", false); // 2. 요청정보준비(동기)
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // only post
 		xhr.send(params); // 3. 요청(서버에서 응답이 올 때까지 리턴안함)
+		
 		//console.log(xhr.responseText); // 4. 서버의 응답 꺼내기
 		
 		// 자바스크립트 객체 생성 코드를 실행하는 방법
@@ -31,9 +32,11 @@ window.onload = function() {
 		
 		if(result.status == "fail") {
 			alert("이메일이나 암호가 맞지 않습니다.");
+			document.getElementById("email").value = "";
+			document.getElementById("password").value = "";
+			document.getElementById("saveId").checked = false;
 		} else {
-			alert("로그인 성공입니다.");
-			alert(result.data);
+			location.href = "../main.html";
 		}
 		
 		

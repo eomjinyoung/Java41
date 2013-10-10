@@ -42,11 +42,12 @@
 		<filter-name>CharSetFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
+	<!--
 	<filter-mapping>
 		<filter-name>AuthFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
-
+  	-->
 	<!-- 서블릿 선언 -->
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>

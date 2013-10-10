@@ -52,9 +52,33 @@ public class UserAuthControl {
 		return "auth/LoginForm";
 	}
 	
+	@RequestMapping(value="/loginInfo")
+	public ResponseEntity<String> loginInfo(
+			HttpSession session,
+			SessionStatus status) throws Exception {
+		
+		LoginInfo loginInfo = (LoginInfo) session.getAttribute("loginInfo");
+		
+		JsonResult jsonResult = null;
+		if (loginInfo != null) {
+			jsonResult = new JsonResult().setStatus("success")
+								.setData(loginInfo);
+		} else {
+			status.setComplete();
+			jsonResult = new JsonResult().setStatus("fail");
+		}
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Content-Type", "text/plain;charset=UTF-8");
+		return new ResponseEntity<String>(
+						new Gson().toJson( jsonResult ),
+						headers,
+						HttpStatus.CREATED);
+	}
+	
 	@RequestMapping(value="/login",
 			method=RequestMethod.POST)
-	public ResponseEntity<String> login(
+	public ResponseEntity<String> login3(
 			String email,
 			@RequestParam("password") String pwd,
 			String saveId,
@@ -83,6 +107,8 @@ public class UserAuthControl {
 			status.setComplete();
 			jsonResult = new JsonResult().setStatus("fail");
 		}
+		
+		//Thread.currentThread().sleep(5000);
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Content-Type", "text/plain;charset=UTF-8");
@@ -125,7 +151,8 @@ public class UserAuthControl {
 			jsonResult = new JsonResult().setStatus("fail");
 		}
 		
-		response.setContentType("text/plain;charset=UTF-8");
+		//response.setContentType("text/plain;charset=UTF-8");
+		response.setHeader("Content-Type", "text/plain;charset=UTF-8");
 		return new Gson().toJson( jsonResult );
 	}
 	
