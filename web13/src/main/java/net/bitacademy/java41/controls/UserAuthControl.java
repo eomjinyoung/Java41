@@ -31,9 +31,14 @@ public class UserAuthControl {
 	@Autowired AuthService authService;
 
 	@RequestMapping("/logout")
-	public String logout(SessionStatus status) throws Exception {
+	public ResponseEntity<String> logout(SessionStatus status) throws Exception {
 		status.setComplete();
-		return "redirect:login.do";
+		JsonResult jsonResult = new JsonResult();
+		jsonResult.setStatus("success");
+		
+		return new ResponseEntity<String>(
+				new Gson().toJson(jsonResult),
+				HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/login",
