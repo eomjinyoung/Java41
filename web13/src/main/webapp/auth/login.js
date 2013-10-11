@@ -14,7 +14,7 @@ window.onload = function() {
 			params += "&saveId=on";
 		}
 		
-		var xhr = new XMLHttpRequest(); // 1. 도구준비
+		var xhr =  createRequest();//new XMLHttpRequest(); // 1. 도구준비
 		xhr.open("POST", "login.do", false); // 2. 요청정보준비(동기)
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // only post
 		xhr.send(params); // 3. 요청(서버에서 응답이 올 때까지 리턴안함)

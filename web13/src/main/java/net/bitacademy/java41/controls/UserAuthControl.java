@@ -73,7 +73,7 @@ public class UserAuthControl {
 		return new ResponseEntity<String>(
 						new Gson().toJson( jsonResult ),
 						headers,
-						HttpStatus.CREATED);
+						HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/login",
@@ -115,7 +115,7 @@ public class UserAuthControl {
 		return new ResponseEntity<String>(
 						new Gson().toJson( jsonResult ),
 						headers,
-						HttpStatus.CREATED);
+						HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/login2",

@@ -3,15 +3,24 @@ window.onload = function() {
 	logout.onclick = function(event) {
 		event.preventDefault();
 		
-		var xhr = new XMLHttpRequest();
+		var xhr = createRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					location.href = "auth/login.html";
+				}
+			}
+		};
 		xhr.open("GET", "auth/logout.do", false);
 		xhr.send();
-		
-		location.href = "auth/login.html";
 	};
 	
-	
-	var xhr = new XMLHttpRequest();
+	loadLoginInfo();
+	loadMyProjects();
+};
+
+function loadLoginInfo() {
+	var xhr = createRequest();
 	// 비동기 요청의 경우, 
 	// XMLHttpRequest의 실행상태 변경시 마다 호출됨. 5단계
 	// 0. 초기화 안됨.
@@ -21,24 +30,48 @@ window.onload = function() {
 	// 4. 서버로부터 데이터 수신 완료.
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
-			var result = JSON.parse(xhr.responseText);
-			if(result.status == "success") {
-				document.getElementById("userName").innerHTML = result.data.name;
-				document.getElementById("userTel").innerHTML = result.data.tel;
-				document.getElementById("userEmail").innerHTML = result.data.email;
-				if (result.data.photoPath != undefined) {
-					document.getElementById("memberPhoto").src = result.data.photoPath;
+			if (xhr.status === 200) {
+				var result = JSON.parse(xhr.responseText);
+				if(result.status == "success") {
+					document.getElementById("userName").innerHTML = result.data.name;
+					document.getElementById("userTel").innerHTML = result.data.tel;
+					document.getElementById("userEmail").innerHTML = result.data.email;
+					if (result.data.photoPath != undefined) {
+						document.getElementById("memberPhoto").src = result.data.photoPath;
+					} else {
+						document.getElementById("memberPhoto").src = "images/test01.png";
+					}
 				} else {
-					document.getElementById("memberPhoto").src = "images/test01.png";
+					location.href = "auth/login.html";
 				}
 			} else {
-				location.href = "auth/login.html";
+				alert("서버와의 통신이 원활하지 않습니다. \n잠시후 다시 시도하세요.");
 			}
 		}
 	};
 	xhr.open("GET", "auth/loginInfo.do", true);
-	xhr.send();
-};
+	xhr.send();	
+}
+
+function loadMyProjects() {
+	var xhr = createRequest();
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				var result = JSON.parse(xhr.responseText);
+				if(result.status == "success") {
+					
+				} else {
+					location.href = "auth/login.html";
+				}
+			} else {
+				alert("서버와의 통신이 원활하지 않습니다. \n잠시후 다시 시도하세요.");
+			}
+		}
+	};
+	xhr.open("GET", "auth/loginInfo.do", true);
+	xhr.send();	
+}
 
 
 
