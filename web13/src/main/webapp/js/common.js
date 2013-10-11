@@ -1,4 +1,15 @@
-function createRequest() {
+//var bitacademy = new Object();
+function bitacademy(value) {
+	if (value.charAt(0) == "#") { // #태그아이디
+		return document.getElementById(value.substr(1));
+		
+	} else if (value.charAt(0) == "<"){ // <태그명>
+		var tag = value.substr(1, (value.length - 2));
+		return document.createElement(tag);
+	}
+}
+
+bitacademy.createRequest = function() {
     try {
         return new XMLHttpRequest();
     } catch (exception) {
@@ -16,10 +27,10 @@ function createRequest() {
             } catch (e) { }
         }
     }
-}
+};
 
-function ajax(url, settings) {
-	var xhr = createRequest();
+bitacademy.ajax = function(url, settings) {
+	var xhr = bitacademy.createRequest();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
@@ -58,9 +69,9 @@ function ajax(url, settings) {
 		}
 		xhr.send(params); 
 	}
-}
+};
 
-
+var $ = bitacademy;
 
 
 
