@@ -1,13 +1,37 @@
 //var bitacademy = new Object();
 function bitacademy(value) {
+	var extElement;
 	if (value.charAt(0) == "#") { // #태그아이디
-		return document.getElementById(value.substr(1));
+		extElement = document.getElementById(value.substr(1));
 		
 	} else if (value.charAt(0) == "<"){ // <태그명>
 		var tag = value.substr(1, (value.length - 2));
-		return document.createElement(tag);
+		extElement = document.createElement(tag);
 	}
+	
+	extElement.load = function(url) {
+		bitacademy.ajax(url, {
+			type: "GET",
+			dataType: "html",
+			success: function(result) {
+				extElement.innerHTML = result;
+			}
+		});
+	};
+	
+	return extElement;
 }
+
+bitacademy.load = function(selector, url) {
+	bitacademy.ajax(url, {
+		type: "GET",
+		dataType: "html",
+		success: function(result) {
+			var element = bitacademy(selector);
+			element.innerHTML = result;
+		}
+	});
+};
 
 bitacademy.createRequest = function() {
     try {
@@ -34,7 +58,18 @@ bitacademy.ajax = function(url, settings) {
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
-				var result = JSON.parse(xhr.responseText);
+				var dataType = "json";
+				if (settings.dataType) {
+					dataType = settings.dataType;
+				}
+				
+				var result = null;
+				if (dataType == "json") {
+					result = JSON.parse(xhr.responseText);
+				} else if (dataType == "html") {
+					result = xhr.responseText;
+				}
+				
 				if (settings.success) {
 					settings.success(result);
 				}
@@ -70,6 +105,9 @@ bitacademy.ajax = function(url, settings) {
 		xhr.send(params); 
 	}
 };
+
+
+
 
 var $ = bitacademy;
 

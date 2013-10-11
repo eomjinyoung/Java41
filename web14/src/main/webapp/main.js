@@ -1,4 +1,7 @@
 window.onload = function() {
+	$("#footer").load("footer.html");
+	
+	/*
 	var logout = $("#logout");
 	logout.onclick = function(event) {
 		event.preventDefault();
@@ -12,9 +15,10 @@ window.onload = function() {
 			}
 		});
 	};
+	*/
 	
-	loadLoginInfo();
-	loadMyProjects();
+	//loadLoginInfo();
+	//loadMyProjects();
 };
 
 function loadLoginInfo() {
