@@ -15,6 +15,10 @@ function bitacademy(value) {
 			dataType: "html",
 			success: function(result) {
 				extElement.innerHTML = result;
+				var elements = extElement.getElementsByTagName("script");
+				for (var i = 0; i < elements.length; i++) {
+					eval(elements[i].textContent);
+				}
 			}
 		});
 	};

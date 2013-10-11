@@ -1,55 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SPMS-프로젝트</title>
-<link rel="stylesheet" href="css/common.css">
-<script src="js/common.js"></script>
-<script src="main.js"></script>
-</head>
-<body>
-<header>
-<div id="controlBar"> 
-	<a id="logout" href="/web13/auth/logout.do">로그아웃</a>
-</nav>
-</header>
-  
-<aside>
-<section id="member">
-<img id="memberPhoto">
-<div id="memberInfo">
-<p id="name"><a href="/web13/member/updateMyInfo.do"><span id="userName"></span></a></p>
-<p id="tel"><span id="userTel"></span></p>
-<p id="email"><span id="userEmail"></span></p>
-</div>
-</section>
+<h1>프로젝트</h1>
+<table>
+<tr>
+	<th>번호</th>
+	<th>프로젝트</th>
+	<th>시작</th>
+	<th>종료</th>
+</tr>
 
-<section id="projects">
-<h1>프로젝트들 <a href="/web13/project/list.do">[전체]</a></h1>
+<tr>
+	<td>5</td>
+	<td><a href="view.do?no=5">project5</a></td>
+	<td>2013-05-01</td>
+	<td>2013-06-02</td>
+</tr>	
 
+<tr>
+	<td>4</td>
+	<td><a href="view.do?no=4">project4</a></td>
+	<td>2013-04-01</td>
+	<td>2013-05-02</td>
+</tr>	
 
-</section>
-</aside>
+<tr>
+	<td>3</td>
+	<td><a href="view.do?no=3">project3</a></td>
+	<td>2013-03-01</td>
+	<td>2013-04-02</td>
+</tr>	
 
-<section id="content">
-<p>Simple Project Management System<p>
-</section>
+<tr>
+	<td>2</td>
+	<td><a href="view.do?no=2">project2</a></td>
+	<td>2013-02-02</td>
+	<td>2013-03-02</td>
+</tr>	
 
-<footer>
-<address>모든 권리는 비트교육센터 자바41기에 있습니다. @Java41</address>
-</footer>
-</body>
-</html>
+<tr>
+	<td>1</td>
+	<td><a href="view.do?no=1">project1</a></td>
+	<td>2013-01-01</td>
+	<td>2013-02-02</td>
+</tr>	
 
+</table>
 
-
-
-
-
-
-
-
-
-
-
-
+<p><a href="/web14/project/add.do">[신규 프로젝트]</a></p>
