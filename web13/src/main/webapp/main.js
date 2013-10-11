@@ -11,7 +11,7 @@ window.onload = function() {
 				}
 			}
 		};
-		xhr.open("GET", "auth/logout.do", false);
+		xhr.open("GET", "auth/logout.do", true);
 		xhr.send();
 	};
 	
@@ -60,16 +60,27 @@ function loadMyProjects() {
 			if (xhr.status === 200) {
 				var result = JSON.parse(xhr.responseText);
 				if(result.status == "success") {
-					
+					var projectsSection = document.getElementById("projects");
+					var projects = result.data;
+					var article = null;
+					for (var i in projects) {
+						article = document.createElement("article");
+						article.innerHTML = 
+							"<a href='/web13/project/view.do?no=" + 
+							projects[i].no + "'>" +
+							projects[i].title + "</a>";
+						projectsSection.appendChild(article);
+					}
 				} else {
-					location.href = "auth/login.html";
+					alert("실행중 오류발생!");
+					console.log(result.data);
 				}
 			} else {
 				alert("서버와의 통신이 원활하지 않습니다. \n잠시후 다시 시도하세요.");
 			}
 		}
 	};
-	xhr.open("GET", "auth/loginInfo.do", true);
+	xhr.open("GET", "project/myprojects.do", true);
 	xhr.send();	
 }
 

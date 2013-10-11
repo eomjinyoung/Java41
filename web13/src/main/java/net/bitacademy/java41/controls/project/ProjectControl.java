@@ -20,17 +20,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
 @Controller
+@SessionAttributes("loginInfo")
 @RequestMapping("/project")
 public class ProjectControl {
 	@Autowired ProjectService projectService;
 
 	@RequestMapping("/myprojects")
-	public ResponseEntity<String> execute(
+	public ResponseEntity<String> myprojects(
 			@ModelAttribute("loginInfo") LoginInfo loginInfo) throws Exception {
 		
 		JsonResult jsonResult = new JsonResult();
