@@ -3,7 +3,14 @@ function sidebarjs_onload() {
 	loadMyProjects();
 	
 	$("#projectListAll").onclick = function() {
-		alert("okok");
+		var event = new MouseEvent('projectListAllClick', {
+		    'view': window,
+		    'bubbles': true,
+		    'cancelable': true
+		});
+		
+		event.test = "okok";
+		this.dispatchEvent(event);
 	};
 };
 
