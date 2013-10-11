@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ENTITY % basicElements "(name,email,tel?)">
+
+<!ENTITY % idAttr "id	ID #REQUIRED">
+
+<!ENTITY hong "홍길동">
+
+<!ENTITY bit "비트출판사">
+
+<!ELEMENT books (author*,book*,press*)>
+
+<!ELEMENT author %basicElements;>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT tel (#PCDATA)>
+<!ATTLIST author
+	%idAttr;
+	gender CDATA #IMPLIED
+	country (local | internal) "local">
+
+<!ELEMENT book 
+	(title,page?,price,published?,edition?,(in | out))>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT page (#PCDATA)>
+<!ELEMENT price (#PCDATA)>
+<!ELEMENT published (#PCDATA)>
+<!ELEMENT edition (#PCDATA)>
+<!ELEMENT in EMPTY>
+<!ELEMENT out EMPTY>
+
+<!ATTLIST book
+	isbn	 ID #REQUIRED
+	authors IDREFS #REQUIRED
+	press IDREFS #REQUIRED>	
+
+<!ELEMENT press %basicElements;>
+<!ATTLIST press
+	%idAttr;>
+
+
+
+
+
+
+
+
+
