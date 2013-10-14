@@ -1,47 +1,41 @@
+<section id="list">
 <h1>프로젝트</h1>
-<table>
+<table id="projectTable">
 <tr>
 	<th>번호</th>
 	<th>프로젝트</th>
 	<th>시작</th>
 	<th>종료</th>
 </tr>
-
-<tr>
-	<td>5</td>
-	<td><a href="view.do?no=5">project5</a></td>
-	<td>2013-05-01</td>
-	<td>2013-06-02</td>
-</tr>	
-
-<tr>
-	<td>4</td>
-	<td><a href="view.do?no=4">project4</a></td>
-	<td>2013-04-01</td>
-	<td>2013-05-02</td>
-</tr>	
-
-<tr>
-	<td>3</td>
-	<td><a href="view.do?no=3">project3</a></td>
-	<td>2013-03-01</td>
-	<td>2013-04-02</td>
-</tr>	
-
-<tr>
-	<td>2</td>
-	<td><a href="view.do?no=2">project2</a></td>
-	<td>2013-02-02</td>
-	<td>2013-03-02</td>
-</tr>	
-
-<tr>
-	<td>1</td>
-	<td><a href="view.do?no=1">project1</a></td>
-	<td>2013-01-01</td>
-	<td>2013-02-02</td>
-</tr>	
-
 </table>
-
+ 
 <p><a href="/web14/project/add.do">[신규 프로젝트]</a></p>
+</section>
+
+<section id="view" style="display:none;">
+<h1>프로젝트 정보</h1>
+<form id="projectForm">
+번호: <input type="text" name="no"><br>
+프로젝트명: <input type="text" name="title"><br>
+내용:<br> 
+<textarea name="content" rows="4" cols="50"></textarea><br>
+시작일: <input type="text" name="startDate" placeholder="예)2013-4-5"><br>
+종료일: <input type="text" name="endDate" placeholder="예)2013-6-5"><br>
+태그: <input type="text" name="tag" placeholder="예)태그1 태그2 태그3 (공백으로 구분)"><br>
+<input type="submit" value="등록"><input type="reset" value="취소"><br>
+</form>
+<p><a id="btnList" href="#">[목록]</a></p>
+</section>
+
+<script>
+	projectjs_onload();
+</script>
+
+
+
+
+
+
+
+
+

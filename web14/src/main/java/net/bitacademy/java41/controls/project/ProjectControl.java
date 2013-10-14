@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
@@ -58,18 +57,28 @@ public class ProjectControl {
 				HttpStatus.OK);
 	}
 	
-	@RequestMapping("/list2")
-	public String list2(Model model) throws Exception {
-		model.addAttribute("list", projectService.getProjectList());
-		return "project/list";
-	}
-	
 	@RequestMapping("/list")
-	public ModelAndView list() throws Exception {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("project/list");
-		mv.addObject("list", projectService.getProjectList());
-		return mv;
+	public ResponseEntity<String> list() throws Exception {
+		JsonResult jsonResult = new JsonResult();
+		
+		try {
+			jsonResult.setData(projectService.getProjectList());
+			jsonResult.setStatus("success");
+		} catch (Throwable e) {
+			StringWriter out = new StringWriter();
+			e.printStackTrace(new PrintWriter(out));
+			
+			jsonResult.setStatus("fail");
+			jsonResult.setData(out.toString());
+		}
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("Content-Type", "text/plain;charset=UTF-8");
+		
+		return new ResponseEntity<String>(
+				new Gson().toJson(jsonResult),
+				responseHeaders,
+				HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.GET)

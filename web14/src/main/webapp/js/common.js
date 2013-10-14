@@ -23,6 +23,26 @@ function bitacademy(value) {
 		});
 	};
 	
+	extElement.html = function(value) {
+		this.innerHTML = value;
+		return this;
+	};
+	
+	extElement.append = function(childElement) {
+		this.appendChild(childElement);
+		return this;
+	};
+	
+	extElement.appendTo = function(parentElement) {
+		parentElement.appendChild(this);
+		return this;
+	};
+	
+	extElement.attr = function(attrName, value) {
+		this.setAttribute(attrName, value);
+		return this;
+	};
+	
 	return extElement;
 }
 
