@@ -170,7 +170,7 @@ bitacademy.ajax = function(url, settings) {
 				if (params != "") {
 					params += "&";
 				}
-				params += name + "=" + settings.data[name];
+				params += name + "=" + encodeURIComponent(settings.data[name]);
 			}
 		}
 		xhr.send(params); 

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import net.bitacademy.java41.services.ProjectService;
 import net.bitacademy.java41.vo.JsonResult;
 import net.bitacademy.java41.vo.LoginInfo;
-import net.bitacademy.java41.vo.Member;
 import net.bitacademy.java41.vo.Project;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,21 +80,34 @@ public class ProjectControl {
 				HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String form() {
-		return "project/newForm";
-	}
-	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(
+	public ResponseEntity<String> add(
 			Project project,
 			HttpSession session) throws Exception {
-		Member member = (Member)session.getAttribute("member");
-		project.setLeader(member.getEmail());
+		JsonResult jsonResult = new JsonResult();
 		
-		projectService.addProject(project);
+		try {
+			LoginInfo loginInfo = (LoginInfo)session.getAttribute("loginInfo");
+			project.setLeader(loginInfo.getEmail());
+			projectService.addProject(project);
+			
+			jsonResult.setStatus("success");
+			
+		} catch (Throwable e) {
+			StringWriter out = new StringWriter();
+			e.printStackTrace(new PrintWriter(out));
+			
+			jsonResult.setStatus("fail");
+			jsonResult.setData(out.toString());
+		}
 		
-		return "redirect:list.do";
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("Content-Type", "text/plain;charset=UTF-8");
+		
+		return new ResponseEntity<String>(
+				new Gson().toJson(jsonResult),
+				responseHeaders,
+				HttpStatus.OK);
 	}
 	
 	@RequestMapping("/view")
