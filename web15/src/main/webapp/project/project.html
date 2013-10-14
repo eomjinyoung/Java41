@@ -1,0 +1,44 @@
+<section id="list">
+<h1>프로젝트</h1>
+<table id="projectTable">
+<tr>
+	<th>번호</th>
+	<th>프로젝트</th>
+	<th>시작</th>
+	<th>종료</th>
+</tr>
+</table>
+ 
+<p><a id="btnNewForm" href="#">[신규 프로젝트]</a></p>
+</section>
+
+<section id="view" style="display:none;">
+<h1>프로젝트 정보</h1>
+<form id="projectForm">
+번호: <input type="text" id="no" name="no" readonly class="view-project"><br>
+프로젝트명: <input type="text" id="title" name="title"><br>
+내용:<br> 
+<textarea id="pcontent" name="pcontent" rows="4" cols="50"></textarea><br>
+시작일: <input type="text" id="startDate" name="startDate" placeholder="예)2013-4-5"><br>
+종료일: <input type="text" id="endDate" name="endDate" placeholder="예)2013-6-5"><br>
+태그: <input type="text" id="tag" name="tag" placeholder="예)태그1 태그2 태그3 (공백으로 구분)"><br>
+<input id="btnAdd" type="button" value="등록" class="new-project">
+<input id="btnUpdate" type="button" value="변경" class="view-project">
+<input id="btnDelete" type="button" value="삭제" class="view-project">
+<input id="btnReset" type="reset" value="취소"><br>
+</form>
+<p><a id="btnList" href="#">[목록]</a></p>
+</section>
+
+<script>
+	projectjs_onload();
+</script>
+
+
+
+
+
+
+
+
+
