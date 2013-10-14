@@ -1,7 +1,10 @@
 //var bitacademy = new Object();
 function bitacademy(value) {
 	var extElement;
-	if (value.charAt(0) == "#") { // #태그아이디
+	if (value instanceof Element) {
+		extElement = value;
+		
+	} else if (value.charAt(0) == "#") { // #태그아이디
 		extElement = document.getElementById(value.substr(1));
 		
 	} else if (value.charAt(0) == "<"){ // <태그명>
@@ -39,7 +42,34 @@ function bitacademy(value) {
 	};
 	
 	extElement.attr = function(attrName, value) {
-		this.setAttribute(attrName, value);
+		if (arguments.length > 1) {
+			this.setAttribute(attrName, value);
+			return this;
+		} else if (arguments.length == 1) {
+			return this.getAttribute(attrName);
+		}
+	};
+	
+	extElement.css = function(styleName, value) {
+		if (arguments.length > 1) {
+			this.style[styleName] = value;
+			return this;
+		} else if (arguments.length == 1) {
+			return this.style[styleName];
+		}
+	};
+	
+	extElement.val = function(value) {
+		if (arguments.length > 0) {
+			this.value = value;
+			return this;
+		} else if (arguments.length == 0) {
+			return this.value;
+		}
+	};
+	
+	extElement.click = function(listener) {
+		this.addEventListener("click", listener);
 		return this;
 	};
 	

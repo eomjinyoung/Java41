@@ -99,10 +99,27 @@ public class ProjectControl {
 	}
 	
 	@RequestMapping("/view")
-	public String view(int no, Model model) throws Exception {
-		model.addAttribute("project", projectService.getProject(no));
+	public ResponseEntity<String> view(int no, Model model) throws Exception {
+		JsonResult jsonResult = new JsonResult();
 		
-		return "project/view";
+		try {
+			jsonResult.setData(projectService.getProject(no));
+			jsonResult.setStatus("success");
+		} catch (Throwable e) {
+			StringWriter out = new StringWriter();
+			e.printStackTrace(new PrintWriter(out));
+			
+			jsonResult.setStatus("fail");
+			jsonResult.setData(out.toString());
+		}
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("Content-Type", "text/plain;charset=UTF-8");
+		
+		return new ResponseEntity<String>(
+				new Gson().toJson(jsonResult),
+				responseHeaders,
+				HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.GET)
