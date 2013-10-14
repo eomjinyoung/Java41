@@ -1,33 +1,5 @@
 function projectjs_onload() {
-	$.ajax("project/list.do", {
-		type:"GET",
-		success: function(result) {
-			if(result.status == "success") {
-				var projects = result.data;
-				var table = $("#projectTable");
-				for (var i in projects) {
-					$("<tr>")
-					.append($("<td>").html( projects[i].no ))
-					.append($("<td>").append(
-						$("<a>").html(projects[i].title)
-						.attr("href", "#")
-						.attr("data-no", projects[i].no)
-						.click(function(event){
-							viewDetailProject(this.attr("data-no"));
-						})))
-					.append($("<td>").html( projects[i].startDate ))
-					.append($("<td>").html( projects[i].endDate ))
-					.appendTo(table);
-				}
-			} else {
-				alert("실행중 오류발생!");
-				console.log(result.data);
-			}
-		},
-		error: function(message) {
-			alert("서버와의 통신이 원활하지 않습니다. \n잠시후 다시 시도하세요.");
-		}
-	});
+	listProject();
 	
 	$("#btnNewForm").click(function(event){
 		$("#list").css("display", "none");
@@ -53,13 +25,75 @@ function projectjs_onload() {
 	$("#btnAdd").click(function(){
 		addProject();
 	});
+	
 	$("#btnUpdate").click(function(){
 		updateProject();
+	});
+	
+	$("#btnDelete").click(function(){
+		deleteProject();
+	});
+}
+
+function listProject() {
+	$.ajax("project/list.do", {
+		type:"GET",
+		success: function(result) {
+			if(result.status == "success") {
+				var projects = result.data;
+				$(".data-row").remove();
+				var table = $("#projectTable");
+				for (var i in projects) {
+					$("<tr>")
+					.attr("class", "data-row")
+					.append($("<td>").html( projects[i].no ))
+					.append($("<td>").append(
+						$("<a>").html(projects[i].title)
+						.attr("href", "#")
+						.attr("data-no", projects[i].no)
+						.click(function(event){
+							viewDetailProject(this.attr("data-no"));
+						})))
+					.append($("<td>").html( projects[i].startDate ))
+					.append($("<td>").html( projects[i].endDate ))
+					.appendTo(table);
+				}
+			} else {
+				alert("실행중 오류발생!");
+				console.log(result.data);
+			}
+		},
+		error: function(message) {
+			alert("서버와의 통신이 원활하지 않습니다. \n잠시후 다시 시도하세요.");
+		}
 	});
 }
 
 function updateProject() {
-	
+	$.ajax("project/update.do", {
+		type:"POST",
+		data: {
+			no: $("#no").val(),
+			title: $("#title").val(),
+			content: $("#pcontent").val(),
+			startDate: $("#startDate").val(),
+			endDate: $("#endDate").val(),
+			tag: $("#tag").val()
+		},
+		success: function(result) {
+			if(result.status == "success") {
+				listProject();
+				$("#view").css("display", "none");
+				$("#list").css("display", "");
+			} else {
+				alert("실행중 오류발생!");
+				console.log(result.data);
+			}
+		},
+		error: function(message) {
+			alert("서버와의 통신이 원활하지 않습니다. \n잠시후 다시 시도하세요.");
+		}
+	});	
 }
 
 function addProject() {
@@ -74,7 +108,9 @@ function addProject() {
 		},
 		success: function(result) {
 			if(result.status == "success") {
-				alert("등록 성공입니다!");
+				listProject();
+				$("#view").css("display", "none");
+				$("#list").css("display", "");
 			} else {
 				alert("실행중 오류발생!");
 				console.log(result.data);
@@ -113,6 +149,24 @@ function viewDetailProject(projectNo) {
 	});
 }
 
+function deleteProject() {
+	$.ajax("project/delete.do?no=" + $("#no").val(), {
+		type:"GET",
+		success: function(result) {
+			if(result.status == "success") {
+				listProject();
+				$("#view").css("display", "none");
+				$("#list").css("display", "");
+			} else {
+				alert("실행중 오류발생!");
+				console.log(result.data);
+			}
+		},
+		error: function(message) {
+			alert("서버와의 통신이 원활하지 않습니다. \n잠시후 다시 시도하세요.");
+		}
+	});
+}
 
 
 

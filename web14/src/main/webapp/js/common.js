@@ -54,7 +54,7 @@ function bitacademy(value) {
 	};
 	
 	extElement.css = function(styleName, value) {
-		if (extElement.length && extElement.length > 0) {
+		if ("length" in extElement) {
 			// 엘리먼트가 여러 개인 경우, 
 			if (arguments.length > 1) {
 				// 모든 엘리먼트에 대해 값을 할 당한다.
@@ -74,6 +74,18 @@ function bitacademy(value) {
 				return this.style[styleName];
 			}
 		}
+	};
+	
+	extElement.remove = function() {
+		if ("length" in extElement) {
+			for(var i = 0; i < extElement.length; i++) {
+				this[i].parentNode.removeChild(this[i]);
+			} 
+		} else {
+			this.parentNode.removeChild(this);
+		}
+		
+		return this;
 	};
 	
 	extElement.val = function(value) {

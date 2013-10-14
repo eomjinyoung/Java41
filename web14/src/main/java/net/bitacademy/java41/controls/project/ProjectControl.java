@@ -11,17 +11,13 @@ import net.bitacademy.java41.vo.LoginInfo;
 import net.bitacademy.java41.vo.Project;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
-import com.google.gson.Gson;
 
 @Controller
 @SessionAttributes("loginInfo")
@@ -30,7 +26,8 @@ public class ProjectControl {
 	@Autowired ProjectService projectService;
 
 	@RequestMapping("/myprojects")
-	public ResponseEntity<String> myprojects(
+	@ResponseBody
+	public Object myprojects(
 			@ModelAttribute("loginInfo") LoginInfo loginInfo) throws Exception {
 		
 		JsonResult jsonResult = new JsonResult();
@@ -47,17 +44,12 @@ public class ProjectControl {
 			jsonResult.setData(out.toString());
 		}
 		
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("Content-Type", "text/plain;charset=UTF-8");
-		
-		return new ResponseEntity<String>(
-				new Gson().toJson(jsonResult),
-				responseHeaders,
-				HttpStatus.OK);
+		return jsonResult;
 	}
 	
 	@RequestMapping("/list")
-	public ResponseEntity<String> list() throws Exception {
+	@ResponseBody
+	public Object list() throws Exception {
 		JsonResult jsonResult = new JsonResult();
 		
 		try {
@@ -71,17 +63,12 @@ public class ProjectControl {
 			jsonResult.setData(out.toString());
 		}
 		
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("Content-Type", "text/plain;charset=UTF-8");
-		
-		return new ResponseEntity<String>(
-				new Gson().toJson(jsonResult),
-				responseHeaders,
-				HttpStatus.OK);
+		return jsonResult;
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public ResponseEntity<String> add(
+	@ResponseBody
+	public Object add(
 			Project project,
 			HttpSession session) throws Exception {
 		JsonResult jsonResult = new JsonResult();
@@ -101,17 +88,12 @@ public class ProjectControl {
 			jsonResult.setData(out.toString());
 		}
 		
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("Content-Type", "text/plain;charset=UTF-8");
-		
-		return new ResponseEntity<String>(
-				new Gson().toJson(jsonResult),
-				responseHeaders,
-				HttpStatus.OK);
+		return jsonResult;
 	}
 	
 	@RequestMapping("/view")
-	public ResponseEntity<String> view(int no, Model model) throws Exception {
+	@ResponseBody
+	public Object view(int no, Model model) throws Exception {
 		JsonResult jsonResult = new JsonResult();
 		
 		try {
@@ -125,31 +107,47 @@ public class ProjectControl {
 			jsonResult.setData(out.toString());
 		}
 		
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("Content-Type", "text/plain;charset=UTF-8");
-		
-		return new ResponseEntity<String>(
-				new Gson().toJson(jsonResult),
-				responseHeaders,
-				HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="/update",method=RequestMethod.GET)
-	public String updateForm(int no, Model model) throws Exception {
-		model.addAttribute("project", projectService.getProject(no));
-		return "project/updateForm";
+		return jsonResult;
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public String update(Project project) throws Exception {
-		projectService.updateProject(project);
-		return "redirect:view.do?no=" + project.getNo();
+	@ResponseBody
+	public Object update(Project project) throws Exception {
+		JsonResult jsonResult = new JsonResult();
+		
+		try {
+			projectService.updateProject(project);
+			jsonResult.setStatus("success");
+			
+		} catch (Throwable e) {
+			StringWriter out = new StringWriter();
+			e.printStackTrace(new PrintWriter(out));
+			
+			jsonResult.setStatus("fail");
+			jsonResult.setData(out.toString());
+		}
+		
+		return jsonResult;
 	}
 	
 	@RequestMapping("/delete")
-	public String delete(int no) throws Exception {
-		projectService.removeProject(no);
-		return "redirect:list.do";
+	@ResponseBody
+	public Object delete(int no) throws Exception {
+		JsonResult jsonResult = new JsonResult();
+		
+		try {
+			projectService.removeProject(no);
+			jsonResult.setStatus("success");
+			
+		} catch (Throwable e) {
+			StringWriter out = new StringWriter();
+			e.printStackTrace(new PrintWriter(out));
+			
+			jsonResult.setStatus("fail");
+			jsonResult.setData(out.toString());
+		}
+		
+		return jsonResult;
 	}
 }
 

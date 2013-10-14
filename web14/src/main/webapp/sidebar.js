@@ -3,7 +3,7 @@ function sidebarjs_onload() {
 	loadMyProjects();
 	
 	$("#projectListAll").onclick = function() {
-		var event = new MouseEvent('projectListAllClick', {
+		var event = new MouseEvent('projectManagement', {
 		    'view': window,
 		    'bubbles': true,
 		    'cancelable': true
