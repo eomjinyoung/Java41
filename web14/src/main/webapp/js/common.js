@@ -10,6 +10,9 @@ function bitacademy(value) {
 	} else if (value.charAt(0) == "<"){ // <태그명>
 		var tag = value.substr(1, (value.length - 2));
 		extElement = document.createElement(tag);
+		
+	} else {
+		extElement = document.querySelectorAll(value);
 	}
 	
 	extElement.load = function(url) {
@@ -51,11 +54,25 @@ function bitacademy(value) {
 	};
 	
 	extElement.css = function(styleName, value) {
-		if (arguments.length > 1) {
-			this.style[styleName] = value;
-			return this;
-		} else if (arguments.length == 1) {
-			return this.style[styleName];
+		if (extElement.length && extElement.length > 0) {
+			// 엘리먼트가 여러 개인 경우, 
+			if (arguments.length > 1) {
+				// 모든 엘리먼트에 대해 값을 할 당한다.
+				for(var i = 0; i < extElement.length; i++) {
+					this[i].style[styleName] = value;
+				} 
+				return this;
+			} else if (arguments.length == 1) {
+				// 만약 특정 스타일의 값을 꺼내려 할 때 0번째인 값만 꺼내서 리턴한다.
+				return this[0].style[styleName];
+			}
+		} else {
+			if (arguments.length > 1) {
+				this.style[styleName] = value;
+				return this;
+			} else if (arguments.length == 1) {
+				return this.style[styleName];
+			}
 		}
 	};
 	
