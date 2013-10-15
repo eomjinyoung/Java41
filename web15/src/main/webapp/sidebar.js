@@ -1,65 +1,55 @@
-function sidebarjs_onload() {
+$(function() {
 	loadLoginInfo();
 	loadMyProjects();
 	
-	$("#projectListAll").onclick = function() {
-		var event = new MouseEvent('projectManagement', {
-		    'view': window,
-		    'bubbles': true,
-		    'cancelable': true
-		});
-		
-		event.test = "okok";
-		this.dispatchEvent(event);
-	};
-};
+	$("#projectListAll").click( function() {
+		$(this).trigger("projectManagement");
+	});
+	
+	$("#projects").on("click", ".projectView", function() {
+		$(this).trigger("projectView", [$(this).attr("data-no")]);
+	});
+});
 
 function loadLoginInfo() {
-	$.ajax("auth/loginInfo.do", {
-		type:"GET",
-		success: function(result) {
-			if(result.status == "success") {
-				$("#userName").innerHTML = result.data.name;
-				$("#userTel").innerHTML = result.data.tel;
-				$("#userEmail").innerHTML = result.data.email;
-				if (result.data.photoPath != undefined) {
-					$("#memberPhoto").src = result.data.photoPath;
-				} else {
-					$("#memberPhoto").src = "images/test01.png";
-				}
+	$.getJSON("auth/loginInfo.do", function(result) {
+		if(result.status == "success") {
+			var loginInfo = result.data;
+			
+			$("#userName").text( loginInfo.name );
+			$("#userTel").text( loginInfo.tel );
+			$("#userEmail").text( loginInfo.email );
+			
+			if (loginInfo.photoPath != undefined) {
+				$("#memberPhoto").attr("src", loginInfo.photoPath);
 			} else {
-				location.href = "auth/login.html";
+				$("#memberPhoto").attr("src", "images/test01.png");
 			}
-		},
-		error: function(message) {
-			alert("서버와의 통신이 원활하지 않습니다. \n잠시후 다시 시도하세요.");
+		} else {
+			location.href = "auth/login.html";
 		}
 	});
 }
 
 function loadMyProjects() {
-	$.ajax("project/myprojects.do", {
-		type:"GET",
-		success: function(result) {
-			if(result.status == "success") {
-				var projectsSection = $("#projects");
-				var projects = result.data;
-				var article = null;
-				for (var i in projects) {
-					article = $("<article>");
-					article.innerHTML = 
-						"<a href='/web13/project/view.do?no=" + 
-						projects[i].no + "'>" +
-						projects[i].title + "</a>";
-					projectsSection.appendChild(article);
-				}
-			} else {
-				alert("실행중 오류발생!");
-				console.log(result.data);
+	$.getJSON("project/myprojects.do", function(result) {
+		if(result.status == "success") {
+			var projectsSection = $("#projects");
+			$("#projects article").remove();
+			var projects = result.data;
+			for (var i in projects) {
+				$("<article>")
+					.append( 
+							$("<a>")
+								.addClass("projectView")
+								.attr("href", "#")
+								.attr("data-no", projects[i].no)
+								.text(projects[i].title))
+					.appendTo(projectsSection);
 			}
-		},
-		error: function(message) {
-			alert("서버와의 통신이 원활하지 않습니다. \n잠시후 다시 시도하세요.");
+		} else {
+			alert("실행중 오류발생!");
+			console.log(result.data);
 		}
 	});
 }

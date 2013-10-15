@@ -1,0 +1,14 @@
+HashMap map = ...
+map.put("student", s);
+map.put("projects", list);
+
+return map;
+
+
+{
+student: {
+	name: ...
+	
+	}
+projects: [{},{}]
+}

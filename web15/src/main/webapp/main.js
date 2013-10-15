@@ -3,11 +3,22 @@ window.onload = function() {
 	$("#sidebar").load("sidebar.html");
 	$("#footer").load("footer.html");
 	
-	document.body.addEventListener("projectManagement", function(event) {
-		console.log(event.test);
+
+	$('body').on("projectManagement", function(event) {
 		$("#content").load("project/project.html");
 	});
 	
+	$('body').on("projectChanged", function(event) {
+		loadMyProjects();
+	});
+	
+	$('body').on("projectView", function(event, projectNo) {
+		$("#content").load("project/project.html", function() {
+			viewDetailProject(projectNo);
+		});
+	});
+	
+	/*	
 	document.body.addEventListener("memberManagement", function(event) {
 		console.log(event.test);
 		$("#content").load("member/member.html");
@@ -22,4 +33,5 @@ window.onload = function() {
 		console.log(event.test);
 		$("#content").load("feed/feed.html");
 	});
+	*/
 };
