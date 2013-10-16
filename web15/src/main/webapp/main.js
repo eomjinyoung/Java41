@@ -1,11 +1,14 @@
-window.onload = function() {
+$(document).ready(function() {
 	$("#header").load("header.html");
 	$("#sidebar").load("sidebar.html");
 	$("#footer").load("footer.html");
 	
 
 	$('body').on("projectManagement", function(event) {
-		$("#content").load("project/project.html");
+		$("#content").load("project/project.html", function() {
+			var projectjs = appContext.getObject("projectjs");
+			projectjs.listProject();
+		});
 	});
 	
 	$('body').on("projectChanged", function(event) {
@@ -14,7 +17,8 @@ window.onload = function() {
 	
 	$('body').on("projectView", function(event, projectNo) {
 		$("#content").load("project/project.html", function() {
-			viewDetailProject(projectNo);
+			var projectjs = appContext.getObject("projectjs");
+			projectjs.viewDetailProject(projectNo);
 		});
 	});
 	
@@ -34,4 +38,34 @@ window.onload = function() {
 		$("#content").load("feed/feed.html");
 	});
 	*/
-};
+});
+
+function AppContext() {
+	var objMap = {};
+	
+	this.addObject = function(name, obj) {
+		objMap[name] = obj;
+	};
+	
+	this.getObject = function(name) {
+		return objMap[name];
+	};
+}
+
+window.appContext = new AppContext();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
