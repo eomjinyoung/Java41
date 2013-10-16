@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -49,11 +50,39 @@ public class ProjectControl {
 	
 	@RequestMapping("/list")
 	@ResponseBody
-	public Object list() throws Exception {
+	public Object list(
+			@RequestParam(value="pageNo", defaultValue="1") 
+			int pageNo,
+			@RequestParam(value="pageSize", defaultValue="10") 
+			int pageSize) throws Exception {
 		JsonResult jsonResult = new JsonResult();
 		
 		try {
-			jsonResult.setData(projectService.getProjectList());
+			int startIndex = (pageNo - 1) * pageSize;
+			if (startIndex < 0) {
+				startIndex = 0;
+			}
+			jsonResult.setData( 
+				projectService.getProjectList(startIndex,pageSize));
+			jsonResult.setStatus("success");
+		} catch (Throwable e) {
+			StringWriter out = new StringWriter();
+			e.printStackTrace(new PrintWriter(out));
+			
+			jsonResult.setStatus("fail");
+			jsonResult.setData(out.toString());
+		}
+		
+		return jsonResult;
+	}
+	
+	@RequestMapping("/count")
+	@ResponseBody
+	public Object count() throws Exception {
+		JsonResult jsonResult = new JsonResult();
+		
+		try {
+			jsonResult.setData(projectService.countProject());
 			jsonResult.setStatus("success");
 		} catch (Throwable e) {
 			StringWriter out = new StringWriter();

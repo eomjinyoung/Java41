@@ -6,7 +6,9 @@ import net.bitacademy.java41.vo.MemberProject;
 import net.bitacademy.java41.vo.Project;
 
 public interface ProjectService {
-	List<Project> getProjectList() throws Exception;
+	List<Project> getProjectList(int startIndex, int pageSize) throws Exception;
+	
+	int countProject() throws Exception;
 	
 	List<MemberProject> getMyProjects(String email) throws Exception;
 	

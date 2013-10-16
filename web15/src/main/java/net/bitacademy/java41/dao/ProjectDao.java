@@ -1,12 +1,15 @@
 package net.bitacademy.java41.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import net.bitacademy.java41.vo.MemberProject;
 import net.bitacademy.java41.vo.Project;
 
 public interface ProjectDao {
-	List<Project> list() throws Exception;
+	List<Project> list(Map<String,Object> params) throws Exception;
+	
+	int size() throws Exception;
 	
 	Project get(int no) throws Exception;
 	

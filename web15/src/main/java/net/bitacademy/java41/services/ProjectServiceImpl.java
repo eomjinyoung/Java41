@@ -20,8 +20,16 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired ProjectDao projectDao;
 	@Autowired ProjectMemberDao projectMemberDao;
 	
-	public List<Project> getProjectList() throws Exception {
-		return projectDao.list();
+	public List<Project> getProjectList(int startIndex, int pageSize) throws Exception {
+		HashMap<String,Object> params = new HashMap<String,Object>();
+		params.put("startIndex", startIndex);
+		params.put("pageSize", pageSize);
+		
+		return projectDao.list(params);
+	}
+	
+	public int countProject() throws Exception {
+		return projectDao.size();
 	}
 	
 	public List<MemberProject> getMyProjects(String email) throws Exception {

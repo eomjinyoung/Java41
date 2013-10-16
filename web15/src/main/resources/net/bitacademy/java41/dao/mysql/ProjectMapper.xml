@@ -20,10 +20,18 @@
 	</select>
 	
 	<select id="list"  
+			parameterType="map"
 			resultMap="projectMap"><![CDATA[
 	    select PNO, TITLE, START_DATE, END_DATE
 	    from SPMS_PRJS
 	    order by PNO desc
+	    limit #{startIndex}, #{pageSize}
+	]]></select>
+	
+	<select id="size"  
+			resultType="int"><![CDATA[
+	    select count(*)
+	    from SPMS_PRJS
 	]]></select>
 	
 	<select id="get" 

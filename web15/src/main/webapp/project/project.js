@@ -1,6 +1,8 @@
 if (window.appContext.getObject("projectjs") == undefined) {
 	console.log("project.js 로딩...");
 	var projectjs = {
+		currPageNo: 1,
+		pageSize: 10,
 		init: function(startPage) {
 			var that = this;
 
@@ -38,31 +40,74 @@ if (window.appContext.getObject("projectjs") == undefined) {
 			$("#btnDelete").click(function(){
 				that.deleteProject();
 			});
+			
+			$("#prevPage").click(function() {
+				if(that.currPageNo > 1) {
+					that.listProject(that.currPageNo - 1);
+				}
+			});
+			
+			$("#nextPage").click(function() {
+				that.listProject(that.currPageNo + 1);
+			});
 		},
 		
-		listProject: function() {
-			$.getJSON("project/list.do", function(result) {
+		listProject: function(pageNo) {
+			var that = this;
+			
+			if (pageNo == undefined) {
+				pageNo = 1;
+			}
+			
+			$.getJSON("project/list.do?pageNo=" + pageNo, function(result) {
 				if(result.status == "success") {
+					that.currPageNo = pageNo;
 					var projects = result.data;
 					$(".data-row").remove();
 					var table = $("#projectTable");
 					var rowno = 1;
 					var tr = null;
-					for (var i in projects) {
+					for (var i = 0; i < 10; i++) {
 						tr = $(table).find("tr:eq(" + rowno + ")");
-						tr.find("td:eq(0)").html(projects[i].no);
-						tr.find("td:eq(1)").append(
-							$("<a>")
-								.addClass("projectTitleLink")
-								.text(projects[i].title)
-								.attr("href", "#")
-								.attr("data-no", projects[i].no));
-						tr.find("td:eq(2)").html(projects[i].startDate);
-						tr.find("td:eq(3)").html(projects[i].endDate);
+						if (i < projects.length) {
+							tr.find("td:eq(0)").html(projects[i].no);
+							tr.find("td:eq(1)").append(
+								$("<a>")
+									.addClass("projectTitleLink")
+									.text(projects[i].title)
+									.attr("href", "#")
+									.attr("data-no", projects[i].no));
+							tr.find("td:eq(2)").html(projects[i].startDate);
+							tr.find("td:eq(3)").html(projects[i].endDate);
+						} else {
+							tr.find("td").empty();
+						}
 						rowno++;
 					}
 					$("#view").css("display", "none");
 					$("#list").css("display", "");
+				} else {
+					alert("실행중 오류발생!");
+					console.log(result.data);
+				}
+			});
+		},
+		
+		countProject: function() {
+			var that = this;
+			$.getJSON("project/count.do", function(result) {
+				if(result.status == "success") {
+					var count = parseInt(result.data);
+					var totalPage = int(count / that.pageSize);
+					if ((count % that.pageSize) > 0) {
+						totalPage++;
+					}
+					
+					if (totalPage == that.currPageNo) {
+						$("#nextPage").css("display", "none");
+					} else {
+						$("#nextPage").css("display", "");
+					}					
 				} else {
 					alert("실행중 오류발생!");
 					console.log(result.data);
