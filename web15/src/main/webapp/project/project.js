@@ -1,11 +1,13 @@
 if (window.appContext.getObject("projectjs") == undefined) {
 	console.log("project.js 로딩...");
 	var projectjs = {
-		currPageNo: 1,
+		currPageNo: 0,
 		pageSize: 10,
 		init: function(startPage) {
 			var that = this;
-
+			that.currPageNo = 0;
+			that.pageSize = 10;
+			
 			if (startPage) {
 				$("#" + startPage).css("display", "");
 			} else {
@@ -17,6 +19,9 @@ if (window.appContext.getObject("projectjs") == undefined) {
 			});
 			
 			$("#btnList").click(function(event){
+				if (that.currPageNo == 0) {
+					that.listProject(1);
+				}
 				$("#view").css("display", "none");
 				$("#list").css("display", "");
 			});
