@@ -70,20 +70,23 @@ if (window.appContext.getObject("projectjs") == undefined) {
 					for (var i = 0; i < 10; i++) {
 						tr = $(table).find("tr:eq(" + rowno + ")");
 						if (i < projects.length) {
-							tr.find("td:eq(0)").html(projects[i].no);
-							tr.find("td:eq(1)").append(
+							tr.find("td:eq(0)").text(projects[i].no);
+							tr.find("td:eq(1)").empty().append(
 								$("<a>")
 									.addClass("projectTitleLink")
 									.text(projects[i].title)
 									.attr("href", "#")
 									.attr("data-no", projects[i].no));
-							tr.find("td:eq(2)").html(projects[i].startDate);
-							tr.find("td:eq(3)").html(projects[i].endDate);
+							tr.find("td:eq(2)").text(projects[i].startDate);
+							tr.find("td:eq(3)").text(projects[i].endDate);
 						} else {
 							tr.find("td").empty();
 						}
 						rowno++;
 					}
+					
+					that.countProject();
+					
 					$("#view").css("display", "none");
 					$("#list").css("display", "");
 				} else {
@@ -98,15 +101,18 @@ if (window.appContext.getObject("projectjs") == undefined) {
 			$.getJSON("project/count.do", function(result) {
 				if(result.status == "success") {
 					var count = parseInt(result.data);
-					var totalPage = int(count / that.pageSize);
-					if ((count % that.pageSize) > 0) {
-						totalPage++;
+					var totalPage = Math.ceil(count / that.pageSize);
+					
+					if (that.currPageNo > 1) {
+						$("#prevPage").css("display", "");
+					} else {
+						$("#prevPage").css("display", "none");
 					}
 					
-					if (totalPage == that.currPageNo) {
-						$("#nextPage").css("display", "none");
-					} else {
+					if (that.currPageNo < totalPage) {
 						$("#nextPage").css("display", "");
+					} else {
+						$("#nextPage").css("display", "none");
 					}					
 				} else {
 					alert("실행중 오류발생!");

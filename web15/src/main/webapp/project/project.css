@@ -1,10 +1,10 @@
 @CHARSET "UTF-8";
 table#projectTable {
 /* 	border: 1px red solid; */
-	min-height: 200px;
+	min-height: 220px;
 }
 
 table#projectTable td{
 /* 	border: 1px red solid; */
-	height: 15px;
+	height: 18px;
 }
