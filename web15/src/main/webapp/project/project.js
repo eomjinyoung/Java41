@@ -1,9 +1,14 @@
 if (window.appContext.getObject("projectjs") == undefined) {
 	console.log("project.js 로딩...");
 	var projectjs = {
-		init: function() {
+		init: function(startPage) {
 			var that = this;
-			this.listProject();
+
+			if (startPage) {
+				$("#" + startPage).css("display", "");
+			} else {
+				$("#list").css("display", "");
+			}
 			
 			$("#projectTable").on('click', '.projectTitleLink', function() {
 				that.viewDetailProject($(this).attr("data-no"));
@@ -41,19 +46,20 @@ if (window.appContext.getObject("projectjs") == undefined) {
 					var projects = result.data;
 					$(".data-row").remove();
 					var table = $("#projectTable");
+					var rowno = 1;
+					var tr = null;
 					for (var i in projects) {
-						$("<tr>")
-							.addClass("data-row")
-							.append($("<td>").text( projects[i].no ))
-							.append($("<td>").append(
-										$("<a>")
-											.addClass("projectTitleLink")
-											.text(projects[i].title)
-											.attr("href", "#")
-											.attr("data-no", projects[i].no)))
-							.append($("<td>").text( projects[i].startDate ))
-							.append($("<td>").text( projects[i].endDate ))
-							.appendTo(table);
+						tr = $(table).find("tr:eq(" + rowno + ")");
+						tr.find("td:eq(0)").html(projects[i].no);
+						tr.find("td:eq(1)").append(
+							$("<a>")
+								.addClass("projectTitleLink")
+								.text(projects[i].title)
+								.attr("href", "#")
+								.attr("data-no", projects[i].no));
+						tr.find("td:eq(2)").html(projects[i].startDate);
+						tr.find("td:eq(3)").html(projects[i].endDate);
+						rowno++;
 					}
 					$("#view").css("display", "none");
 					$("#list").css("display", "");
@@ -145,8 +151,6 @@ if (window.appContext.getObject("projectjs") == undefined) {
 	};
 	
 	window.appContext.addObject("projectjs", projectjs);
-	
-	projectjs.init();
 }
 
 

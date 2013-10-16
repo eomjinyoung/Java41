@@ -75,6 +75,7 @@ aside {
 section#content {
 /* 	border: 1px solid red; */
 	margin-left: 190px;
+	min-height: 300px;
 }
 
 section h1 {

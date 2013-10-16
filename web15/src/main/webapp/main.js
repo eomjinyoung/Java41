@@ -1,12 +1,21 @@
 $(document).ready(function() {
-	$("#header").load("header.html");
-	$("#sidebar").load("sidebar.html");
+	$("#header").load("header.html", function() {
+		var headerjs = appContext.getObject("headerjs");
+		headerjs.init();
+	});
+	
+	$("#sidebar").load("sidebar.html", function() {
+		var sidebarjs = appContext.getObject("sidebarjs");
+		sidebarjs.init();
+	});
+	
 	$("#footer").load("footer.html");
 	
 
 	$('body').on("projectManagement", function(event) {
 		$("#content").load("project/project.html", function() {
 			var projectjs = appContext.getObject("projectjs");
+			projectjs.init("list");
 			projectjs.listProject();
 		});
 	});
@@ -18,6 +27,7 @@ $(document).ready(function() {
 	$('body').on("projectView", function(event, projectNo) {
 		$("#content").load("project/project.html", function() {
 			var projectjs = appContext.getObject("projectjs");
+			projectjs.init("view");
 			projectjs.viewDetailProject(projectNo);
 		});
 	});
