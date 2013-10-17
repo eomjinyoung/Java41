@@ -1,0 +1,101 @@
+@CHARSET "UTF-8";
+body {
+	font-family:     Verdana, Geneva, Arial, sans-serif;
+	font-size: small;
+	width: 900px;
+	margin: 0px auto;
+	background-color: white;
+/* 	border: 2px solid red; */
+}
+
+header {
+	padding: 10px 20px;
+	margin-bottom: 5px;
+	background-color: DarkBlue;
+	color: white;
+	height: 25px;
+}
+
+header #controlBar {
+	float: right;
+}
+
+header a:link {
+	color: white;
+}
+
+header a:visited {
+	color: white;
+}
+
+aside {
+/* 	border: 1px solid red; */
+	float: left;
+	width: 180px;
+	margin-bottom: 10px;
+	background-color: LightYellow;
+}
+
+#memberPhoto {
+	width: 50px;
+	float: left;
+}
+
+#memberInfo {
+/* 	border: 2px solid blue; */
+	padding: 10px;
+	margin-left: 55px;
+}
+
+#name {
+	font-size: 120%;
+	font-weight: bold;
+	line-height: 130%;
+	padding: 0px;
+	margin: 0px;
+}
+
+#tel {
+	font-size: 80%;
+	color: gray;
+	line-height: 130%;
+	padding: 0px;
+	margin: 0px;
+	
+}
+
+#email {
+	font-size: 90%;
+	line-height: 130%;
+	padding: 0px;
+	margin: 0px;
+}
+
+
+section#content {
+/* 	border: 1px solid red; */
+	margin-left: 190px;
+	min-height: 300px;
+}
+
+section h1 {
+	font-size: 130%;
+}
+
+footer {
+	clear: left;
+	text-align: center;
+	padding: 10px 20px;
+	margin-top: 10px;
+	border-top: 3px solid black;
+	border-bottom: 1px solid lightgray;
+	background-color: #ececec;
+}
+
+
+
+
+
+
+
+
