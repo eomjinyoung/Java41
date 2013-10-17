@@ -66,7 +66,7 @@ public class UserAuthControl {
 			Model model,
 			SessionStatus status) throws Exception {
 		LoginInfo loginInfo = authService.getLoginInfo(email, pwd);
-		
+
 		if(saveId != null) {
 			Cookie cookie = new Cookie("email", email);
 			cookie.setMaxAge(60); 
